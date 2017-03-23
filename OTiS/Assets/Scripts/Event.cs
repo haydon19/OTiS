@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType { Greeting, Combat, Decision, Outcome, Death, NewEnemy, NewAlly, GameOver, Charm };
+public enum EventType { Greeting, Combat, Decision, Outcome, Death, NewEnemy, NewAlly, GameOver, Charm, Run_Pass, Run_Fail };
 
 public class Event {
 
@@ -103,8 +103,13 @@ public class Event {
                     }
                 }
                 break;
-            case EventType.Outcome:
-
+            case EventType.Run_Pass:
+                summary = participants[1].Name + " safely leads the party away from " + participants[0].Name + ".";
+                EnemyInfoPanel.instance.removeCharacter(participants[0]);
+                GameControllerScript.instance.Enemies.Remove(participants[0]);
+                break;
+            case EventType.Run_Fail:
+                summary = participants[1].Name + " cannot escape " + participants[0].Name + ".";
                 break;
             case EventType.Death:
                 summary = participants[0].Name + " has Died.";
@@ -130,21 +135,7 @@ public class Event {
 
         EventLog.instance.newLogItem(this);
 
-        /*
-        foreach(Character c in participants)
-        {
-            if (c.Dead) { }
-            if(c is Enemy)
-            {
-               
-                    CharacterInfoPanel.instance.removeCharacter(partyMember);
-                    GameControllerScript.instance.Party.Remove(partyMember);
-                    new Event(EventType.Death, new List<Character> { partyMember }, EventLog.instance.transform.childCount);
 
-                
-            }
-        }
-        */
     }
 
     /*

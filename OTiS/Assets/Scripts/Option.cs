@@ -94,13 +94,13 @@ public class Option {
         {
 
             case (OptionType.Fight):
-                description = actors[1].Name + " fights " + actors[0].Name + " (Strength)";
+                description = actors[1].Name + " fights " + actors[0].Name + ". (Strength)";
                 break;
             case (OptionType.Charm):
-                description = actors[1].Name + " attempts to charm " + actors[0].Name + " (Smarts)";
+                description = actors[1].Name + " attempts to charm " + actors[0].Name + ". (Smarts)";
                 break;
             case (OptionType.Run):
-                description = "The party runs away from " + actors[0].Name + " (Agility)";
+                description = actors[1].Name + " tries to run from " + actors[0].Name + ". (Agility)";
                 break;
         }
     }
@@ -130,7 +130,14 @@ public class Option {
                 GameControllerScript.instance.choosing = false;
                 break;
             case (OptionType.Run):
-                outcomeEvent = new Event(EventType.Combat, actors, EventLog.instance.transform.childCount);
+                if (actors[1].getStat("Agility") >= actors[0].getStat("Agility"))
+                {
+                    outcomeEvent = new Event(EventType.Run_Pass, actors, EventLog.instance.transform.childCount);
+                } else
+                {
+                    outcomeEvent = new Event(EventType.Run_Fail, actors, EventLog.instance.transform.childCount);
+                    outcomeEvent = new Event(EventType.Combat, actors, EventLog.instance.transform.childCount);
+                }
                 //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
 
                 GameControllerScript.instance.choosing = false;

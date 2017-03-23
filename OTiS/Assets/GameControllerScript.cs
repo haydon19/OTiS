@@ -37,10 +37,10 @@ public class GameControllerScript : MonoBehaviour {
     {
         enemyDictionary = new Dictionary<string, Enemy>();
         enemyDictionary.Add("Zombie", new Enemy("Zombie", 0, 8, 1, 2));
-        enemyDictionary.Add("Feral Cat", new Enemy("Feral Cat", 0, 3, 4, 6));
+        enemyDictionary.Add("Feral Cat", new Enemy("Feral Cat", 0, 3, 4, 10));
         enemyDictionary.Add("Robot", new Enemy("Robot", 0, 6, 6, 2));
-        enemyDictionary.Add("Alien", new Enemy("Alien", 0, 2, 10, 5));
-        enemyDictionary.Add("Horse", new Enemy("Horse", 0, 5, 2, 6));
+        enemyDictionary.Add("Alien", new Enemy("Alien", 0, 2, 10, 6));
+        enemyDictionary.Add("Horse", new Enemy("Horse", 0, 5, 2, 7));
 
         enemyKeyList = new List<string>(enemyDictionary.Keys);
     }

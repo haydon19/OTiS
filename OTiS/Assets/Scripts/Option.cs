@@ -12,7 +12,9 @@ public class Option {
     string outcome;
     string stat;
     float successRate;
-    List<Character> actors;
+    Character subject;
+    Character actor;
+    //List<Character> actors;
     Event eventObject;
     OptionType type;
 
@@ -83,24 +85,25 @@ public class Option {
         }
     }
 
-    public Option(OptionType type, List<Character> participants)
+    public Option(OptionType type, Character subject, Character actor)
     {
 
 
         this.type = type;
-        actors = new List<Character>(participants);
-
+        //actors = new List<Character>(participants);
+        this.actor = actor;
+        this.subject = subject;
         switch (type)
         {
 
             case (OptionType.Fight):
-                description = actors[1].Name + " fights " + actors[0].Name + ". (Strength)";
+                description = actor.Name + " fights " + subject.Name + ". (Strength)";
                 break;
             case (OptionType.Charm):
-                description = actors[1].Name + " attempts to charm " + actors[0].Name + ". (Smarts)";
+                description = actor.Name + " attempts to charm " + subject.Name + ". (Smarts)";
                 break;
             case (OptionType.Run):
-                description = actors[1].Name + " tries to run from " + actors[0].Name + ". (Agility)";
+                description = actor.Name + " tries to run from " + subject.Name + ". (Agility)";
                 break;
         }
     }
@@ -117,27 +120,22 @@ public class Option {
         {
 
             case (OptionType.Fight):
-                outcomeEvent = new Event(EventType.Combat, actors , EventLog.instance.transform.childCount);
+                outcomeEvent = new CharacterCombatEvent(EventType.Combat, EventLog.instance.transform.childCount, actor, subject);
                 //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
 
                 GameControllerScript.instance.choosing = false;
                 
                 break;
             case (OptionType.Charm):
-                outcomeEvent = new Event(EventType.Charm, actors, EventLog.instance.transform.childCount);
+                outcomeEvent = new CharmEvent(EventType.Charm, EventLog.instance.transform.childCount, actor, subject);
                 //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
 
                 GameControllerScript.instance.choosing = false;
                 break;
             case (OptionType.Run):
-                if (actors[1].getStat("Agility") >= actors[0].getStat("Agility"))
-                {
-                    outcomeEvent = new Event(EventType.Run_Pass, actors, EventLog.instance.transform.childCount);
-                } else
-                {
-                    outcomeEvent = new Event(EventType.Run_Fail, actors, EventLog.instance.transform.childCount);
-                    outcomeEvent = new Event(EventType.Combat, actors, EventLog.instance.transform.childCount);
-                }
+                
+                    outcomeEvent = new RunEvent(EventType.Run_Fail, EventLog.instance.transform.childCount, actor, subject);
+               
                 //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
 
                 GameControllerScript.instance.choosing = false;

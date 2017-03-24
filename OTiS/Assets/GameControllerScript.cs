@@ -58,6 +58,11 @@ public class GameControllerScript : MonoBehaviour {
         return enemy;
     }
 
+    public Character getRandomPartyMember()
+    {
+        return Party[Random.Range(0, Party.Count)];
+    }
+
     public string getRandomName()
     {
         int r = Random.Range(0,8);
@@ -122,25 +127,23 @@ public class GameControllerScript : MonoBehaviour {
             validEvents.Add(EventType.Greeting);
         }
 
-        if (Enemies.Count > 0)
-        {
-            validEvents.Add(EventType.Combat);
-        }
-
         if (Enemies.Count < 5)
         {
             validEvents.Add(EventType.NewEnemy);
         }
+
+        /*
         if(enemyShip == null)
         {
             validEvents.Add(EventType.EnemyShip);
         }
-
+        */
+        /*
         if(ship != null && ship.getStat("Shields") > 0 && enemyShip != null && enemyShip.getStat("Shields") > 0)
         {
             validEvents.Add(EventType.SpaceCombat);
         }
-
+        */
         return validEvents[Random.Range(0, validEvents.Count)];
 
     }
@@ -163,11 +166,12 @@ void Update () {
             switch (getRandomEvent()) { 
                 case EventType.Greeting:
                     //This event makes 2 random party members greet eachother
-                    newEvent = new Event(EventType.Greeting, new List<Character> { Party[Random.Range(0, Party.Count)], Party[Random.Range(0, Party.Count)] }, EventLog.instance.transform.childCount);
+                    newEvent = new StatementEvent(EventType.Greeting, EventLog.instance.transform.childCount, getRandomPartyMember());
 
                    // EventLog.instance.newLogItem(newEvent);
 
                     break;
+                    /*
                 case EventType.Combat:
                     if (Enemies.Count < 1)
                         return;
@@ -177,15 +181,14 @@ void Update () {
                     newEvent = new Event(EventType.Combat, new List<Character> { enemy, partyMember }, EventLog.instance.transform.childCount);
                    // EventLog.instance.newLogItem(newEvent);
                     break;
-                
+                */
                 case EventType.NewEnemy:
-                    c = getRandomEnemy();
-                    Enemies.Add(c);
-                    EnemyInfoPanel.instance.newCharacter(c);
-                    newEvent = new Event(EventType.NewEnemy, new List<Character> { c, Party[Random.Range(0, Party.Count)] }, EventLog.instance.transform.childCount);
+                   
+                    newEvent = new NewEnemyEvent(EventType.NewEnemy, EventLog.instance.transform.childCount);
                     //characterInfoPanel.newCharacter(temp);
                     //EventLog.instance.newLogItem(newEvent);
                     break;
+                    /*
                 case EventType.EnemyShip:
                     enemyShip = new SpaceShip("Enemy Ship", Random.Range(1, 12));
                     newEvent = new Event(EventType.EnemyShip, null, EventLog.instance.transform.childCount);
@@ -196,6 +199,7 @@ void Update () {
                     newEvent = new Event(EventType.SpaceCombat, null, EventLog.instance.transform.childCount);
 
                     break;
+                    */
                     /*
                     case 3:
                         //This is the event that halts the event system and waits for the player to choose an option
@@ -213,7 +217,7 @@ void Update () {
             if (Party.Count == 0)
             {
                 gameState = GameState.GameOver;
-                new Event(EventType.GameOver, new List<Character> { }, EventLog.instance.transform.childCount);
+                new GameOverEvent(EventType.GameOver,  EventLog.instance.transform.childCount);
                 //EventLog.instance.newLogItem();
             }
 

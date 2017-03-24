@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum EventType { Greeting, Combat, Decision, Outcome, Death, NewEnemy, NewAlly, GameOver, Charm, Run_Pass, Run_Fail, EnemyShip, ShipDestroyed, SpaceCombat };
 
-public class Event {
+public abstract class Event {
 
     
-    string summary;
+    protected string summary;
     int id;
     List<Option> options;
     EventType type;
@@ -66,6 +66,7 @@ public class Event {
         }
     }
 
+    /*
     public Event(EventType type, List<Character> participants, int id) {
         this.id = id;
         
@@ -76,9 +77,6 @@ public class Event {
         //Then if a noncombat event ended in combat, we could just create a combat event and chain from there
         switch (type)
         {
-            case EventType.Greeting:
-                summary = participants[0].Name + " says hello to " + participants[1].Name;
-                break;
 
             case EventType.Combat:
                 summary = participants[0].Name + " deals " + participants[0].Attack(participants[1]) + " damage to " + participants[1].Name;
@@ -148,6 +146,14 @@ public class Event {
 
 
     }
+    */
+
+    public Event(EventType type, int ID)
+    {
+
+        id = ID;
+        this.type = type;
+    }
 
     /*
     public void addOptions()
@@ -159,10 +165,9 @@ public class Event {
     }
     */
 
-    public void setSummary()
+    public void LogEvent()
     {
-        
-
+        EventLog.instance.newLogItem(this);
     }
 
    
@@ -170,14 +175,136 @@ public class Event {
 }
 
 
-/*
-public class CombatEvent : Event
+
+public class StatementEvent : Event
 {
 
-    public CombatEvent(EventType type, int id, List<Character> participants) : base(type, participants, id)
+    public StatementEvent(EventType type, int id, Character actor) : base(type, id)
     {
-        Summary = participants[0].Name + " deals " + participants[0].Attack(participants[1]) + " damage to " + participants[1].Name;
+        summary = actor.Name + " makes a statement.";
+        LogEvent();
+
     }
 
 }
-*/
+
+public class GameOverEvent : Event
+{
+
+    public GameOverEvent(EventType type, int id) : base(type, id)
+    {
+        summary = " The party has died. Game Over.";
+        LogEvent();
+    }
+
+}
+
+public class NewEnemyEvent : Event
+{
+    public NewEnemyEvent(EventType type, int ID) : base(type, ID)
+    {
+        GameControllerScript gc = GameControllerScript.instance;
+        Enemy enemy = gc.getRandomEnemy();
+            GameControllerScript.instance.Enemies.Add(enemy);
+        EnemyInfoPanel.instance.newCharacter(enemy);
+
+        summary = enemy.Name + " has appeared and looks hostile! What do you do?";
+
+        Options = new List<Option>();
+        Options.Add(new Option(OptionType.Fight, enemy, gc.getRandomPartyMember()));
+        Options.Add(new Option(OptionType.Charm, enemy, gc.getRandomPartyMember()));
+        Options.Add(new Option(OptionType.Run, enemy, gc.getRandomPartyMember()));
+        OptionMenuController.instance.addOptionItems(this);
+        GameControllerScript.instance.choosing = true;
+        LogEvent();
+
+    }
+}
+
+public class CharacterCombatEvent : Event
+{
+
+    public CharacterCombatEvent(EventType type, int id, Character player, Character enemy) : base(type, id)
+    {
+       
+        if (player.getStat("Strength") >= enemy.getStat("Strength"))
+        {
+            summary = player.Name + " has fought off the " + enemy.Name + " without much harm.";
+        }
+        else
+        {
+            summary = player.Name + " is overwhelmed by " + enemy.Name + "'s strength and suffers " + enemy.Attack(player) + " damage while fighting it off.";
+            if (player.Dead)
+            {
+                CharacterInfoPanel.instance.removeCharacter(player);
+                GameControllerScript.instance.Party.Remove(player);
+            }
+            
+        }
+        enemy.Dead = true;
+        EnemyInfoPanel.instance.removeCharacter(enemy);
+        GameControllerScript.instance.Enemies.Remove(enemy);
+        LogEvent();
+
+    }
+
+}
+
+public class RunEvent : Event
+{
+
+    public RunEvent(EventType type, int id, Character player, Character enemy) : base(type, id)
+    {
+       
+        if (player.getStat("Agility") >= enemy.getStat("Agility"))
+        {
+            summary = player.Name + " has lead the party away from the " + enemy.Name + " without trouble.";
+        }
+        else
+        {
+            summary = player.Name + " cannot escape " + enemy.Name + " and suffers " + enemy.Attack(player) + " damage while trying to run.";
+            if (player.Dead)
+            {
+                CharacterInfoPanel.instance.removeCharacter(player);
+                GameControllerScript.instance.Party.Remove(player);
+            }
+            
+        }
+        enemy.Dead = true;
+        EnemyInfoPanel.instance.removeCharacter(enemy);
+        GameControllerScript.instance.Enemies.Remove(enemy);
+        LogEvent();
+
+    }
+
+}
+
+public class CharmEvent : Event
+{
+
+    public CharmEvent(EventType type, int id, Character player, Character enemy) : base(type, id)
+    {
+        
+        if (player.getStat("Smarts") >= enemy.getStat("Smarts"))
+        {
+            summary = player.Name + " convices the " + enemy.Name + " to join the party.";
+            enemy.Charm();
+        }
+        else
+        {
+            summary = player.Name + " fumbles their words, enraging " + enemy.Name + " and suffers " + enemy.Attack(player) + " damage as a result.";
+            if (player.Dead)
+            {
+                CharacterInfoPanel.instance.removeCharacter(player);
+                GameControllerScript.instance.Party.Remove(player);
+            }
+            enemy.Dead = true;
+            EnemyInfoPanel.instance.removeCharacter(enemy);
+            GameControllerScript.instance.Enemies.Remove(enemy);
+            
+
+        }
+        LogEvent();
+    }
+
+}

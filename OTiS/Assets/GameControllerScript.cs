@@ -4,6 +4,8 @@ using UnityEngine;
 
 public enum GameState { Start, Active, GameOver};
 
+public enum LocationState { Space, Land };
+
 public class GameControllerScript : MonoBehaviour {
     public CharacterInfoPanel characterInfoPanel;
     public float eventRate = 2.0f;
@@ -17,7 +19,9 @@ public class GameControllerScript : MonoBehaviour {
     List<string> enemyKeyList;
     int characterIndex = 0;
     GameState gameState;
+    public SpaceShip ship;
     public List<EventType> validEvents;
+    public SpaceShip enemyShip;
 
     public void createNameDictionary()
     {
@@ -81,8 +85,8 @@ public class GameControllerScript : MonoBehaviour {
         createEnemyPrototypes();
         characterIndex = 0;
 
-        
 
+        ship = new SpaceShip("Space Ship", 10);
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
         Character temp;
         temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
@@ -126,6 +130,15 @@ public class GameControllerScript : MonoBehaviour {
         if (Enemies.Count < 5)
         {
             validEvents.Add(EventType.NewEnemy);
+        }
+        if(enemyShip == null)
+        {
+            validEvents.Add(EventType.EnemyShip);
+        }
+
+        if(ship != null && ship.getStat("Shields") > 0 && enemyShip != null && enemyShip.getStat("Shields") > 0)
+        {
+            validEvents.Add(EventType.SpaceCombat);
         }
 
         return validEvents[Random.Range(0, validEvents.Count)];
@@ -172,22 +185,29 @@ void Update () {
                     newEvent = new Event(EventType.NewEnemy, new List<Character> { c, Party[Random.Range(0, Party.Count)] }, EventLog.instance.transform.childCount);
                     //characterInfoPanel.newCharacter(temp);
                     //EventLog.instance.newLogItem(newEvent);
-
-
+                    break;
+                case EventType.EnemyShip:
+                    enemyShip = new SpaceShip("Enemy Ship", Random.Range(1, 12));
+                    newEvent = new Event(EventType.EnemyShip, null, EventLog.instance.transform.childCount);
 
                     break;
-                /*
-                case 3:
-                    //This is the event that halts the event system and waits for the player to choose an option
-                    c = Party[Random.Range(0, Party.Count)];
-                    //Create the event
-                    newEvent = new Event(EventType.Decision, new List<Character> { c }, EventLog.instance.transform.childCount);
+                case EventType.SpaceCombat:
+                    //enemyShip = new SpaceShip("Enemy Ship", Random.Range(1, 12));
+                    newEvent = new Event(EventType.SpaceCombat, null, EventLog.instance.transform.childCount);
 
-                    OptionMenuController.instance.addOptionItems(newEvent);
-                    EventLog.instance.newLogItem(newEvent);
-                    choosing = true;
                     break;
-                    */
+                    /*
+                    case 3:
+                        //This is the event that halts the event system and waits for the player to choose an option
+                        c = Party[Random.Range(0, Party.Count)];
+                        //Create the event
+                        newEvent = new Event(EventType.Decision, new List<Character> { c }, EventLog.instance.transform.childCount);
+
+                        OptionMenuController.instance.addOptionItems(newEvent);
+                        EventLog.instance.newLogItem(newEvent);
+                        choosing = true;
+                        break;
+                        */
             }
 
             if (Party.Count == 0)

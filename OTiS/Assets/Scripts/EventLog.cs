@@ -39,6 +39,12 @@ public class EventLog : MonoBehaviour {
             case (EventType.Greeting):
                 newItem.Sprite.color = Color.blue;
                 break;
+            case (EventType.EnemyShip):
+                newItem.Sprite.color = Color.magenta;
+                break;
+            case (EventType.SpaceCombat):
+                newItem.Sprite.color = Color.magenta;
+                break;
         }
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
        

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType { Greeting, Combat, Decision, Outcome, Death, NewEnemy, NewAlly, GameOver, Charm, Run_Pass, Run_Fail };
+public enum EventType { Greeting, Combat, Decision, Outcome, Death, NewEnemy, NewAlly, GameOver, Charm, Run_Pass, Run_Fail, EnemyShip, ShipDestroyed, SpaceCombat };
 
 public class Event {
 
@@ -95,7 +95,7 @@ public class Event {
                         {
                             EnemyInfoPanel.instance.removeCharacter(c);
                             GameControllerScript.instance.Enemies.Remove(c);
-                        } else
+                        } else if (c is Character)
                         {
                             CharacterInfoPanel.instance.removeCharacter(c);
                             GameControllerScript.instance.Party.Remove(c);
@@ -130,7 +130,18 @@ public class Event {
                 break;
             case EventType.GameOver:
                 summary = "The Party has died. Game Over.";
-                break;       
+                break;
+            case EventType.EnemyShip:
+                summary = "An enemy spaceship has appeared!";
+                break;
+            case EventType.SpaceCombat:
+                SpaceShip enemy, player;
+                enemy = GameControllerScript.instance.enemyShip;
+                player = GameControllerScript.instance.ship;
+                summary = enemy.Name + " deals " + enemy.Attack(player) + " damage to " + player.Name;
+
+                summary += "\n" + player.Name + " deals " + player.Attack(enemy) + " damage to " + enemy.Name;
+                break;
         }
 
         EventLog.instance.newLogItem(this);
@@ -157,6 +168,7 @@ public class Event {
    
 
 }
+
 
 /*
 public class CombatEvent : Event

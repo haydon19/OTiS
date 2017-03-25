@@ -32,6 +32,7 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>> {
         setStat("Ammo", 100);
         setStat("Shields", 75);
         setStat("FirePower", damage);
+        setStat("CargoSpace", 5);
 
     }
 

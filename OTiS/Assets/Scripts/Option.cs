@@ -4,7 +4,7 @@ using UnityEngine;
 //public enum OptionType {  };
 
 
-    public enum OptionType { Fight, Run, Charm };
+    public enum OptionType { Fight, Run, Charm, Avoid, Blast, Land };
 public class Option {
     //string type;
     string name;
@@ -85,10 +85,10 @@ public class Option {
         }
     }
 
-    public Option(OptionType type, Character subject, Character actor)
+    public Option(Event eventObject, OptionType type, Character subject, Character actor)
     {
 
-
+        this.eventObject = eventObject;
         this.type = type;
         //actors = new List<Character>(participants);
         this.actor = actor;
@@ -108,14 +108,33 @@ public class Option {
         }
     }
 
+    public Option(Event eventObject, OptionType type, Character actor)
+    {
+        this.eventObject = eventObject;
+
+        this.type = type;
+        this.actor = actor;
+
+        switch (type)
+        {
+
+            case (OptionType.Avoid):
+                description = actor.Name + " attempts to steer past the Astroid.";
+                break;
+            case (OptionType.Blast):
+                description = actor.Name + " fires up the lasers to fuck that shit up.";
+                break;
+            case (OptionType.Land):
+                description = actor.Name + " is a crazy mofo and wants to land on the asteroid.";
+                break;
+        }
+
+    }
+
     public void OptionChosen()
     {
         Event outcomeEvent;
-        //if the outcome succeeded
-        //int r = Random.Range(1, 13);
-        //Debug.Log(actors[0].Name + " rolled " + r + " and needed less than " + actors[0].getStat(stat));
-
-
+        RogueAstroidEvent raEvent;
         switch (type)
         {
 
@@ -141,6 +160,24 @@ public class Option {
                 GameControllerScript.instance.choosing = false;
                 break;
 
+            case (OptionType.Avoid):
+                raEvent = (RogueAstroidEvent)eventObject;
+                raEvent.HandleEvent(OptionType.Avoid);
+
+                GameControllerScript.instance.choosing = false;
+                break;
+            case (OptionType.Blast):
+                raEvent = (RogueAstroidEvent)eventObject;
+                raEvent.HandleEvent(OptionType.Blast);
+
+                GameControllerScript.instance.choosing = false;
+                break;
+            case (OptionType.Land):
+                raEvent = (RogueAstroidEvent)eventObject;
+                raEvent.HandleEvent(OptionType.Land);
+
+                GameControllerScript.instance.choosing = false;
+                break;
         }
 
         OptionMenuController.instance.clearOptions();

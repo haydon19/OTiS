@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class LogItem : MonoBehaviour {
+public class LogItemObject : MonoBehaviour {
     Image sprite;
     Text description;
 
@@ -36,8 +36,8 @@ public class LogItem : MonoBehaviour {
 
     public void Awake()
     {
-        Description = this.GetComponentInChildren<Text>();
-        Sprite = this.GetComponentInChildren<Image>();
+        Description = GetComponentInChildren<Text>();
+        Sprite = GetComponentInChildren<Image>();
 
     }
 }

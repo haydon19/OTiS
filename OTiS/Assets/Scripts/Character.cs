@@ -70,6 +70,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float> {
         setStat("Strength", Strength);
         setStat("Smarts", Smarts);
         setStat("Agility", Agility);
+        setStat("Piloting", 5);
         setStat("Level", 1);
         setStat("Health", 15);
     }

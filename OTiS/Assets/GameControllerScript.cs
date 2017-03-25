@@ -22,6 +22,7 @@ public class GameControllerScript : MonoBehaviour {
     public SpaceShip ship;
     public List<EventType> validEvents;
     public SpaceShip enemyShip;
+    public LocationState locationState = LocationState.Space;
 
     public void createNameDictionary()
     {
@@ -132,12 +133,14 @@ public class GameControllerScript : MonoBehaviour {
             validEvents.Add(EventType.NewEnemy);
         }
 
+        validEvents.Add(EventType.RogueAstroid);
         /*
         if(enemyShip == null)
         {
             validEvents.Add(EventType.EnemyShip);
         }
         */
+
         /*
         if(ship != null && ship.getStat("Shields") > 0 && enemyShip != null && enemyShip.getStat("Shields") > 0)
         {
@@ -158,7 +161,6 @@ void Update () {
         //This is the timer for the events, also we don't have a new event if we are currently making a decision
         if (Time.time > nextEvent && !choosing)
         {
-            Character c;
             nextEvent = Time.time + eventRate;
             Event newEvent;
             //int eventNum = Random.Range(0, 3);
@@ -166,7 +168,7 @@ void Update () {
             switch (getRandomEvent()) { 
                 case EventType.Greeting:
                     //This event makes 2 random party members greet eachother
-                    newEvent = new StatementEvent(EventType.Greeting, EventLog.instance.transform.childCount, getRandomPartyMember());
+                    newEvent = new StatementEvent(EventType.Greeting, EventLog.instance.transform.childCount);
 
                    // EventLog.instance.newLogItem(newEvent);
 
@@ -185,6 +187,12 @@ void Update () {
                 case EventType.NewEnemy:
                    
                     newEvent = new NewEnemyEvent(EventType.NewEnemy, EventLog.instance.transform.childCount);
+                    //characterInfoPanel.newCharacter(temp);
+                    //EventLog.instance.newLogItem(newEvent);
+                    break;
+                case EventType.RogueAstroid:
+
+                    newEvent = new RogueAstroidEvent(EventType.RogueAstroid, EventLog.instance.transform.childCount);
                     //characterInfoPanel.newCharacter(temp);
                     //EventLog.instance.newLogItem(newEvent);
                     break;

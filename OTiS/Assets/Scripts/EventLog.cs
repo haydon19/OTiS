@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EventLog : MonoBehaviour {
-    public LogItem logItemProto;
+    public LogItemObject logItemProto;
     //List<LogItem> logItemList;
     public static EventLog instance;
 
@@ -23,12 +23,13 @@ public class EventLog : MonoBehaviour {
 
 
 
-    public void newLogItem(Event eventObject)
+    public void newLogItem(string desc, EventType type)
     {
-        LogItem newItem = Instantiate(logItemProto, transform.position, transform.rotation, transform) as LogItem;
+        LogItemObject newItem = Instantiate(logItemProto, transform.position, transform.rotation, transform) as LogItemObject;
         
-        newItem.Description.text = eventObject.Summary;
-        switch (eventObject.Type)
+        newItem.Description.text = desc;
+        
+        switch (type)
         {
             case(EventType.Combat): 
             newItem.Sprite.color = Color.red;
@@ -46,6 +47,7 @@ public class EventLog : MonoBehaviour {
                 newItem.Sprite.color = Color.magenta;
                 break;
         }
+        
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
        
         //logItemList.Add(newItem);

@@ -12,8 +12,27 @@ public abstract class Event {
     List<Option> options;
     EventType type;
     public List<Character> characters;
+    public SpaceShip ship;
 
+    public bool randomSkillGain(Character character,string stat)
+    {
+        if(Random.Range(0, 7) > 4)
+        {
+            character.changeStat(stat, 1);
+            return true;
+        }
+        return false;
+    }
 
+    public bool randomSkillLoss(Character character, string stat)
+    {
+        if (Random.Range(0, 7) > 4)
+        {
+            character.changeStat(stat, -1);
+            return true;
+        }
+        return false;
+    }
 
     public string Summary
     {
@@ -187,12 +206,26 @@ public class RogueAstroidEvent : Event
         switch (oType)
         {
             case (OptionType.Avoid):
-                if(characters[0].getStat("Piloting") + Random.Range(0,3) > 6)
+                if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = "Ya fuckin avoided it bud.";
-                } else
-                {
-                    summary = "Ya fucked up avoiding.";
+                    if (randomSkillGain(characters[0], "Piloting"))
+                    {
+                        summary = "You seem to be at one with the controls of the ship, you feel your skills as a pilot grow!\n\n" + characters[0].Name + "'s Piloting increases! " + characters[0].getStat("Piloting");
+                    }
+                    else {
+                        summary = "You race to the helm, and dive into the pilots seat in an effort to steer the ship clear of the asteroid. A narrow success.";
+                    }
+                }
+                else {
+
+                    if (randomSkillLoss(characters[0], "Piloting"))
+                    {
+                        characters[0].changeStat("Piloting", -1);
+                        summary = "You scrape against the asteriods hard exterior, a compartment of the ship holding ESSENTIAL supplies has been damaged and it's contents blown into space! Maybe you weren't meant to hang around the pilots seat...\n\n" + characters[0].Name + "'s Piloting decreases!  " + characters[0].getStat("Piloting");
+                    }
+                    else {
+                        summary = "Your heroic dive to the pilots seat is misaligned, luckily it wasn't the hardest asteroid in the galaxy, and your ship destroys it with it's hull.";
+                    }
                 }
             break;
             case (OptionType.Blast):
@@ -240,6 +273,7 @@ public class EnemyShipEvent : Event
         characters.Clear();
 
         Character c;
+        ship = GameControllerScript.instance.ship;
         Options = new List<Option>();
         foreach (OptionType o in GameControllerScript.instance.eventOptions[Type])
         {
@@ -260,11 +294,11 @@ public class EnemyShipEvent : Event
             case (OptionType.Avoid):
                 if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = "Ya fuckin avoided it bud.";
+                    summary = "It's about to get spicy as " + characters[0].Name + " churns up the engines to the MAX. " + ship.Name + "'s thrusters fuckin' RIP OUT OF THERE.";
                 }
                 else
                 {
-                    summary = "Ya fucked up avoiding.";
+                    summary = "Maybe " + ship.Name + " isn't as nimble as we thought, maybe " + characters[0].Name + " is just a shit pilot, only time will tell...";
                 }
                 break;
             case (OptionType.Blast):

@@ -48,7 +48,6 @@ public class GameControllerScript : MonoBehaviour {
         eventOptions = new Dictionary<EventType, List<OptionType>>();
         eventOptions.Add(EventType.RogueAstroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
         eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
-
         //options.Add(OptionType.Blast, " ")
 
     }
@@ -137,7 +136,7 @@ public class GameControllerScript : MonoBehaviour {
         characterIndex = 0;
 
 
-        ship = new SpaceShip("Space Ship", 10);
+        ship = new SpaceShip("The Aloha", 10);
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
         Character temp;
         temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));

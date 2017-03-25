@@ -79,16 +79,20 @@
     <Compile Include="Assets\CharacterInfoPanel.cs" />
     <Compile Include="Assets\EnemyInfoPanel.cs" />
     <Compile Include="Assets\GameControllerScript.cs" />
-    <Compile Include="Assets\LogItem.cs" />
+    <Compile Include="Assets\LogItemObject.cs" />
     <Compile Include="Assets\OptionMenuController.cs" />
     <Compile Include="Assets\OptionObjectButton.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Event.cs" />
+    <Compile Include="Assets\Scripts\EventController.cs" />
+    <Compile Include="Assets\Scripts\EventDescription.cs" />
     <Compile Include="Assets\Scripts\EventLog.cs" />
     <Compile Include="Assets\Scripts\GameAction.cs" />
     <Compile Include="Assets\Scripts\Interfaces.cs" />
+    <Compile Include="Assets\Scripts\LogItem.cs" />
     <Compile Include="Assets\Scripts\Option.cs" />
+    <Compile Include="Assets\Scripts\PartyManager.cs" />
     <Compile Include="Assets\Scripts\SpaceShip.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

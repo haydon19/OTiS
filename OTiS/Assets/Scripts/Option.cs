@@ -4,7 +4,7 @@ using UnityEngine;
 //public enum OptionType {  };
 
 
-    public enum OptionType { Fight, Run, Charm, Avoid, Blast, Land };
+    public enum OptionType { Avoid, Blast, Land, Board, Thrusters, Comms };
 public class Option {
     //string type;
     string name;
@@ -85,6 +85,9 @@ public class Option {
         }
     }
 
+
+    /*
+
     public Option(Event eventObject, OptionType type, Character subject, Character actor)
     {
 
@@ -107,6 +110,7 @@ public class Option {
                 break;
         }
     }
+    */
 
     public Option(Event eventObject, OptionType type, Character actor)
     {
@@ -115,72 +119,46 @@ public class Option {
         this.type = type;
         this.actor = actor;
 
-        switch (type)
-        {
-
-            case (OptionType.Avoid):
-                description = actor.Name + " attempts to steer past the Astroid.";
-                break;
-            case (OptionType.Blast):
-                description = actor.Name + " fires up the lasers to fuck that shit up.";
-                break;
-            case (OptionType.Land):
-                description = actor.Name + " is a crazy mofo and wants to land on the asteroid.";
-                break;
-        }
+        description = actor.Name + GameControllerScript.instance.optionStrings[type][Random.Range(0, GameControllerScript.instance.optionStrings[type].Count)] + eventObject.ToString();
 
     }
 
     public void OptionChosen()
     {
-        Event outcomeEvent;
-        RogueAstroidEvent raEvent;
-        switch (type)
-        {
 
-            case (OptionType.Fight):
-                outcomeEvent = new CharacterCombatEvent(EventType.Combat, EventLog.instance.transform.childCount, actor, subject);
-                //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
-
-                GameControllerScript.instance.choosing = false;
-                
-                break;
-            case (OptionType.Charm):
-                outcomeEvent = new CharmEvent(EventType.Charm, EventLog.instance.transform.childCount, actor, subject);
-                //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
-
-                GameControllerScript.instance.choosing = false;
-                break;
-            case (OptionType.Run):
-                
-                    outcomeEvent = new RunEvent(EventType.Run_Fail, EventLog.instance.transform.childCount, actor, subject);
-               
-                //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
-
-                GameControllerScript.instance.choosing = false;
-                break;
-
-            case (OptionType.Avoid):
-                raEvent = (RogueAstroidEvent)eventObject;
-                raEvent.HandleEvent(OptionType.Avoid);
-
-                GameControllerScript.instance.choosing = false;
-                break;
-            case (OptionType.Blast):
-                raEvent = (RogueAstroidEvent)eventObject;
-                raEvent.HandleEvent(OptionType.Blast);
-
-                GameControllerScript.instance.choosing = false;
-                break;
-            case (OptionType.Land):
-                raEvent = (RogueAstroidEvent)eventObject;
-                raEvent.HandleEvent(OptionType.Land);
-
-                GameControllerScript.instance.choosing = false;
-                break;
-        }
-
+        eventObject.HandleEvent(type);
         OptionMenuController.instance.clearOptions();
+        GameControllerScript.instance.choosing = false;
+
+        /*
+
+        case (OptionType.Fight):
+            outcomeEvent = new CharacterCombatEvent(EventType.Combat, EventLog.instance.transform.childCount, actor, subject);
+            //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
+
+            GameControllerScript.instance.choosing = false;
+
+            break;
+        case (OptionType.Charm):
+            outcomeEvent = new CharmEvent(EventType.Charm, EventLog.instance.transform.childCount, actor, subject);
+            //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
+
+            GameControllerScript.instance.choosing = false;
+            break;
+        case (OptionType.Run):
+
+                outcomeEvent = new RunEvent(EventType.Run_Fail, EventLog.instance.transform.childCount, actor, subject);
+
+            //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
+
+            GameControllerScript.instance.choosing = false;
+            break;
+            */
+
+
+
+
+
 
     }
 

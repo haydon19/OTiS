@@ -23,30 +23,13 @@ public class EventLog : MonoBehaviour {
 
 
 
-    public void newLogItem(string desc, EventType type)
+    public void newLogItem(string desc)
     {
         LogItemObject newItem = Instantiate(logItemProto, transform.position, transform.rotation, transform) as LogItemObject;
         
         newItem.Description.text = desc;
         
-        switch (type)
-        {
-            case(EventType.Combat): 
-            newItem.Sprite.color = Color.red;
-                break;
-            case (EventType.Death):
-                newItem.Sprite.color = Color.red;
-                break;
-            case (EventType.Greeting):
-                newItem.Sprite.color = Color.blue;
-                break;
-            case (EventType.EnemyShip):
-                newItem.Sprite.color = Color.magenta;
-                break;
-            case (EventType.SpaceCombat):
-                newItem.Sprite.color = Color.magenta;
-                break;
-        }
+        
         
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
        

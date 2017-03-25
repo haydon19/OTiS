@@ -31,7 +31,7 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>> {
         setStat("Fuel", 50);
         setStat("Ammo", 100);
         setStat("Shields", 75);
-        setStat("FirePower", damage);
+        setStat("Blast", damage);
         setStat("CargoSpace", 5);
 
     }
@@ -94,8 +94,8 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>> {
 
     public float Attack(IDamageable<float> target)
     {
-        changeStat("Ammo", -getStat("FirePower"));
-       return target.Damage(getStat("FirePower"));
+        changeStat("Ammo", -getStat("Blast"));
+       return target.Damage(getStat("Blast"));
     }
 }
 

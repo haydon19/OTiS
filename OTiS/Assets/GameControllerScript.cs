@@ -15,6 +15,11 @@ public class GameControllerScript : MonoBehaviour {
     public bool choosing = false;
     public static GameControllerScript instance;
     public Dictionary<int, string> names;
+    public Dictionary<OptionType, List<string>> options;
+    public Dictionary<EventType, Event> possibleEvents;
+    public Dictionary<EventType, List<string>> Event;
+    public Dictionary<EventType, List<OptionType>> eventOptions;
+    public Dictionary<OptionType, List<string>> optionStrings;
     public Dictionary<string, Enemy> enemyDictionary;
     List<string> enemyKeyList;
     int characterIndex = 0;
@@ -37,6 +42,43 @@ public class GameControllerScript : MonoBehaviour {
         names.Add(7, "Clarissa");
 
     }
+
+    public void createEventOptionsDictionary()
+    {
+        eventOptions = new Dictionary<EventType, List<OptionType>>();
+        eventOptions.Add(EventType.RogueAstroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
+        eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
+
+        //options.Add(OptionType.Blast, " ")
+
+    }
+
+    public void createPossibleEventsDictionary()
+    {
+        possibleEvents = new Dictionary<EventType, Event>();
+        possibleEvents.Add(EventType.RogueAstroid, new RogueAstroidEvent(EventType.RogueAstroid, 0));
+        possibleEvents.Add(EventType.EnemyShip, new EnemyShipEvent(EventType.EnemyShip, 1));
+
+        possibleEvents.Add(EventType.Statement, new StatementEvent(EventType.Statement, 2));
+        possibleEvents.Add(EventType.GameOver, new GameOverEvent(EventType.Statement, 3));
+
+
+        //options.Add(OptionType.Blast, " ")
+
+    }
+
+    public void createOptionStringsDictionary()
+    {
+        optionStrings = new Dictionary<OptionType, List<string>>();
+        optionStrings.Add(OptionType.Blast, new List<string> { " attempts to blast the ", " runs for the guns to shoot at " });
+        optionStrings.Add(OptionType.Avoid, new List<string> { " dips and dives to avoid the ", " uses ace pilot skills to manuever around the " });
+        optionStrings.Add(OptionType.Land, new List<string> { " brings the ship down to ", " lowers the landing gear in attempts to land on the " });
+        optionStrings.Add(OptionType.Board, new List<string> { " rams into the ", " tries to get close enough to board " });
+        //options.Add(OptionType.Blast, " ")
+
+    }
+
+
 
     public void createEnemyPrototypes()
     {
@@ -89,6 +131,9 @@ public class GameControllerScript : MonoBehaviour {
         //Create prototype lists, eventually this will just be importing from an XML file or something
         createNameDictionary();
         createEnemyPrototypes();
+        createEventOptionsDictionary();
+        createPossibleEventsDictionary();
+        createOptionStringsDictionary();
         characterIndex = 0;
 
 
@@ -125,15 +170,16 @@ public class GameControllerScript : MonoBehaviour {
 
         if(Party.Count > 1)
         {
-            validEvents.Add(EventType.Greeting);
+            validEvents.Add(EventType.Statement);
         }
-
+        /*
         if (Enemies.Count < 5)
         {
             validEvents.Add(EventType.NewEnemy);
-        }
+        }*/
 
         validEvents.Add(EventType.RogueAstroid);
+        validEvents.Add(EventType.EnemyShip);
         /*
         if(enemyShip == null)
         {
@@ -162,65 +208,8 @@ void Update () {
         if (Time.time > nextEvent && !choosing)
         {
             nextEvent = Time.time + eventRate;
-            Event newEvent;
-            //int eventNum = Random.Range(0, 3);
-            //I have 3 different events right now, so this randomly chooses 1
-            switch (getRandomEvent()) { 
-                case EventType.Greeting:
-                    //This event makes 2 random party members greet eachother
-                    newEvent = new StatementEvent(EventType.Greeting, EventLog.instance.transform.childCount);
 
-                   // EventLog.instance.newLogItem(newEvent);
-
-                    break;
-                    /*
-                case EventType.Combat:
-                    if (Enemies.Count < 1)
-                        return;
-                    Character partyMember = Party[Random.Range(0, Party.Count)];
-                    Character enemy = Enemies[Random.Range(0, Enemies.Count)];
-                    //This event makes a random party member and enemy attack one another
-                    newEvent = new Event(EventType.Combat, new List<Character> { enemy, partyMember }, EventLog.instance.transform.childCount);
-                   // EventLog.instance.newLogItem(newEvent);
-                    break;
-                */
-                case EventType.NewEnemy:
-                   
-                    newEvent = new NewEnemyEvent(EventType.NewEnemy, EventLog.instance.transform.childCount);
-                    //characterInfoPanel.newCharacter(temp);
-                    //EventLog.instance.newLogItem(newEvent);
-                    break;
-                case EventType.RogueAstroid:
-
-                    newEvent = new RogueAstroidEvent(EventType.RogueAstroid, EventLog.instance.transform.childCount);
-                    //characterInfoPanel.newCharacter(temp);
-                    //EventLog.instance.newLogItem(newEvent);
-                    break;
-                    /*
-                case EventType.EnemyShip:
-                    enemyShip = new SpaceShip("Enemy Ship", Random.Range(1, 12));
-                    newEvent = new Event(EventType.EnemyShip, null, EventLog.instance.transform.childCount);
-
-                    break;
-                case EventType.SpaceCombat:
-                    //enemyShip = new SpaceShip("Enemy Ship", Random.Range(1, 12));
-                    newEvent = new Event(EventType.SpaceCombat, null, EventLog.instance.transform.childCount);
-
-                    break;
-                    */
-                    /*
-                    case 3:
-                        //This is the event that halts the event system and waits for the player to choose an option
-                        c = Party[Random.Range(0, Party.Count)];
-                        //Create the event
-                        newEvent = new Event(EventType.Decision, new List<Character> { c }, EventLog.instance.transform.childCount);
-
-                        OptionMenuController.instance.addOptionItems(newEvent);
-                        EventLog.instance.newLogItem(newEvent);
-                        choosing = true;
-                        break;
-                        */
-            }
+                    possibleEvents[getRandomEvent()].EnterEvent();
 
             if (Party.Count == 0)
             {

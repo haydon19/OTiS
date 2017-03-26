@@ -48,6 +48,8 @@ public class GameControllerScript : MonoBehaviour {
         eventOptions = new Dictionary<EventType, List<OptionType>>();
         eventOptions.Add(EventType.RogueAstroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
         eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
+        eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Intimidate, OptionType.Gossip });
+
         //options.Add(OptionType.Blast, " ")
 
     }
@@ -57,9 +59,9 @@ public class GameControllerScript : MonoBehaviour {
         possibleEvents = new Dictionary<EventType, Event>();
         possibleEvents.Add(EventType.RogueAstroid, new RogueAstroidEvent(EventType.RogueAstroid, 0));
         possibleEvents.Add(EventType.EnemyShip, new EnemyShipEvent(EventType.EnemyShip, 1));
-
-        possibleEvents.Add(EventType.Statement, new StatementEvent(EventType.Statement, 2));
-        possibleEvents.Add(EventType.GameOver, new GameOverEvent(EventType.Statement, 3));
+        possibleEvents.Add(EventType.EncounterNPC, new EncounterNPC(EventType.EncounterNPC, 2));
+        possibleEvents.Add(EventType.Statement, new StatementEvent(EventType.Statement, 3));
+        possibleEvents.Add(EventType.GameOver, new GameOverEvent(EventType.Statement, 4));
 
 
         //options.Add(OptionType.Blast, " ")
@@ -73,6 +75,11 @@ public class GameControllerScript : MonoBehaviour {
         optionStrings.Add(OptionType.Avoid, new List<string> { " dips and dives to avoid the ", " uses ace pilot skills to manuever around the " });
         optionStrings.Add(OptionType.Land, new List<string> { " brings the ship down to ", " lowers the landing gear in attempts to land on the " });
         optionStrings.Add(OptionType.Board, new List<string> { " rams into the ", " tries to get close enough to board " });
+        optionStrings.Add(OptionType.Gossip, new List<string> { " listens to the musings of ", " chats about the local area with " });
+        optionStrings.Add(OptionType.Intimidate, new List<string> { " attempts to scare ", " pulls out a gun and shows it to " });
+        optionStrings.Add(OptionType.Recruit, new List<string> { " trys to recruit ", " eyes over the resume of " });
+
+
         //options.Add(OptionType.Blast, " ")
 
     }
@@ -100,6 +107,11 @@ public class GameControllerScript : MonoBehaviour {
         return enemy;
     }
 
+    public Character createNPC()
+    {
+        return new Character(getRandomName(), nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
+    }
+
     public Character getRandomPartyMember()
     {
         return party.getParty()[Random.Range(0, party.getParty().Count)];
@@ -111,7 +123,7 @@ public class GameControllerScript : MonoBehaviour {
         return names[r];
     }
 
-    int nextCharID()
+    public int nextCharID()
     {
         return characterIndex += 1;
     }
@@ -138,20 +150,10 @@ public class GameControllerScript : MonoBehaviour {
         party = new PartyManager();
         ship = new SpaceShip("The Aloha", 10);
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
-        Character temp;
-        temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        party.addPartyMember(temp);
-        characterInfoPanel.newCharacter(temp);
-        temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        party.addPartyMember(temp);
-        characterInfoPanel.newCharacter(temp);
-        temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        party.addPartyMember(temp);
-        characterInfoPanel.newCharacter(temp);
-        temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        party.addPartyMember(temp);
-        characterInfoPanel.newCharacter(temp);
-
+        for (int i = 0; i < 4; i++)
+        {
+            party.addPartyMember();
+        }
     }
 
     //function for quitting the game
@@ -179,6 +181,7 @@ public class GameControllerScript : MonoBehaviour {
 
         validEvents.Add(EventType.RogueAstroid);
         validEvents.Add(EventType.EnemyShip);
+        validEvents.Add(EventType.EncounterNPC);
         /*
         if(enemyShip == null)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAstroid };
+public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAstroid, EncounterNPC};
 
 public abstract class Event {
 
@@ -125,7 +125,19 @@ public abstract class Event {
 
     }
 
-
+    public virtual void getOptions()
+    {
+        Character c;
+        Options = new List<Option>();
+        foreach (OptionType o in GameControllerScript.instance.eventOptions[Type])
+        {
+            c = GameControllerScript.instance.getRandomPartyMember();
+            characters.Add(c);
+            Options.Add(new Option(this, o, c));
+        }
+        OptionMenuController.instance.addOptionItems(this);
+        GameControllerScript.instance.choosing = true;
+    }
 }
 
 
@@ -330,4 +342,66 @@ public class EnemyShipEvent : Event
         summary = "You have encountered an enemy ship!";
     }
 
+}
+
+
+public class EncounterNPC : Event
+{
+
+    public EncounterNPC(EventType type, int id) : base(type, id)
+    {
+
+    }
+
+    public override void EnterEvent()
+    {
+        characters.Clear();
+
+        characters.Add(GameControllerScript.instance.createNPC());
+        getOptions();
+        setSummary();
+
+        LogEvent();
+    }
+
+    public override void HandleEvent(OptionType oType)
+    {
+        switch (oType)
+        {
+            case (OptionType.Recruit):
+                if (characters[1].getStat("Smarts") + Random.Range(0, 3) > 6)
+                {
+                    summary = characters[1].Name + " convices " + characters[0].Name + " to join the party with a triumphant speech.";
+                    GameControllerScript.instance.party.addPartyMember(characters[0]);
+                    summary = "\n" + characters[0].Name + " joins the party!";
+                    
+                }
+                else
+                {
+                    summary = "AWKWARD! " + characters[0].Name + " rejects the invitation from " + characters[1].Name + " to join the party.";
+                }
+                break;
+            case (OptionType.Gossip):
+
+                summary = characters[2].Name + " learns about a nearby planet rich with resources from " + characters[0].Name;
+
+                break;
+            case (OptionType.Intimidate):
+                if (characters[3].getStat("Strength") > Random.Range(0, 10))
+                {
+                    summary = characters[0].Name + " backs away as " + characters[3].Name + " threatens them into giving up supplies.";
+                }
+                else
+                {
+                    summary = characters[0].Name + " stands up to " + characters[3].Name + ", causing them to give up supplies in embarassment.";
+                }
+                break;
+        }
+        LogEvent();
+    }
+
+    public override void setSummary()
+    {
+        summary = "The party happens upon a mysterious stranger named " + characters[0].Name + ".";
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 //public enum OptionType {  };
 
 
-    public enum OptionType { Avoid, Blast, Land, Board, Thrusters, Comms };
+    public enum OptionType { Avoid, Blast, Land, Board, Thrusters, Comms,Intimidate, Recruit, Gossip };
 public class Option {
     //string type;
     string name;
@@ -123,42 +123,23 @@ public class Option {
 
     }
 
+    public Option(EncounterNPC eventObject, OptionType type, Character actor)
+    {
+        this.eventObject = eventObject;
+
+        this.type = type;
+        this.actor = actor;
+
+        description = actor.Name + GameControllerScript.instance.optionStrings[type][Random.Range(0, GameControllerScript.instance.optionStrings[type].Count)] + eventObject.characters[0].Name;
+
+    }
+
     public void OptionChosen()
     {
 
         eventObject.HandleEvent(type);
         OptionMenuController.instance.clearOptions();
         GameControllerScript.instance.choosing = false;
-
-        /*
-
-        case (OptionType.Fight):
-            outcomeEvent = new CharacterCombatEvent(EventType.Combat, EventLog.instance.transform.childCount, actor, subject);
-            //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
-
-            GameControllerScript.instance.choosing = false;
-
-            break;
-        case (OptionType.Charm):
-            outcomeEvent = new CharmEvent(EventType.Charm, EventLog.instance.transform.childCount, actor, subject);
-            //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
-
-            GameControllerScript.instance.choosing = false;
-            break;
-        case (OptionType.Run):
-
-                outcomeEvent = new RunEvent(EventType.Run_Fail, EventLog.instance.transform.childCount, actor, subject);
-
-            //outcomeEvent.Summary = actor.Name + " succeeded in " + description + ". " + actor.Name + " gained 1 point in " + stat;
-
-            GameControllerScript.instance.choosing = false;
-            break;
-            */
-
-
-
-
-
 
     }
 

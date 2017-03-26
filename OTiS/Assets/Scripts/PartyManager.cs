@@ -12,9 +12,19 @@ public class PartyManager  {
     //Inventory?
     //Cargo?
 
+    public void addPartyMember()
+    {
+        Character temp;
+        temp = new Character(GameControllerScript.instance.getRandomName(), GameControllerScript.instance.nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
+        partyMembers.Add(temp);
+        CharacterInfoPanel.instance.newCharacter(temp);
+    }
+
     public void addPartyMember(Character character)
     {
         partyMembers.Add(character);
+        CharacterInfoPanel.instance.newCharacter(character);
+
     }
 
     public List<Character> getParty()

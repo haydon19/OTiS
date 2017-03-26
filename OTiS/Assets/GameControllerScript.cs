@@ -8,9 +8,9 @@ public enum LocationState { Space, Land };
 
 public class GameControllerScript : MonoBehaviour {
     public CharacterInfoPanel characterInfoPanel;
+    public PartyManager party;
     public float eventRate = 2.0f;
     public float nextEvent = 0.0f;
-    public List<Character> Party = new List<Character>();
     public List<Character> Enemies = new List<Character>();
     public bool choosing = false;
     public static GameControllerScript instance;
@@ -102,7 +102,7 @@ public class GameControllerScript : MonoBehaviour {
 
     public Character getRandomPartyMember()
     {
-        return Party[Random.Range(0, Party.Count)];
+        return party.getParty()[Random.Range(0, party.getParty().Count)];
     }
 
     public string getRandomName()
@@ -135,21 +135,21 @@ public class GameControllerScript : MonoBehaviour {
         createOptionStringsDictionary();
         characterIndex = 0;
 
-
+        party = new PartyManager();
         ship = new SpaceShip("The Aloha", 10);
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
         Character temp;
         temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        Party.Add(temp);
+        party.addPartyMember(temp);
         characterInfoPanel.newCharacter(temp);
         temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        Party.Add(temp);
+        party.addPartyMember(temp);
         characterInfoPanel.newCharacter(temp);
         temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        Party.Add(temp);
+        party.addPartyMember(temp);
         characterInfoPanel.newCharacter(temp);
         temp = new Character(getRandomName(), nextCharID(), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7), Random.Range(1, 7) + Random.Range(1, 7));
-        Party.Add(temp);
+        party.addPartyMember(temp);
         characterInfoPanel.newCharacter(temp);
 
     }
@@ -167,7 +167,7 @@ public class GameControllerScript : MonoBehaviour {
     {
         validEvents.Clear();
 
-        if(Party.Count > 1)
+        if(party.getParty().Count > 1)
         {
             validEvents.Add(EventType.Statement);
         }
@@ -210,7 +210,7 @@ void Update () {
 
                     possibleEvents[getRandomEvent()].EnterEvent();
 
-            if (Party.Count == 0)
+            if (party.getParty().Count == 0)
             {
                 gameState = GameState.GameOver;
                 new GameOverEvent(EventType.GameOver,  EventLog.instance.transform.childCount);

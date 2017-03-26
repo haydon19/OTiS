@@ -97,7 +97,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float> {
         GameControllerScript.instance.Enemies.Remove(this);
         EnemyInfoPanel.instance.removeCharacter(this);
         Character temp = new Character(Name, ID, getStat("Strength"), getStat("Smarts"), getStat("Agility"));
-        GameControllerScript.instance.Party.Add(temp);
+        GameControllerScript.instance.party.addPartyMember(temp);
         CharacterInfoPanel.instance.newCharacter(temp);
 
     }

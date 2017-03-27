@@ -28,6 +28,8 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISub
     {
 
         this.Name = name;
+        
+
         setStat("Fuel", 50);
         setStat("Ammo", 100);
         setStat("Shields", 75);
@@ -55,12 +57,20 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISub
         {
             shipResources[resourceName] = Value;
 
+
         }
         else
         {
             //If the stat doesnt exist and we are setting it, lets just create it
             shipResources.Add(resourceName, Value);
         }
+        /*
+        Debug.Log(GameControllerScript.instance.party.ToString());
+        if (this == GameControllerScript.instance.party.ship)
+        {
+            PartyInfoPanel.instance.setStat(resourceName, shipResources[resourceName].ToString());
+        }
+        */
     }
 
     public void changeStat(string resourceName, int statChange)
@@ -79,6 +89,12 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISub
             //If the stat doesnt exist and we are setting it, lets just create it
             shipResources.Add(resourceName, statChange);
         }
+        /*
+        if (this == GameControllerScript.instance.party.ship)
+        {
+             PartyInfoPanel.instance.setStat(resourceName, shipResources[resourceName].ToString());
+        }
+        */
     }
 
     public virtual float Damage(float damageTaken)

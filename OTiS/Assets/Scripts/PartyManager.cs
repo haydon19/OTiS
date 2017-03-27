@@ -5,12 +5,26 @@ using UnityEngine;
 public class PartyManager  {
 
     //Party members
-    public List<Character> partyMembers = new List<Character>();
+    public List<Character> partyMembers;
     int supplies;
     int fuel;
     public SpaceShip ship;
     //Inventory?
     //Cargo?
+
+    public PartyManager()
+    {
+        partyMembers = new List<Character>();
+        ship = new SpaceShip("The Aloha", 10);
+        PartyInfoPanel.instance.setStat("Ship", ship.Name);
+        PartyInfoPanel.instance.setStat("Blast", ship.getStat("Blast").ToString());
+        PartyInfoPanel.instance.setStat("Fuel", ship.getStat("Fuel").ToString());
+        PartyInfoPanel.instance.setStat("Shields", ship.getStat("Shields").ToString());
+        supplies = 5;
+        PartyInfoPanel.instance.setStat("Supplies", supplies.ToString());
+
+        
+    }
 
     public void addPartyMember()
     {
@@ -47,6 +61,13 @@ public class PartyManager  {
         }
     }
 
+    public void changeShipStat(string stat, int change)
+    {
+
+        ship.changeStat(stat, change);
+        PartyInfoPanel.instance.setStat(stat, ship.getStat(stat).ToString());
+
+    }
 
     //FOR ALL FUEL RELATED THINGS
     public void addFuel(int num)

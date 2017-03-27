@@ -7,6 +7,7 @@ public class EventLog : MonoBehaviour {
     public LogItemObject logItemProto;
     //List<LogItem> logItemList;
     public static EventLog instance;
+    public Color defaultColor = Color.black;
 
     public void Start()
     {
@@ -28,11 +29,25 @@ public class EventLog : MonoBehaviour {
         LogItemObject newItem = Instantiate(logItemProto, transform.position, transform.rotation, transform) as LogItemObject;
         
         newItem.Description.text = desc;
-        
+        newItem.Sprite.color = defaultColor;
         
         
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
        
+        //logItemList.Add(newItem);
+
+    }
+
+    public void newLogItem(string desc, Color color)
+    {
+        LogItemObject newItem = Instantiate(logItemProto, transform.position, transform.rotation, transform) as LogItemObject;
+
+        newItem.Description.text = desc;
+        newItem.Sprite.color = color;
+
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
+
         //logItemList.Add(newItem);
 
     }

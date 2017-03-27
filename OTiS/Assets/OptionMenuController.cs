@@ -32,6 +32,20 @@ public class OptionMenuController : MonoBehaviour {
             newOption.Description.supportRichText = true;
             newOption.Description.text = o.Description;
             newOption.Option = o;
+            switch(o.Type){
+                case (OptionType.Blast):
+                        newOption.Sprite.color = Color.red;
+                        break;
+                case (OptionType.Avoid):
+                    newOption.Sprite.color = Color.green;
+                    break;
+                case (OptionType.Gossip):
+                    newOption.Sprite.color = Color.grey;
+                    break;
+                case (OptionType.Recruit):
+                    newOption.Sprite.color = Color.magenta;
+                    break;
+            }
 
             //CurrentOptions.Add(o.Description, newOption);
 

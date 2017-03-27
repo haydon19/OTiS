@@ -82,6 +82,7 @@
     <Compile Include="Assets\LogItemObject.cs" />
     <Compile Include="Assets\OptionMenuController.cs" />
     <Compile Include="Assets\OptionObjectButton.cs" />
+    <Compile Include="Assets\PartyInfoPanel.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Event.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Assets\Scripts\Option.cs" />
     <Compile Include="Assets\Scripts\PartyManager.cs" />
     <Compile Include="Assets\Scripts\SpaceShip.cs" />
+    <Compile Include="Assets\StatInfoObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

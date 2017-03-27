@@ -226,6 +226,8 @@ public class RogueAstroidEvent : Event
                     }
                     else {
                         summary = "You race to the helm, and dive into the pilots seat in an effort to steer the ship clear of the asteroid. A narrow success.";
+                        summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
+                        GameControllerScript.instance.party.changeShipStat("Shields", -5);
                     }
                 }
                 else {
@@ -258,6 +260,8 @@ public class RogueAstroidEvent : Event
                 else
                 {
                     summary = "Ya fucked up the landing.";
+                    summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
+                    GameControllerScript.instance.party.changeShipStat("Shields", -5);
                 }
                 break;
         }
@@ -288,7 +292,7 @@ public class EnemyShipEvent : Event
         //ship = new SpaceShip(GameControllerScript.instance.getRandomShipName(), 5);
         enemyShip = new SpaceShip(GameControllerScript.instance.getRandomShipName(), 5);
         subject = enemyShip.SubjectReference();
-        ship = GameControllerScript.instance.ship;
+        ship = GameControllerScript.instance.party.ship;
         getOptions();
         setSummary();
 
@@ -307,6 +311,8 @@ public class EnemyShipEvent : Event
                 else
                 {
                     summary = "Maybe " + ship.Name + " isn't as nimble as we thought, maybe " + characters[0].Name + " is just a shit pilot, only time will tell...";
+                    summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
+                    GameControllerScript.instance.party.changeShipStat("Shields", -5);
                 }
                 break;
             case (OptionType.Blast):

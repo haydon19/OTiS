@@ -170,7 +170,8 @@ public class GameControllerScript : MonoBehaviour {
         characterIndex = 0;
 
         party = new PartyManager();
-        ship = new SpaceShip("The Aloha", 10);
+        Debug.Log(GameControllerScript.instance.party.ToString());
+
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
         for (int i = 0; i < 4; i++)
         {
@@ -191,10 +192,8 @@ public class GameControllerScript : MonoBehaviour {
     {
         validEvents.Clear();
 
-        if(party.getParty().Count > 1)
-        {
             validEvents.Add(EventType.Statement);
-        }
+        
         /*
         if (Enemies.Count < 5)
         {

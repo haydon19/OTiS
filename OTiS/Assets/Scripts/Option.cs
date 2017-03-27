@@ -11,25 +11,11 @@ public class Option {
     string description;
     string outcome;
     string stat;
-    float successRate;
     Character subject;
     Character actor;
     //List<Character> actors;
     Event eventObject;
     OptionType type;
-
-    public float SuccessRate
-    {
-        get
-        {
-            return successRate;
-        }
-
-        set
-        {
-            successRate = value;
-        }
-    }
 
     public string Stat
     {
@@ -86,32 +72,6 @@ public class Option {
     }
 
 
-    /*
-
-    public Option(Event eventObject, OptionType type, Character subject, Character actor)
-    {
-
-        this.eventObject = eventObject;
-        this.type = type;
-        //actors = new List<Character>(participants);
-        this.actor = actor;
-        this.subject = subject;
-        switch (type)
-        {
-
-            case (OptionType.Fight):
-                description = actor.Name + " fights " + subject.Name + ". (Strength)";
-                break;
-            case (OptionType.Charm):
-                description = actor.Name + " attempts to charm " + subject.Name + ". (Smarts)";
-                break;
-            case (OptionType.Run):
-                description = actor.Name + " tries to run from " + subject.Name + ". (Agility)";
-                break;
-        }
-    }
-    */
-
     public Option(Event eventObject, OptionType type, Character actor)
     {
         this.eventObject = eventObject;
@@ -119,8 +79,13 @@ public class Option {
         this.type = type;
         this.actor = actor;
 
-        description = actor.Name + GameControllerScript.instance.optionStrings[type][Random.Range(0, GameControllerScript.instance.optionStrings[type].Count)] + eventObject.ToString();
+        setDescription();
+    }
 
+    public void setDescription()
+    {
+        string s = GameControllerScript.instance.optionStrings[type][Random.Range(0, GameControllerScript.instance.optionStrings[type].Count)];
+        description = s.Replace("<actor>", actor.Name) + eventObject.ToString();
     }
 
     public Option(EncounterNPC eventObject, OptionType type, Character actor)

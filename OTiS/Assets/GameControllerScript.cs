@@ -71,13 +71,13 @@ public class GameControllerScript : MonoBehaviour {
     public void createOptionStringsDictionary()
     {
         optionStrings = new Dictionary<OptionType, List<string>>();
-        optionStrings.Add(OptionType.Blast, new List<string> { " attempts to blast the ", " runs for the guns to shoot at " });
-        optionStrings.Add(OptionType.Avoid, new List<string> { " dips and dives to avoid the ", " uses ace pilot skills to manuever around the " });
-        optionStrings.Add(OptionType.Land, new List<string> { " brings the ship down to ", " lowers the landing gear in attempts to land on the " });
-        optionStrings.Add(OptionType.Board, new List<string> { " rams into the ", " tries to get close enough to board " });
-        optionStrings.Add(OptionType.Gossip, new List<string> { " listens to the musings of ", " chats about the local area with " });
-        optionStrings.Add(OptionType.Intimidate, new List<string> { " attempts to scare ", " pulls out a gun and shows it to " });
-        optionStrings.Add(OptionType.Recruit, new List<string> { " trys to recruit ", " eyes over the resume of " });
+        optionStrings.Add(OptionType.Blast, new List<string> { "<actor> attempts to blast the ", "<actor> runs for the guns to shoot at " });
+        optionStrings.Add(OptionType.Avoid, new List<string> { "<actor> dips and dives to avoid the ", "<actor> uses ace pilot skills to manuever around the " });
+        optionStrings.Add(OptionType.Land, new List<string> { "<actor> brings the ship down to ", "<actor> lowers the landing gear in attempts to land on the " });
+        optionStrings.Add(OptionType.Board, new List<string> { "<actor> rams into the ", "<actor> tries to get close enough to board " });
+        optionStrings.Add(OptionType.Gossip, new List<string> { "<actor> listens to the musings of ", "<actor> chats about the local area with " });
+        optionStrings.Add(OptionType.Intimidate, new List<string> { "<actor> attempts to scare ", "<actor> pulls out a gun and shows it to " });
+        optionStrings.Add(OptionType.Recruit, new List<string> { "<actor> trys to recruit ", "<actor> eyes over the resume of " });
 
 
         //options.Add(OptionType.Blast, " ")
@@ -209,7 +209,7 @@ void Update () {
         //This is the timer for the events, also we don't have a new event if we are currently making a decision
         if (Time.time > nextEvent && !choosing)
         {
-            nextEvent = Time.time + eventRate;
+            nextEvent = Time.time + 0.5f;
 
                     possibleEvents[getRandomEvent()].EnterEvent();
 

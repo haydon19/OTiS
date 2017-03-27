@@ -118,6 +118,13 @@ public abstract class Event {
     public virtual void EnterEvent()
     {
 
+        characters.Clear();
+
+        getOptions();
+        setSummary();
+
+        LogEvent();
+
     }
 
     public virtual void HandleEvent(OptionType oType)
@@ -196,19 +203,10 @@ public class RogueAstroidEvent : Event
 
     public override void EnterEvent()
     {
-        setSummary();
         characters.Clear();
 
-        Character c;
-        Options = new List<Option>();
-        foreach (OptionType o in GameControllerScript.instance.eventOptions[Type])
-        {
-            c = GameControllerScript.instance.getRandomPartyMember();
-            characters.Add(c);
-            Options.Add(new Option(this, o, c));
-        }
-        OptionMenuController.instance.addOptionItems(this);
-        GameControllerScript.instance.choosing = true;
+        getOptions();
+        setSummary();
 
         LogEvent();
     }
@@ -281,20 +279,11 @@ public class EnemyShipEvent : Event
 
     public override void EnterEvent()
     {
-        setSummary();
+
         characters.Clear();
 
-        Character c;
-        ship = GameControllerScript.instance.ship;
-        Options = new List<Option>();
-        foreach (OptionType o in GameControllerScript.instance.eventOptions[Type])
-        {
-            c = GameControllerScript.instance.getRandomPartyMember();
-            characters.Add(c);
-            Options.Add(new Option(this, o, c));
-        }
-        OptionMenuController.instance.addOptionItems(this);
-        GameControllerScript.instance.choosing = true;
+        getOptions();
+        setSummary();
 
         LogEvent();
     }

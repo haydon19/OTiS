@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : IAttacker<IDamageable<float>>, IDamageable<float> {
+public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISubject {
     Dictionary<string, int> stats = new Dictionary<string, int>();
     string name;
     string charID;
@@ -147,4 +148,8 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float> {
         }
     }
 
+    public string SubjectReference()
+    {
+        return name;
+    }
 }

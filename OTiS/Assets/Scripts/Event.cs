@@ -10,6 +10,7 @@ public abstract class Event {
     protected string summary;
     int id;
     List<Option> options;
+    protected string subject;
     EventType type;
     public List<Character> characters;
     public SpaceShip ship;
@@ -140,7 +141,7 @@ public abstract class Event {
         {
             c = GameControllerScript.instance.getRandomPartyMember();
             characters.Add(c);
-            Options.Add(new Option(this, o, c));
+            Options.Add(new Option(this, o, c, subject));
         }
         OptionMenuController.instance.addOptionItems(this);
         GameControllerScript.instance.choosing = true;
@@ -205,6 +206,7 @@ public class RogueAstroidEvent : Event
     {
         characters.Clear();
 
+        subject = "the rogue asteroid";
         getOptions();
         setSummary();
 
@@ -264,7 +266,7 @@ public class RogueAstroidEvent : Event
 
     public override void setSummary()
     {
-        summary = "You are travelling through space... A Rogue Astroid appears!";
+        summary = "You are travelling through space... A rogue asteroid appears!";
     }
 
 }
@@ -277,11 +279,16 @@ public class EnemyShipEvent : Event
 
     }
 
+    SpaceShip enemyShip;
     public override void EnterEvent()
     {
 
         characters.Clear();
-
+        //This should be the enemy ship
+        //ship = new SpaceShip(GameControllerScript.instance.getRandomShipName(), 5);
+        enemyShip = new SpaceShip(GameControllerScript.instance.getRandomShipName(), 5);
+        subject = enemyShip.SubjectReference();
+        ship = GameControllerScript.instance.ship;
         getOptions();
         setSummary();
 
@@ -328,7 +335,7 @@ public class EnemyShipEvent : Event
 
     public override void setSummary()
     {
-        summary = "You have encountered an enemy ship!";
+        summary = "You have encountered an enemy ship! On the side is it's name - " + subject;
     }
 
 }
@@ -347,6 +354,7 @@ public class EncounterNPC : Event
         characters.Clear();
 
         characters.Add(GameControllerScript.instance.createNPC());
+        subject = characters[0].SubjectReference();
         getOptions();
         setSummary();
 
@@ -362,7 +370,7 @@ public class EncounterNPC : Event
                 {
                     summary = characters[1].Name + " convices " + characters[0].Name + " to join the party with a triumphant speech.";
                     GameControllerScript.instance.party.addPartyMember(characters[0]);
-                    summary = "\n" + characters[0].Name + " joins the party!";
+                    summary += "\n" + characters[0].Name + " joins the party!";
                     
                 }
                 else

@@ -11,7 +11,7 @@ public class Option {
     string description;
     string outcome;
     string stat;
-    Character subject;
+    string subject;
     Character actor;
     //List<Character> actors;
     Event eventObject;
@@ -72,10 +72,10 @@ public class Option {
     }
 
 
-    public Option(Event eventObject, OptionType type, Character actor)
+    public Option(Event eventObject, OptionType type, Character actor, string subject)
     {
         this.eventObject = eventObject;
-
+        this.subject = subject;
         this.type = type;
         this.actor = actor;
 
@@ -85,8 +85,9 @@ public class Option {
     public void setDescription()
     {
         string s = GameControllerScript.instance.optionStrings[type][Random.Range(0, GameControllerScript.instance.optionStrings[type].Count)];
-        description = s.Replace("<actor>", actor.Name) + eventObject.ToString();
+        description = s.Replace("<actor>", actor.Name).Replace("<subject>", subject);
     }
+
 
     public Option(EncounterNPC eventObject, OptionType type, Character actor)
     {

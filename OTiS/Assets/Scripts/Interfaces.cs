@@ -15,3 +15,8 @@ public interface IDamageable<T>
 {
     float Damage(T damageTaken);
 }
+
+public interface ISubject
+{
+    string SubjectReference();
+}

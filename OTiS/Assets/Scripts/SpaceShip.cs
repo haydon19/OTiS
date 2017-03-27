@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum ShipType { };
 
-public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>> {
+public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISubject {
 
     public List<Character> passengers;
     Dictionary<string, int> shipResources = new Dictionary<string, int>();
@@ -96,6 +96,11 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>> {
     {
         changeStat("Ammo", -getStat("Blast"));
        return target.Damage(getStat("Blast"));
+    }
+
+    public string SubjectReference()
+    {
+        return name;
     }
 }
 

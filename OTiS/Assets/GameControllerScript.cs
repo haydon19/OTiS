@@ -15,6 +15,7 @@ public class GameControllerScript : MonoBehaviour {
     public bool choosing = false;
     public static GameControllerScript instance;
     public Dictionary<int, string> names;
+    List<string> shipNames;
     public Dictionary<OptionType, List<string>> options;
     public Dictionary<EventType, Event> possibleEvents;
     public Dictionary<EventType, List<string>> Event;
@@ -40,6 +41,20 @@ public class GameControllerScript : MonoBehaviour {
         names.Add(5, "Bull");
         names.Add(6, "Nathan");
         names.Add(7, "Clarissa");
+
+    }
+
+    public void createShipNameList()
+    {
+        shipNames = new List<string>();
+        shipNames.Add("Neverwhatever");
+        shipNames.Add("Star Destroyer");
+        shipNames.Add("Her Majesty");
+        shipNames.Add("Qtaz'Tzor");
+        shipNames.Add("The Justice");
+        shipNames.Add("Wanderer");
+        shipNames.Add("Cheese Mechana");
+
 
     }
 
@@ -71,13 +86,13 @@ public class GameControllerScript : MonoBehaviour {
     public void createOptionStringsDictionary()
     {
         optionStrings = new Dictionary<OptionType, List<string>>();
-        optionStrings.Add(OptionType.Blast, new List<string> { "<actor> attempts to blast the ", "<actor> runs for the guns to shoot at " });
-        optionStrings.Add(OptionType.Avoid, new List<string> { "<actor> dips and dives to avoid the ", "<actor> uses ace pilot skills to manuever around the " });
-        optionStrings.Add(OptionType.Land, new List<string> { "<actor> brings the ship down to ", "<actor> lowers the landing gear in attempts to land on the " });
-        optionStrings.Add(OptionType.Board, new List<string> { "<actor> rams into the ", "<actor> tries to get close enough to board " });
-        optionStrings.Add(OptionType.Gossip, new List<string> { "<actor> listens to the musings of ", "<actor> chats about the local area with " });
-        optionStrings.Add(OptionType.Intimidate, new List<string> { "<actor> attempts to scare ", "<actor> pulls out a gun and shows it to " });
-        optionStrings.Add(OptionType.Recruit, new List<string> { "<actor> trys to recruit ", "<actor> eyes over the resume of " });
+        optionStrings.Add(OptionType.Blast, new List<string> { "<actor> attempts to blast <subject> with it's lazers", "<actor> runs for the guns to shoot at <subject>" });
+        optionStrings.Add(OptionType.Avoid, new List<string> { "<actor> dips and dives to avoid <subject>", "<actor> uses ace pilot skills to manuever around <subject>" });
+        optionStrings.Add(OptionType.Land, new List<string> { "<actor> brings the ship down to <subject>", "<actor> lowers the landing gear in attempts to land on <subject>" });
+        optionStrings.Add(OptionType.Board, new List<string> { "<actor> rams into <subject>", "<actor> tries to get close enough to board <subject>" });
+        optionStrings.Add(OptionType.Gossip, new List<string> { "<actor> listens to <subject> talk about his adventures", "<actor> chats about the local area with <subject>" });
+        optionStrings.Add(OptionType.Intimidate, new List<string> { "<actor> attempts to scare <subject> with a loud roar", "<actor> brandishes a gun to <subject> to show them they means business" });
+        optionStrings.Add(OptionType.Recruit, new List<string> { "<actor> trys to recruit <subject> by offering pizza flavoured chips", "<actor> eyes over <subject>'s resume then offers them a job" });
 
 
         //options.Add(OptionType.Blast, " ")
@@ -123,6 +138,12 @@ public class GameControllerScript : MonoBehaviour {
         return names[r];
     }
 
+    public string getRandomShipName()
+    {
+        
+        return shipNames[Random.Range(0,shipNames.Count)];
+    }
+
     public int nextCharID()
     {
         return characterIndex += 1;
@@ -145,6 +166,7 @@ public class GameControllerScript : MonoBehaviour {
         createEventOptionsDictionary();
         createPossibleEventsDictionary();
         createOptionStringsDictionary();
+        createShipNameList();
         characterIndex = 0;
 
         party = new PartyManager();

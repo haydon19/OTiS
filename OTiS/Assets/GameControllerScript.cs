@@ -25,6 +25,7 @@ public class GameControllerScript : MonoBehaviour {
     int characterIndex = 0;
     GameState gameState;
     public SpaceShip ship;
+    bool paused = false;
     public List<EventType> validEvents;
     public SpaceShip enemyShip;
     public LocationState locationState = LocationState.Space;
@@ -226,6 +227,7 @@ public class GameControllerScript : MonoBehaviour {
         {
             // PartyManagerPanel.instance.gameObject.SetActive(!PartyManagerPanel.instance.gameObject.activeSelf);
             PartyManagerPanel.instance.openPartyManagerPanel();
+            paused = !paused;
         }
     }
 
@@ -239,7 +241,7 @@ void Update () {
             return;
         }
         //This is the timer for the events, also we don't have a new event if we are currently making a decision
-        if (Time.time > nextEvent && !choosing)
+        if (Time.time > nextEvent && !choosing && !paused)
         {
             nextEvent = Time.time + 0.5f;
 

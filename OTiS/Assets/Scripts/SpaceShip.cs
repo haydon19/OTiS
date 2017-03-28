@@ -24,6 +24,19 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISub
         }
     }
 
+    public Dictionary<string, int> ShipResources
+    {
+        get
+        {
+            return shipResources;
+        }
+
+        set
+        {
+            shipResources = value;
+        }
+    }
+
     public SpaceShip(string name, int damage)
     {
 
@@ -41,28 +54,28 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISub
     //Dealing with the player stat dictionary
     public int getStat(string resourceName)
     {
-        if (!shipResources.ContainsKey(resourceName))
+        if (!ShipResources.ContainsKey(resourceName))
         {
-            shipResources.Add(resourceName, 0);
+            ShipResources.Add(resourceName, 0);
         }
 
         //returns the value of the given stat
-        return shipResources[resourceName];
+        return ShipResources[resourceName];
 
     }
 
     public void setStat(string resourceName, int Value)
     {
-        if (shipResources.ContainsKey(resourceName))
+        if (ShipResources.ContainsKey(resourceName))
         {
-            shipResources[resourceName] = Value;
+            ShipResources[resourceName] = Value;
 
 
         }
         else
         {
             //If the stat doesnt exist and we are setting it, lets just create it
-            shipResources.Add(resourceName, Value);
+            ShipResources.Add(resourceName, Value);
         }
         /*
         Debug.Log(GameControllerScript.instance.party.ToString());
@@ -75,19 +88,19 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISub
 
     public void changeStat(string resourceName, int statChange)
     {
-        if (shipResources.ContainsKey(resourceName))
+        if (ShipResources.ContainsKey(resourceName))
         {
-            shipResources[resourceName] = getStat(resourceName) + statChange;
-            if (shipResources[resourceName] < 0)
+            ShipResources[resourceName] = getStat(resourceName) + statChange;
+            if (ShipResources[resourceName] < 0)
             {
-                shipResources[resourceName] = 0;
+                ShipResources[resourceName] = 0;
             }
 
         }
         else
         {
             //If the stat doesnt exist and we are setting it, lets just create it
-            shipResources.Add(resourceName, statChange);
+            ShipResources.Add(resourceName, statChange);
         }
         /*
         if (this == GameControllerScript.instance.party.ship)

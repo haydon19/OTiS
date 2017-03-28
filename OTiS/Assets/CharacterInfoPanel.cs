@@ -7,12 +7,12 @@ using System;
 
 public class CharacterInfoPanel : MonoBehaviour {
     public CharacterContainer characterTabs;
-    public CharacterStatPanel characterStats;
 
     private Character activeCharacter;
     public static CharacterInfoPanel instance;
+    public Text activeCharacterLabel;
 
-    public void Start()
+    public void Awake()
     {
         if (instance == null)
             //...set this one to be it...
@@ -22,6 +22,8 @@ public class CharacterInfoPanel : MonoBehaviour {
             //...destroy this one because it is a duplicate.
             Destroy(gameObject);
         activeCharacter = null;
+        gameObject.SetActive(false);
+
     }
 
     public Character ActiveCharacter
@@ -44,9 +46,11 @@ public class CharacterInfoPanel : MonoBehaviour {
 
     public void updateActiveCharacter()
     {
+        activeCharacterLabel.text = activeCharacter.Name + "'s Stats";
         foreach (KeyValuePair<string, int> stat in activeCharacter.Stats)
         {
-            characterStats.setStat(stat.Key, stat.Value.ToString());
+            Debug.Log("stat: " + stat + "activeCharacter: " + activeCharacter.Name + "key: " + stat.Key + "value: " + stat.Value);
+            CharacterStatPanel.instance.setStat(stat.Key, stat.Value.ToString());
         }
 
     }

@@ -30,8 +30,17 @@ public class CharacterStatPanel : MonoBehaviour {
 
     //public void showCharacter
 
-    public void Start()
+    void Awake()
     {
+        if (instance == null)
+            //...set this one to be it...
+            instance = this;
+        //...otherwise...
+        else if (instance != this)
+            //...destroy this one because it is a duplicate.
+            Destroy(gameObject);
+        Debug.Log("Start thing");
+
         statObjectList = new Dictionary<string, StatInfoObject>();
     }
 

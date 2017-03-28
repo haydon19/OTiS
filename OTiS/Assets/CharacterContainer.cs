@@ -10,7 +10,7 @@ public class CharacterContainer : MonoBehaviour {
     Dictionary<string, CharacterInfoObject> logItemList = new Dictionary<string, CharacterInfoObject>();
     public static CharacterContainer instance;
 
-    void Start()
+    void Awake()
     {
         if (instance == null)
             //...set this one to be it...

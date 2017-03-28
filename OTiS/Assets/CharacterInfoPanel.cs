@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
+using System;
 
 public class CharacterInfoPanel : MonoBehaviour {
+    public CharacterContainer characterTabs;
+    public CharacterStatPanel characterStats;
 
-    public CharacterInfoObject logItemProto;
-    Dictionary<string, CharacterInfoObject> logItemList = new Dictionary<string, CharacterInfoObject>();
+    private Character activeCharacter;
     public static CharacterInfoPanel instance;
 
     public void Start()
@@ -19,37 +21,33 @@ public class CharacterInfoPanel : MonoBehaviour {
         else if (instance != this)
             //...destroy this one because it is a duplicate.
             Destroy(gameObject);
-
+        activeCharacter = null;
     }
 
-    public void addLogItem(Event eventObject)
+    public Character ActiveCharacter
     {
-        //LogItem temp = newLogItem(eventObject.Summary);
+        get
+        {
+            return activeCharacter;
+        }
 
+        set
+        {
+            Character newActive = value;
+            if (newActive != activeCharacter)
+            {
+                activeCharacter = value;
+                updateActiveCharacter();
+            }
+        }
     }
-    public void updateCharacterInfo(Character characterObject)
+
+    public void updateActiveCharacter()
     {
-        CharacterInfoObject charInfo = logItemList[characterObject.CharID];
-        charInfo.Description.text = characterObject.Name + "\n" + "<color=red>Health:</color>" + characterObject.getStat("Health");
-    }
-
-    public void removeCharacter(Character characterObject)
-    {
-        CharacterInfoObject charInfo = logItemList[characterObject.CharID];
-        logItemList.Remove(characterObject.CharID);
-        Destroy(charInfo.gameObject);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
-    }
-
-    public void newCharacter(Character characterObject)
-    {
-        CharacterInfoObject newItem = Instantiate(logItemProto, transform.position, transform.rotation, transform) as CharacterInfoObject;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
-        newItem.Description.supportRichText = true;
-        newItem.Description.text = characterObject.Name + "\n" + "<color=red>Health:</color>" + characterObject.getStat("Health");
-        Debug.Log("Name: " + characterObject.Name + " ID: " + characterObject.CharID);
-        logItemList.Add(characterObject.CharID, newItem);
+        foreach (KeyValuePair<string, int> stat in activeCharacter.Stats)
+        {
+            characterStats.setStat(stat.Key, stat.Value.ToString());
+        }
 
     }
-
 }

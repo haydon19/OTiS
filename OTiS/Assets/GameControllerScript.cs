@@ -7,7 +7,6 @@ public enum GameState { Start, Active, GameOver};
 public enum LocationState { Space, Land };
 
 public class GameControllerScript : MonoBehaviour {
-    public CharacterInfoPanel characterInfoPanel;
     public PartyManager party;
     public float eventRate = 2.0f;
     public float nextEvent = 0.0f;
@@ -160,6 +159,7 @@ public class GameControllerScript : MonoBehaviour {
             Destroy(gameObject);
 
         validEvents = new List<EventType>();
+        PartyManagerPanel.instance.gameObject.SetActive(false);
         //Create prototype lists, eventually this will just be importing from an XML file or something
         createNameDictionary();
         createEnemyPrototypes();
@@ -220,8 +220,19 @@ public class GameControllerScript : MonoBehaviour {
 
     }
 
+    void GetInput()
+    {
+        if (Input.GetKeyUp("i"))
+        {
+            // PartyManagerPanel.instance.gameObject.SetActive(!PartyManagerPanel.instance.gameObject.activeSelf);
+            PartyManagerPanel.instance.openPartyManagerPanel();
+        }
+    }
+
 // Update is called once per frame
 void Update () {
+
+        GetInput();
 
       if(gameState == GameState.GameOver)
         {

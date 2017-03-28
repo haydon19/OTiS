@@ -207,6 +207,7 @@ public class RogueAstroidEvent : Event
         characters.Clear();
 
         subject = "the rogue asteroid";
+        ship = GameControllerScript.instance.party.ship;
         getOptions();
         setSummary();
 
@@ -372,7 +373,7 @@ public class EncounterNPC : Event
         switch (oType)
         {
             case (OptionType.Recruit):
-                if (characters[1].getStat("Smarts") + Random.Range(0, 3) > 6)
+                if (characters[1].getStat("Smarts") + Random.Range(0, 10) > 6)
                 {
                     summary = characters[1].Name + " convices " + characters[0].Name + " to join the party with a triumphant speech.";
                     GameControllerScript.instance.party.addPartyMember(characters[0]);

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System;
 
-
-public class CharacterInfoObject : MonoBehaviour {
+public class CharacterInfoObject : MonoBehaviour, IPointerClickHandler
+{
     Image sprite;
     Text description;
+    Character character;
 
     public Text Description
     {
@@ -34,6 +37,19 @@ public class CharacterInfoObject : MonoBehaviour {
         }
     }
 
+    public Character Character
+    {
+        get
+        {
+            return character;
+        }
+
+        set
+        {
+            character = value;
+        }
+    }
+
     public void Awake()
     {
 
@@ -41,5 +57,17 @@ public class CharacterInfoObject : MonoBehaviour {
 
 
         Sprite = this.GetComponentInChildren<Image>();
+    }
+
+
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+        // foreach (KeyValuePair<string, int> attachStat in character.Stats)
+
+        CharacterInfoPanel.instance.ActiveCharacter = character;
+
+        
     }
 }

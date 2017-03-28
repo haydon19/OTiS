@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\SpaceShip.cs" />
     <Compile Include="Assets\ShipInfoPanel.cs" />
     <Compile Include="Assets\ShipStatPanel.cs" />
+    <Compile Include="Assets\SoundControllerScript.cs" />
     <Compile Include="Assets\StatInfoObject.cs" />
     <Compile Include="Assets\UIManager.cs" />
   </ItemGroup>

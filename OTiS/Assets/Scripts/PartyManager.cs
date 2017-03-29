@@ -9,6 +9,7 @@ public class PartyManager  {
     int supplies;
     int fuel;
     public SpaceShip ship;
+    public Dictionary<string, int> partyStats;
     //Inventory?
     //Cargo?
 
@@ -17,13 +18,14 @@ public class PartyManager  {
         partyMembers = new List<Character>();
         ship = new SpaceShip("The Aloha", 10);
         PartyInfoPanel.instance.setStat("Ship", ship.Name);
-        PartyInfoPanel.instance.setStat("Blast", ship.getStat("Blast").ToString());
         PartyInfoPanel.instance.setStat("Fuel", ship.getStat("Fuel").ToString());
         PartyInfoPanel.instance.setStat("Shields", ship.getStat("Shields").ToString());
+
         supplies = 5;
         PartyInfoPanel.instance.setStat("Supplies", supplies.ToString());
+        PartyInfoPanel.instance.setStat("Blast", ship.getStat("Blast").ToString());
 
-        
+
     }
 
     public void addPartyMember()

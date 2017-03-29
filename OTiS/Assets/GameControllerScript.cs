@@ -227,8 +227,13 @@ public class GameControllerScript : MonoBehaviour {
         {
             // PartyManagerPanel.instance.gameObject.SetActive(!PartyManagerPanel.instance.gameObject.activeSelf);
             PartyManagerPanel.instance.openPartyManagerPanel();
-            paused = !paused;
+            pauseGame();
         }
+    }
+
+    public void pauseGame()
+    {
+        paused = !paused;
     }
 
 // Update is called once per frame

@@ -53,7 +53,7 @@ public class PartyManagerPanel : MonoBehaviour {
             case (1):
                 ShipInfoPanel.instance.gameObject.SetActive(true);
 
-                ShipInfoPanel.instance.CurrentShip = GameControllerScript.instance.party.ship;
+                //ShipInfoPanel.instance.CurrentShip = GameControllerScript.instance.party.ship;
                 currTab = tabID;
                 break;
 

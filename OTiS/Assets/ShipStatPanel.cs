@@ -59,6 +59,7 @@ public class ShipStatPanel : MonoBehaviour
         else
         {
             StatInfoObject newItem = Instantiate(statObjectProto, transform.position, transform.rotation, transform) as StatInfoObject;
+            newItem.Init();
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
             //If the stat doesnt exist and we are setting it, lets just create it
             StatObjectList.Add(statName, newItem);

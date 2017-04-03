@@ -17,6 +17,8 @@ public class PartyManager  {
     {
         partyMembers = new List<Character>();
         ship = new SpaceShip("The Aloha", 10);
+        ShipInfoPanel.instance.CurrentShip = ship;
+
         PartyInfoPanel.instance.setStat("Ship", ship.Name);
         PartyInfoPanel.instance.setStat("Fuel", ship.getStat("Fuel").ToString());
         PartyInfoPanel.instance.setStat("Shields", ship.getStat("Shields").ToString());
@@ -68,7 +70,7 @@ public class PartyManager  {
 
         ship.changeStat(stat, change);
         PartyInfoPanel.instance.setStat(stat, ship.getStat(stat).ToString());
-
+        ShipInfoPanel.instance.updateCurrentShip();
     }
 
     //FOR ALL FUEL RELATED THINGS

@@ -34,7 +34,7 @@ public class StatInfoObject : MonoBehaviour {
         }
     }
 
-    public void Awake()
+    public void Init()
     {
 
         Description = this.GetComponentInChildren<Text>();

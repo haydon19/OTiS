@@ -28,7 +28,7 @@ public class PartyInfoPanel : MonoBehaviour {
         }
     }
 
-    public void Start()
+    public void Awake()
     {
         if (instance == null)
             //...set this one to be it...
@@ -38,6 +38,7 @@ public class PartyInfoPanel : MonoBehaviour {
             //...destroy this one because it is a duplicate.
             Destroy(gameObject);
         statObjectList = new Dictionary<string, StatInfoObject>();
+
     }
 
     public void updateStatInfo(string stat, string value)
@@ -49,6 +50,7 @@ public class PartyInfoPanel : MonoBehaviour {
 
     public void setStat(string statName, string statValue)
     {
+
         if (StatObjectList.ContainsKey(statName))
         {
             StatObjectList[statName].Description.text = statName + ": " + statValue;
@@ -57,6 +59,7 @@ public class PartyInfoPanel : MonoBehaviour {
         else
         {
             StatInfoObject newItem = Instantiate(statObjectProto, transform.position, transform.rotation, transform) as StatInfoObject;
+            newItem.Init();
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
             //If the stat doesnt exist and we are setting it, lets just create it
             StatObjectList.Add(statName, newItem);

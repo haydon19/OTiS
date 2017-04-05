@@ -35,6 +35,8 @@ public abstract class Event {
         return false;
     }
 
+    
+
     public string Summary
     {
         get
@@ -256,11 +258,13 @@ public class RogueAstroidEvent : Event
             case (OptionType.Land):
                 if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = "Ya fuckin landed on it bud.";
+                    summary = characters[0].Name + " has successfully landed on the Asteroid, allowing the party to scavange for resources.";
+                    EventActions.gainRandomResource(this);
+                    EventActions.gainRandomResource(this);
                 }
                 else
                 {
-                    summary = "Ya fucked up the landing.";
+                    summary = characters[0].Name + " misjudges the landing and the ship scapes along the surface of the asteroid. The party decides to cut their losses and not try again.";
                     summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
                     GameControllerScript.instance.party.changeShipStat("Shields", -5);
                 }
@@ -329,11 +333,14 @@ public class EnemyShipEvent : Event
             case (OptionType.Board):
                 if (characters[2].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[2].Name + " boarded the enemy ship with ease!";
+                    summary = characters[2].Name + " boarded the enemy ship with ease! After a fierce battle you manage to steal some goods and make your way out.";
+                    EventActions.gainRandomResource(this);
+                    EventActions.gainRandomResource(this);
                 }
                 else
                 {
-                    summary = "Ya fucked up the boarding.";
+                    summary = "The boarding was botched! Luckily you got away unscathed.";
+
                 }
                 break;
         }
@@ -388,16 +395,19 @@ public class EncounterNPC : Event
             case (OptionType.Gossip):
 
                 summary = characters[2].Name + " learns about a nearby planet rich with resources from " + characters[0].Name;
+                EventActions.gainRandomResource(this);
 
                 break;
             case (OptionType.Intimidate):
                 if (characters[3].getStat("Strength") > Random.Range(0, 10))
                 {
                     summary = characters[0].Name + " backs away as " + characters[3].Name + " threatens them into giving up supplies.";
+                    EventActions.gainRandomResource(this);
                 }
                 else
                 {
                     summary = characters[0].Name + " stands up to " + characters[3].Name + ", causing them to give up supplies in embarassment.";
+                    EventActions.loseRandomResource(this);
                 }
                 break;
         }

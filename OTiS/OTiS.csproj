@@ -82,6 +82,7 @@
     <Compile Include="Assets\EnemyInfoPanel.cs" />
     <Compile Include="Assets\GameControllerScript.cs" />
     <Compile Include="Assets\LogItemObject.cs" />
+    <Compile Include="Assets\MainMenuController.cs" />
     <Compile Include="Assets\OptionMenuController.cs" />
     <Compile Include="Assets\OptionObjectButton.cs" />
     <Compile Include="Assets\PartyInfoPanel.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Event.cs" />
+    <Compile Include="Assets\Scripts\EventActions.cs" />
     <Compile Include="Assets\Scripts\EventController.cs" />
     <Compile Include="Assets\Scripts\EventDescription.cs" />
     <Compile Include="Assets\Scripts\EventLog.cs" />

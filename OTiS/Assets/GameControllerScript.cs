@@ -4,6 +4,10 @@ using UnityEngine;
 
 public enum GameState { Start, Active, GameOver};
 
+public enum Stat { Strength, Smarts, Agility };
+
+public enum Resource { Fuel, Shields, Medicine };
+
 public enum LocationState { Space, Land };
 
 public class GameControllerScript : MonoBehaviour {
@@ -15,6 +19,9 @@ public class GameControllerScript : MonoBehaviour {
     public static GameControllerScript instance;
     public Dictionary<int, string> names;
     List<string> shipNames;
+    public List<string> characterStatNames = new List<string> { "Strength", "Agility", "Smarts" };
+    public List<string> resourceNames = new List<string> { "Fuel", "Shields", "Ammo" };
+
     public Dictionary<OptionType, List<string>> options;
     public Dictionary<EventType, Event> possibleEvents;
     public Dictionary<EventType, List<string>> Event;

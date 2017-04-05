@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class SoundControllerScript : MonoBehaviour
 {
     public AudioSource musicSource;
-    public AudioClip backgroundMusic;
+    public List<AudioClip> backgroundMusic;
     public static SoundControllerScript instance = null;
 
 
@@ -19,28 +21,27 @@ public class SoundControllerScript : MonoBehaviour
         else
         {
             instance = this;
-           // DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
+
         gameObject.AddComponent<AudioSource>();
         musicSource = gameObject.GetComponent<AudioSource>();
-        musicSource.clip = backgroundMusic;
 
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
-
-
-    // Update is called once per frame
-    void Update()
+    private void SceneManager_activeSceneChanged(Scene previousScene, Scene newScene)
     {
-        if (!(musicSource.isPlaying))
-        {
-            musicSource.Play();
-        }
-        else
-        {
-            //Debug.log("Something is wrong with Music.");
-        }
+        if (instance != this)
+            return;
+            //AudioSource music = new AudioSource();
+            //musicSource.Stop
+            musicSource.clip = backgroundMusic[newScene.buildIndex];
+             musicSource.loop = true;
+             musicSource.Play();
     }
+
+    
 
 
 }

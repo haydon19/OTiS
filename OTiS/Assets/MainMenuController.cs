@@ -22,6 +22,7 @@ public class MainMenuController : MonoBehaviour {
 
         activeScreen = 0;
         setActiveScreen();
+        //SoundControllerScript.instance.PlayMusic(0);
     }
     public void StartGame()
     {

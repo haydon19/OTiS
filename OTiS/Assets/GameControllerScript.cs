@@ -247,7 +247,10 @@ public class GameControllerScript : MonoBehaviour {
 void Update () {
 
         GetInput();
-
+        if(SoundControllerScript.instance != null)
+        {
+            //SoundControllerScript.instance.PlayMusic(1);
+        }
       if(gameState == GameState.GameOver)
         {
             return;

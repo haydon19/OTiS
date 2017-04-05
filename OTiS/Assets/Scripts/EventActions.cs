@@ -23,7 +23,7 @@ public static class EventActions  {
         int amount = randomAmounts[Random.Range(0, randomAmounts.Count)];
 
         
-        GameControllerScript.instance.party.ship.changeStat(randomResource, amount);
+        GameControllerScript.instance.party.changeShipStat(randomResource, amount);
         activeEvent.Summary += "\nThe party has gained " + amount + " " + randomResource + ".";
     }
 
@@ -33,7 +33,7 @@ public static class EventActions  {
         int amount = randomAmounts[Random.Range(0, randomAmounts.Count)];
 
 
-        GameControllerScript.instance.party.ship.changeStat(randomResource, -amount);
+        GameControllerScript.instance.party.changeShipStat(randomResource, -amount);
         activeEvent.Summary += "\nThe party loses " + amount + " " + randomResource + ".";
     }
 

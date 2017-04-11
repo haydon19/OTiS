@@ -246,7 +246,7 @@ public class RogueAstroidEvent : Event
                 }
             break;
             case (OptionType.Blast):
-                if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
+                if (characters[1].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
                     summary = "Ya fuckin blasted it bud.";
                 }
@@ -256,15 +256,15 @@ public class RogueAstroidEvent : Event
                 }
                 break;
             case (OptionType.Land):
-                if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
+                if (characters[2].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[0].Name + " has successfully landed on the Asteroid, allowing the party to scavange for resources.";
+                    summary = characters[2].Name + " has successfully landed on the Asteroid, allowing the party to scavange for resources.";
                     EventActions.gainRandomResource(this);
                     EventActions.gainRandomResource(this);
                 }
                 else
                 {
-                    summary = characters[0].Name + " misjudges the landing and the ship scapes along the surface of the asteroid. The party decides to cut their losses and not try again.";
+                    summary = characters[2].Name + " misjudges the landing and the ship scapes along the surface of the asteroid. The party decides to cut their losses and not try again.";
                     summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
                     GameControllerScript.instance.party.changeShipStat("Shields", -5);
                 }

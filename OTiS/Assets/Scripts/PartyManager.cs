@@ -41,6 +41,7 @@ public class PartyManager  {
     public void addPartyMember(Character character)
     {
         partyMembers.Add(character);
+        CharacterIconsPanel.instance.addCharacter(character);
         //CharacterContainer.instance.addCharacter(character);
 
     }

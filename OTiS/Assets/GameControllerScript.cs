@@ -70,7 +70,7 @@ public class GameControllerScript : MonoBehaviour {
         eventOptions = new Dictionary<EventType, List<OptionType>>();
         eventOptions.Add(EventType.RogueAstroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
         eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
-        eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Intimidate, OptionType.Gossip });
+        eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Gossip, OptionType.Intimidate });
 
         //options.Add(OptionType.Blast, " ")
 
@@ -186,6 +186,8 @@ public class GameControllerScript : MonoBehaviour {
         {
             party.addPartyMember();
         }
+
+        CharacterIconsPanel.instance.populateContainer();
     }
 
 

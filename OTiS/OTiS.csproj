@@ -77,6 +77,8 @@
   <ItemGroup>
     <Compile Include="Assets\CharacterContainer.cs" />
     <Compile Include="Assets\CharacterCreationPanel.cs" />
+    <Compile Include="Assets\CharacterIconObject.cs" />
+    <Compile Include="Assets\CharacterIconsPanel.cs" />
     <Compile Include="Assets\CharacterInfoObject.cs" />
     <Compile Include="Assets\CharacterInfoPanel.cs" />
     <Compile Include="Assets\CharacterStatPanel.cs" />

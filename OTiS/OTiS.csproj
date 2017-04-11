@@ -105,6 +105,7 @@
     <Compile Include="Assets\SoundControllerScript.cs" />
     <Compile Include="Assets\StartMenuScript.cs" />
     <Compile Include="Assets\StatInfoObject.cs" />
+    <Compile Include="Assets\StatSetterObject.cs" />
     <Compile Include="Assets\UIManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

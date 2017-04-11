@@ -26,7 +26,9 @@ public class PartyManagerPanel : MonoBehaviour {
     }
     public void openPartyManagerPanel()
     {
+        
         gameObject.SetActive(!gameObject.activeSelf);
+        GameControllerScript.instance.pauseGame();
         if (gameObject.activeSelf)
         {
             openTab(0);

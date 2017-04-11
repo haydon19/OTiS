@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CharacterContainer.cs" />
+    <Compile Include="Assets\CharacterCreationPanel.cs" />
     <Compile Include="Assets\CharacterInfoObject.cs" />
     <Compile Include="Assets\CharacterInfoPanel.cs" />
     <Compile Include="Assets\CharacterStatPanel.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets\PartyInfoPanel.cs" />
     <Compile Include="Assets\PartyManagerPanel.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\CharacterTrait.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Event.cs" />
     <Compile Include="Assets\Scripts\EventActions.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Assets\Scripts\EventDescription.cs" />
     <Compile Include="Assets\Scripts\EventLog.cs" />
     <Compile Include="Assets\Scripts\GameAction.cs" />
+    <Compile Include="Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\Scripts\Interfaces.cs" />
     <Compile Include="Assets\Scripts\LogItem.cs" />
     <Compile Include="Assets\Scripts\Option.cs" />
@@ -106,7 +109,10 @@
     <Compile Include="Assets\StartMenuScript.cs" />
     <Compile Include="Assets\StatInfoObject.cs" />
     <Compile Include="Assets\StatSetterObject.cs" />
+    <Compile Include="Assets\StatSetterPanel.cs" />
+    <Compile Include="Assets\TraitInfoPanel.cs" />
     <Compile Include="Assets\UIManager.cs" />
+    <Compile Include="Assets\UITraitObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

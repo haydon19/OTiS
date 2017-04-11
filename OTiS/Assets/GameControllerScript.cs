@@ -32,7 +32,7 @@ public class GameControllerScript : MonoBehaviour {
     int characterIndex = 0;
     GameState gameState;
     public SpaceShip ship;
-    bool paused = false;
+    public bool paused = false;
     public List<EventType> validEvents;
     public SpaceShip enemyShip;
     public LocationState locationState = LocationState.Space;
@@ -111,11 +111,11 @@ public class GameControllerScript : MonoBehaviour {
     public void createEnemyPrototypes()
     {
         enemyDictionary = new Dictionary<string, Enemy>();
-        enemyDictionary.Add("Zombie", new Enemy("Zombie", 0, 8, 1, 2));
-        enemyDictionary.Add("Feral Cat", new Enemy("Feral Cat", 0, 3, 4, 10));
-        enemyDictionary.Add("Robot", new Enemy("Robot", 0, 6, 6, 2));
-        enemyDictionary.Add("Alien", new Enemy("Alien", 0, 2, 10, 6));
-        enemyDictionary.Add("Horse", new Enemy("Horse", 0, 5, 2, 7));
+        enemyDictionary.Add("Zombie", new Enemy("Zombie", 0, 8, 1, 2, 0));
+        enemyDictionary.Add("Feral Cat", new Enemy("Feral Cat", 0, 3, 4, 10, 0));
+        enemyDictionary.Add("Robot", new Enemy("Robot", 0, 6, 6, 2, 0));
+        enemyDictionary.Add("Alien", new Enemy("Alien", 0, 2, 10, 6, 0));
+        enemyDictionary.Add("Horse", new Enemy("Horse", 0, 5, 2, 7, 0));
 
         enemyKeyList = new List<string>(enemyDictionary.Keys);
     }
@@ -125,13 +125,13 @@ public class GameControllerScript : MonoBehaviour {
         int rand = Random.Range(0, enemyKeyList.Count);
         string randomKey = enemyKeyList[rand];
         enemyDictionary[randomKey].ID += 1;
-        Enemy enemy = new Enemy(enemyDictionary[randomKey].Name, enemyDictionary[randomKey].ID, enemyDictionary[randomKey].getStat("Strength"), enemyDictionary[randomKey].getStat("Smarts"), enemyDictionary[randomKey].getStat("Agility"));
+        Enemy enemy = new Enemy(enemyDictionary[randomKey].Name, enemyDictionary[randomKey].ID, enemyDictionary[randomKey].getStat("Strength"), enemyDictionary[randomKey].getStat("Smarts"), enemyDictionary[randomKey].getStat("Agility"), enemyDictionary[randomKey].getStat("Piloting"));
         return enemy;
     }
 
     public Character createNPC()
     {
-        return new Character(getRandomName(), nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
+        return new Character(getRandomName(), GameData.instance.nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
     }
 
     public Character getRandomPartyMember()
@@ -151,10 +151,7 @@ public class GameControllerScript : MonoBehaviour {
         return shipNames[Random.Range(0,shipNames.Count)];
     }
 
-    public int nextCharID()
-    {
-        return characterIndex += 1;
-    }
+    
     // Use this for initialization
     void Start () {
 
@@ -178,14 +175,20 @@ public class GameControllerScript : MonoBehaviour {
         characterIndex = 0;
 
         party = new PartyManager();
-        Debug.Log(GameControllerScript.instance.party.ToString());
+        //Debug.Log(GameControllerScript.instance.party.ToString());
+        if(GameData.instance.player1 != null)
+        {
+            party.addPartyMember(GameData.instance.player1);
+        }
 
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             party.addPartyMember();
         }
     }
+
+
 
     //function for quitting the game
     public void ExitGame() {
@@ -234,7 +237,6 @@ public class GameControllerScript : MonoBehaviour {
         {
             // PartyManagerPanel.instance.gameObject.SetActive(!PartyManagerPanel.instance.gameObject.activeSelf);
             PartyManagerPanel.instance.openPartyManagerPanel();
-            pauseGame();
         }
     }
 

@@ -33,7 +33,7 @@ public class PartyManager  {
     public void addPartyMember()
     {
         Character temp;
-        temp = new Character(GameControllerScript.instance.getRandomName(), GameControllerScript.instance.nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
+        temp = new Character(GameControllerScript.instance.getRandomName(), GameData.instance.nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
         partyMembers.Add(temp);
         //CharacterContainer.instance.addCharacter(temp);
     }

@@ -9,6 +9,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
     string charID;
     int iD;
     bool dead;
+    public List<CharacterTrait> traits;
 
     public string Name
     {
@@ -75,7 +76,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         }
     }
 
-    public Character(string name, int ID, int Strength, int Smarts, int Agility)
+    public Character(string name, int ID, int Strength, int Smarts, int Agility, int Piloting)
     {
         Dead = false;
         this.name = name;
@@ -84,9 +85,11 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         setStat("Strength", Strength);
         setStat("Smarts", Smarts);
         setStat("Agility", Agility);
-        setStat("Piloting", 5);
+        setStat("Piloting", Piloting);
         setStat("Level", 1);
         setStat("Health", 15);
+
+        traits = new List<CharacterTrait>();
     }
 
     public float Attack(IDamageable<float> target)
@@ -110,7 +113,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         Debug.Log(Name + " has been charmed.");
         GameControllerScript.instance.Enemies.Remove(this);
         EnemyInfoPanel.instance.removeCharacter(this);
-        Character temp = new Character(Name, ID, getStat("Strength"), getStat("Smarts"), getStat("Agility"));
+        Character temp = new Character(Name, ID, getStat("Strength"), getStat("Smarts"), getStat("Agility"), getStat("Piloting"));
         GameControllerScript.instance.party.addPartyMember(temp);
         //CharacterContainer.instance.addCharacter(temp);
 

@@ -83,6 +83,7 @@
     <Compile Include="Assets\CharacterInfoPanel.cs" />
     <Compile Include="Assets\CharacterStatPanel.cs" />
     <Compile Include="Assets\EnemyInfoPanel.cs" />
+    <Compile Include="Assets\EventPanelScript.cs" />
     <Compile Include="Assets\GameControllerScript.cs" />
     <Compile Include="Assets\LogItemObject.cs" />
     <Compile Include="Assets\MainMenuController.cs" />

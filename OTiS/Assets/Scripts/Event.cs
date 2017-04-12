@@ -213,7 +213,7 @@ public class RogueAstroidEvent : Event
         getOptions();
         setSummary();
 
-        LogEvent();
+        EventPanelScript.instance.SetEvent(this);
     }
 
     public override void HandleEvent(OptionType oType)
@@ -301,7 +301,7 @@ public class EnemyShipEvent : Event
         getOptions();
         setSummary();
 
-        LogEvent();
+        EventPanelScript.instance.SetEvent(this);
     }
 
     public override void HandleEvent(OptionType oType)
@@ -372,7 +372,7 @@ public class EncounterNPC : Event
         getOptions();
         setSummary();
 
-        LogEvent();
+        EventPanelScript.instance.SetEvent(this);
     }
 
     public override void HandleEvent(OptionType oType)

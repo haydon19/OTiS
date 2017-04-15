@@ -49,6 +49,7 @@ public class CharacterCreationPanel : MonoBehaviour {
             int.Parse(startingStats.StatObjectList["Agility"].statValue.text),
             int.Parse(startingStats.StatObjectList["Piloting"].statValue.text));
 
+        //GameData.instance.player1.addTrait();
 
     }
 

@@ -119,6 +119,26 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
 
     }
 
+    public bool hasTrait(string traitName)
+    {
+        bool check = false;
+        foreach(CharacterTrait t in traits)
+        {
+            if (t.Name == traitName)
+            {
+                check = true;
+                break;
+            }
+        }
+
+        return check;
+    }
+
+    public void addTrait(CharacterTrait trait)
+    {
+        traits.Add(trait);
+    }
+
     //Dealing with the player stat dictionary
     public int getStat(string statName)
     {

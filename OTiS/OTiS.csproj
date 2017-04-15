@@ -114,6 +114,8 @@
     <Compile Include="Assets\StatSetterObject.cs" />
     <Compile Include="Assets\StatSetterPanel.cs" />
     <Compile Include="Assets\TraitInfoPanel.cs" />
+    <Compile Include="Assets\TraitListPanel.cs" />
+    <Compile Include="Assets\TraitSelectionPanel.cs" />
     <Compile Include="Assets\UIManager.cs" />
     <Compile Include="Assets\UITraitObject.cs" />
   </ItemGroup>

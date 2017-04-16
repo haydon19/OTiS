@@ -32,10 +32,11 @@ public class TraitSelectionPanel : MonoBehaviour {
 
     }
 
-    public void setTraitsRemaining()
+    public void selectTrait()
     {
-
+        traitsRemaining.text = traitsChosen + "/" + MAX_TRAITS + " traits selected.";
     }
+
 
     public void populateTraitPanel()
     {

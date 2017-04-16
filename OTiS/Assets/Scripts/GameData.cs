@@ -37,6 +37,10 @@ public class GameData : MonoBehaviour {
         traitDictionary = new Dictionary<string, CharacterTrait>();
         traitDictionary.Add("Engineer", new CharacterTrait("Engineer", "Enginners are adept at mechanical workings."));
         traitDictionary.Add("Diplomat", new CharacterTrait("Diplomat", "A diplomat has exeptional negotiating skills."));
+        traitDictionary.Add("Pirate", new CharacterTrait("Pirate", "Pirates will do whatever it takes to make some coin, even questionable things."));
+        traitDictionary.Add("Botanist", new CharacterTrait("Botanist", "A botanist can identify strange plants and even learn to grow their own."));
+        traitDictionary.Add("Sharpshooter", new CharacterTrait("Sharpshooter", "When it comes to gunning, a sharpshooter never misses."));
+        traitDictionary.Add("Explorer", new CharacterTrait("Explorer", "Explorers yearn for adventure and always seem to happen upon mysterious locales."));
 
     }
 

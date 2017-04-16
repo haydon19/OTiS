@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class UITraitObject : MonoBehaviour, IPointerEnterHandler
+public class UITraitObject : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
 
     public Text traitName;
@@ -18,8 +18,8 @@ public class UITraitObject : MonoBehaviour, IPointerEnterHandler
 
         traitName = GetComponentInChildren<Text>();
         traitToggle = GetComponentInChildren<Toggle>();
-        //traitToggle.OnPointerClick.
-
+        traitToggle.onValueChanged.AddListener(CheckboxValueChanged);
+        //traitToggle.OnPointerClick
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -27,6 +27,18 @@ public class UITraitObject : MonoBehaviour, IPointerEnterHandler
         TraitSelectionPanel.instance.traitInfo.setTrait(trait);
     }
 
-    
+    public void CheckboxValueChanged(bool isOn)
+    {
 
+        TraitSelectionPanel.instance.traitsChosen += isOn ? 1 : -1;
+        TraitSelectionPanel.instance.selectTrait();
+
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+        traitToggle.isOn = !traitToggle.isOn;
+        
+    }
 }

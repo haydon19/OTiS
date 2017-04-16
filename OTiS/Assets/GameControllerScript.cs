@@ -68,7 +68,7 @@ public class GameControllerScript : MonoBehaviour {
     public void createEventOptionsDictionary()
     {
         eventOptions = new Dictionary<EventType, List<OptionType>>();
-        eventOptions.Add(EventType.RogueAstroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
+        eventOptions.Add(EventType.RogueAsteroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
         eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
         eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Gossip, OptionType.Intimidate });
 
@@ -79,7 +79,7 @@ public class GameControllerScript : MonoBehaviour {
     public void createPossibleEventsDictionary()
     {
         possibleEvents = new Dictionary<EventType, Event>();
-        possibleEvents.Add(EventType.RogueAstroid, new RogueAstroidEvent(EventType.RogueAstroid, 0));
+        possibleEvents.Add(EventType.RogueAsteroid, new RogueAsteroidEvent(EventType.RogueAsteroid, 0));
         possibleEvents.Add(EventType.EnemyShip, new EnemyShipEvent(EventType.EnemyShip, 1));
         possibleEvents.Add(EventType.EncounterNPC, new EncounterNPC(EventType.EncounterNPC, 2));
         possibleEvents.Add(EventType.Statement, new StatementEvent(EventType.Statement, 3));
@@ -213,7 +213,7 @@ public class GameControllerScript : MonoBehaviour {
             validEvents.Add(EventType.NewEnemy);
         }*/
 
-        validEvents.Add(EventType.RogueAstroid);
+        validEvents.Add(EventType.RogueAsteroid);
         validEvents.Add(EventType.EnemyShip);
         validEvents.Add(EventType.EncounterNPC);
         /*

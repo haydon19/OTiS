@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAstroid, EncounterNPC};
+public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAsteroid, EncounterNPC};
 
 public abstract class Event {
 
@@ -196,10 +196,10 @@ public class GameOverEvent : Event
 
 }
 
-public class RogueAstroidEvent : Event
+public class RogueAsteroidEvent : Event
 {
 
-    public RogueAstroidEvent(EventType type, int id) : base(type, id)
+    public RogueAsteroidEvent(EventType type, int id) : base(type, id)
     {
 
     }

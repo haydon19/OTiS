@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 public class GameData : MonoBehaviour {
 
@@ -8,6 +10,7 @@ public class GameData : MonoBehaviour {
     public Character player1;
     public static int characterIndex;
     public Dictionary<string, CharacterTrait> traitDictionary;
+    public Dictionary<string, Sprite> eventSpriteDictionary;
     // Use this for initialization
     void Awake () {
         if (instance == null)
@@ -23,9 +26,22 @@ public class GameData : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        LoadSprites();
         createTraitDictionary();
     }
 
+    void LoadSprites()
+    {
+        eventSpriteDictionary = new Dictionary<string, Sprite>();
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/EventImages/");
+
+        Debug.Log("LOADED RESOURCE:");
+        foreach (Sprite s in sprites)
+        {
+            Debug.Log(s.name);
+            eventSpriteDictionary[s.name] = s;
+        }
+    }
 
     public int nextCharID()
     {

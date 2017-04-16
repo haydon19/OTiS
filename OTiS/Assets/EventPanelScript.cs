@@ -29,6 +29,7 @@ public class EventPanelScript : MonoBehaviour {
     {
         currentEvent = newEvent;
         eventDesciption.text = currentEvent.Summary;
+        eventImage.sprite = GameData.instance.eventSpriteDictionary[newEvent.Type.ToString()];
     }
 
     string formatEventText()

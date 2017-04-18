@@ -8,6 +8,7 @@ public class GameData : MonoBehaviour {
 
     public static GameData instance;
     public Character player1;
+    public List<Character> party = new List<Character>();
     public static int characterIndex;
     public Dictionary<string, CharacterTrait> traitDictionary;
     public Dictionary<string, Sprite> eventSpriteDictionary;

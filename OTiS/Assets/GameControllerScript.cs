@@ -176,13 +176,14 @@ public class GameControllerScript : MonoBehaviour {
 
         party = new PartyManager();
         //Debug.Log(GameControllerScript.instance.party.ToString());
-        if(GameData.instance.player1 != null)
+        if(GameData.instance.party != null)
         {
-            party.addPartyMember(GameData.instance.player1);
+            foreach(Character c in GameData.instance.party)
+            party.addPartyMember(c);
         }
 
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
-        for (int i = 0; i < 3; i++)
+        while(party.partyMembers.Count < 4)
         {
             party.addPartyMember();
         }

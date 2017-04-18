@@ -11,6 +11,7 @@ public class CharacterCreationPanel : MonoBehaviour {
     public const int MAX_STAT_VALUE = 99;
 
     public static CharacterCreationPanel instance;
+    public PartyMembersContainer partyMembersPanel;
 
     private void Awake()
     {
@@ -42,13 +43,18 @@ public class CharacterCreationPanel : MonoBehaviour {
 
     public void CreateCharacter()
     {
-        GameData.instance.player1 = new Character(characterNameField.text,
+
+        Character temp = new Character(characterNameField.text,
             GameData.instance.nextCharID(),
             int.Parse(startingStats.StatObjectList["Strength"].statValue.text),
             int.Parse(startingStats.StatObjectList["Smarts"].statValue.text),
             int.Parse(startingStats.StatObjectList["Agility"].statValue.text),
             int.Parse(startingStats.StatObjectList["Piloting"].statValue.text));
 
+        GameData.instance.party.Add(temp);
+
+
+        partyMembersPanel.addCharacter(temp);
         //GameData.instance.player1.addTrait();
 
     }

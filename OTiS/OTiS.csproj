@@ -91,6 +91,9 @@
     <Compile Include="Assets\OptionObjectButton.cs" />
     <Compile Include="Assets\PartyInfoPanel.cs" />
     <Compile Include="Assets\PartyManagerPanel.cs" />
+    <Compile Include="Assets\PartyMemberIconObject.cs" />
+    <Compile Include="Assets\PartyMembersContainer.cs" />
+    <Compile Include="Assets\PartyMembersPanel.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\CharacterTrait.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
@@ -118,6 +121,7 @@
     <Compile Include="Assets\TraitSelectionPanel.cs" />
     <Compile Include="Assets\UIManager.cs" />
     <Compile Include="Assets\UITraitObject.cs" />
+    <Compile Include="Assets\image.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

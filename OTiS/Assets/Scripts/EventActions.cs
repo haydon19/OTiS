@@ -37,5 +37,14 @@ public static class EventActions  {
         activeEvent.Summary += "\nThe party loses " + amount + " " + randomResource + ".";
     }
 
+    public static void loseResource(Event activeEvent, string resource)
+    {
+        int amount = randomAmounts[Random.Range(0, randomAmounts.Count)];
+
+
+        GameControllerScript.instance.party.changeShipStat(resource, -amount);
+        activeEvent.Summary += "\nThe party loses " + amount + " " + resource + ".";
+    }
+
 
 }

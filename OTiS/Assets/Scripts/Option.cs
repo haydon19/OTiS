@@ -4,7 +4,7 @@ using UnityEngine;
 //public enum OptionType {  };
 
 
-    public enum OptionType { Avoid, Blast, Land, Board, Thrusters, Comms,Intimidate, Recruit, Gossip };
+    public enum OptionType { Avoid, Blast, Land, Board, Thrusters, Comms, Intimidate, Recruit, Gossip, Scan, Bypass };
 public class Option {
     //string type;
     string name;
@@ -85,7 +85,7 @@ public class Option {
     public void setDescription()
     {
         string s = GameControllerScript.instance.optionStrings[type][Random.Range(0, GameControllerScript.instance.optionStrings[type].Count)];
-        description = s.Replace("<actor>", actor.Name).Replace("<subject>", subject);
+        description = s.Replace("<actor>", actor.Name).Replace("<subject>", subject).Replace("<partyship>", GameControllerScript.instance.party.ship.Name);
     }
 
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAsteroid, EncounterNPC};
+public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAsteroid, EncounterNPC, EncounterPlanet};
 
 public abstract class Event {
 
@@ -417,5 +417,69 @@ public class EncounterNPC : Event
     public override void setSummary()
     {
         summary = "The party happens upon a mysterious stranger named " + characters[0].Name + ".";
+    }
+}
+
+public class EncounterPlanet : Event
+{
+
+    public EncounterPlanet(EventType type, int id) : base(type, id)
+    {
+
+    }
+
+    public override void EnterEvent()
+    {
+        characters.Clear();
+
+        //characters.Add();
+        subject = "Planet X01";
+        getOptions();
+        setSummary();
+
+        EventPanelScript.instance.SetEvent(this);
+    }
+
+    public override void HandleEvent(OptionType oType)
+    {
+        switch (oType)
+        {
+            case (OptionType.Land):
+                if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
+                {
+                    summary = characters[0].Name + " has successfully landed on " + subject + " allowing the party to scavange for resources.";
+                    EventActions.gainRandomResource(this);
+                    EventActions.gainRandomResource(this);
+                }
+                else
+                {
+                    summary = "As " + characters[0].Name + " descends into the atmosphere, an electrical storm knocks out the " + GameControllerScript.instance.party.ship.Name + "'s engines, causing it to crash.";
+                    EventActions.loseResource(this, "Shields");
+                    EventActions.loseResource(this, "Fuel");
+                }
+                break;
+            case (OptionType.Scan):
+                if (Random.Range(0, 100) > 60)
+                {
+                    summary = characters[1].Name + " scans " + subject + " and determines it is rich with minerals.";
+                    EventActions.gainRandomResource(this);
+                } else
+                {
+                    summary = "The atmosphere of " + subject + " is creating too much interference to properly scan.";
+                }
+                break;
+            case (OptionType.Bypass):
+
+                    summary = characters[2].Name + " guides the ship around the planet.";
+                    EventActions.loseResource(this, "Fuel");
+                break;
+               
+        }
+        LogEvent();
+    }
+
+    public override void setSummary()
+    {
+        summary = "The party spots a planet nearby. A quick XooXle search reveals it's name - " + subject;
     }
 }

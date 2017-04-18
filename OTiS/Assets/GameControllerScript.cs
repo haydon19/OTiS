@@ -71,7 +71,7 @@ public class GameControllerScript : MonoBehaviour {
         eventOptions.Add(EventType.RogueAsteroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
         eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
         eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Gossip, OptionType.Intimidate });
-
+        eventOptions.Add(EventType.EncounterPlanet, new List<OptionType> { OptionType.Land, OptionType.Scan, OptionType.Bypass });
         //options.Add(OptionType.Blast, " ")
 
     }
@@ -84,6 +84,7 @@ public class GameControllerScript : MonoBehaviour {
         possibleEvents.Add(EventType.EncounterNPC, new EncounterNPC(EventType.EncounterNPC, 2));
         possibleEvents.Add(EventType.Statement, new StatementEvent(EventType.Statement, 3));
         possibleEvents.Add(EventType.GameOver, new GameOverEvent(EventType.Statement, 4));
+        possibleEvents.Add(EventType.EncounterPlanet, new EncounterPlanet(EventType.EncounterPlanet, 5));
 
 
         //options.Add(OptionType.Blast, " ")
@@ -100,6 +101,8 @@ public class GameControllerScript : MonoBehaviour {
         optionStrings.Add(OptionType.Gossip, new List<string> { "<actor> listens to <subject> talk about his adventures", "<actor> chats about the local area with <subject>" });
         optionStrings.Add(OptionType.Intimidate, new List<string> { "<actor> attempts to scare <subject> with a loud roar", "<actor> brandishes a gun to <subject> to show them they means business" });
         optionStrings.Add(OptionType.Recruit, new List<string> { "<actor> trys to recruit <subject> by offering pizza flavoured chips", "<actor> eyes over <subject>'s resume then offers them a job" });
+        optionStrings.Add(OptionType.Scan, new List<string> { "<actor> scans <subject> for lifeforms and resources", "<actor> scans <subject> for lifeforms and resources" });
+        optionStrings.Add(OptionType.Bypass, new List<string> { "<actor> decides it's not worth the crews time and flies the <partyship> past <subject>", "There's no time, we must fly around <subject>" });
 
 
         //options.Add(OptionType.Blast, " ")
@@ -217,6 +220,7 @@ public class GameControllerScript : MonoBehaviour {
         validEvents.Add(EventType.RogueAsteroid);
         validEvents.Add(EventType.EnemyShip);
         validEvents.Add(EventType.EncounterNPC);
+        validEvents.Add(EventType.EncounterPlanet);
         /*
         if(enemyShip == null)
         {

@@ -10,6 +10,7 @@ public class GameData : MonoBehaviour {
     public Character player1;
     public List<Character> party = new List<Character>();
     public static int characterIndex;
+    public Sprite defaultEventSprite = null;
     public Dictionary<string, CharacterTrait> traitDictionary;
     public Dictionary<string, Sprite> eventSpriteDictionary;
     // Use this for initialization
@@ -29,6 +30,17 @@ public class GameData : MonoBehaviour {
 
         LoadSprites();
         createTraitDictionary();
+    }
+
+    public Sprite getEventSprite(string eventName)
+    {
+        if (eventSpriteDictionary.ContainsKey(eventName))
+        {
+            return eventSpriteDictionary[eventName];
+        } else
+        {
+            return defaultEventSprite;
+        }
     }
 
     void LoadSprites()

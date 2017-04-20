@@ -261,6 +261,7 @@ public class RogueAsteroidEvent : Event
                     summary = characters[2].Name + " has successfully landed on the Asteroid, allowing the party to scavange for resources.";
                     EventActions.gainRandomResource(this);
                     EventActions.gainRandomResource(this);
+                    GameControllerScript.instance.locationState = LocationState.Land;
                 }
                 else
                 {
@@ -411,6 +412,8 @@ public class EncounterNPC : Event
                 }
                 break;
         }
+        summary += "\nThe crew fires up the ship and heads back into space.";
+        GameControllerScript.instance.locationState = LocationState.Space;
         LogEvent();
     }
 
@@ -450,12 +453,14 @@ public class EncounterPlanet : Event
                     summary = characters[0].Name + " has successfully landed on " + subject + " allowing the party to scavange for resources.";
                     EventActions.gainRandomResource(this);
                     EventActions.gainRandomResource(this);
+                    GameControllerScript.instance.locationState = LocationState.Land;
                 }
                 else
                 {
                     summary = "As " + characters[0].Name + " descends into the atmosphere, an electrical storm knocks out the " + GameControllerScript.instance.party.ship.Name + "'s engines, causing it to crash.";
                     EventActions.loseResource(this, "Shields");
                     EventActions.loseResource(this, "Fuel");
+                    GameControllerScript.instance.locationState = LocationState.Land;
                 }
                 break;
             case (OptionType.Scan):

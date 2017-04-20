@@ -209,18 +209,29 @@ public class GameControllerScript : MonoBehaviour {
     {
         validEvents.Clear();
 
-            validEvents.Add(EventType.Statement);
-        
+        //validEvents.Add(EventType.Statement);
+
         /*
         if (Enemies.Count < 5)
         {
             validEvents.Add(EventType.NewEnemy);
         }*/
+        switch (locationState)
+        {
+            case LocationState.Space:
+                validEvents.Add(EventType.RogueAsteroid);
+                validEvents.Add(EventType.EnemyShip);
+                validEvents.Add(EventType.EncounterPlanet);
+                break;
 
-        validEvents.Add(EventType.RogueAsteroid);
-        validEvents.Add(EventType.EnemyShip);
-        validEvents.Add(EventType.EncounterNPC);
-        validEvents.Add(EventType.EncounterPlanet);
+            case LocationState.Land:
+                validEvents.Add(EventType.EncounterNPC);
+                break;
+
+        }
+
+
+
         /*
         if(enemyShip == null)
         {

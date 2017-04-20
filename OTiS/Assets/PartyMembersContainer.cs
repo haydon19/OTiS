@@ -27,6 +27,7 @@ public class PartyMembersContainer : MonoBehaviour {
     {
         PartyMemberIconObject newItem = Instantiate(proto, transform.position, transform.rotation, transform) as PartyMemberIconObject;
         newItem.Description.text = characterObject.Name;
+        newItem.Sprite.sprite = GameData.instance.characterPortraitDictionary[characterObject.Race];
         partyMemberObjects.Add(characterObject.CharID, newItem);
 
 

@@ -18,7 +18,8 @@ public class UITraitObject : MonoBehaviour, IPointerEnterHandler, IPointerClickH
 
         traitName = GetComponentInChildren<Text>();
         traitToggle = GetComponentInChildren<Toggle>();
-        traitToggle.onValueChanged.AddListener(CheckboxValueChanged);
+        traitToggle.interactable = false;
+        
         //traitToggle.OnPointerClick
     }
 
@@ -29,16 +30,29 @@ public class UITraitObject : MonoBehaviour, IPointerEnterHandler, IPointerClickH
 
     public void CheckboxValueChanged(bool isOn)
     {
-
-        TraitSelectionPanel.instance.traitsChosen += isOn ? 1 : -1;
-        TraitSelectionPanel.instance.selectTrait();
-
+        
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!traitToggle.isOn)
+        {
+            if (TraitSelectionPanel.instance.traitsChosen < TraitSelectionPanel.MAX_TRAITS)
+            {
+                TraitSelectionPanel.instance.traitsChosen += 1;
+                TraitSelectionPanel.instance.selectTrait();
+                traitToggle.isOn = true;
+            }
+        }
+        else
+        {
+            if (TraitSelectionPanel.instance.traitsChosen > 0)
+            {
+                TraitSelectionPanel.instance.traitsChosen += -1;
+                TraitSelectionPanel.instance.selectTrait();
+                traitToggle.isOn = false;
+            }
+        }
 
-        traitToggle.isOn = !traitToggle.isOn;
-        
     }
 }

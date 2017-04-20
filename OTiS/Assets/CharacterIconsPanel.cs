@@ -99,7 +99,7 @@ public class CharacterIconsPanel : MonoBehaviour {
         //LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         newItem.Init();
         newItem.charName.text = characterObject.Name;
-        //newItem.Description.supportRichText = true;
+        newItem.portrait.sprite = GameData.instance.characterPortraitDictionary[characterObject.Race];
         newItem.charHealth.text = characterObject.getStat("Health") + " / " + "15";
 
         charIconList.Add(characterObject.CharID, newItem);

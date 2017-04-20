@@ -7,9 +7,15 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
     Dictionary<string, int> stats = new Dictionary<string, int>();
     string name;
     string charID;
+    string race;
+    string gender;
     int iD;
     bool dead;
     public List<CharacterTrait> traits;
+    private int strength;
+    private int smarts;
+    private int agility;
+    private int piloting;
 
     public string Name
     {
@@ -76,10 +82,38 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         }
     }
 
-    public Character(string name, int ID, int Strength, int Smarts, int Agility, int Piloting)
+    public string Race
+    {
+        get
+        {
+            return race;
+        }
+
+        set
+        {
+            race = value;
+        }
+    }
+
+    public string Gender
+    {
+        get
+        {
+            return gender;
+        }
+
+        set
+        {
+            gender = value;
+        }
+    }
+
+    public Character(string name, string race, string gender, int ID, int Strength, int Smarts, int Agility, int Piloting)
     {
         Dead = false;
         this.name = name;
+        this.race = race;
+        this.gender = gender;
         this.ID = ID;
         this.CharID = name + ID;
         setStat("Strength", Strength);
@@ -90,6 +124,16 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         setStat("Health", 15);
 
         traits = new List<CharacterTrait>();
+    }
+
+    public Character(string name, int iD, int strength, int smarts, int agility, int piloting)
+    {
+        this.name = name;
+        this.iD = iD;
+        this.strength = strength;
+        this.smarts = smarts;
+        this.agility = agility;
+        this.piloting = piloting;
     }
 
     public float Attack(IDamageable<float> target)
@@ -108,16 +152,19 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         return damageTaken;
     }
 
+    /*
     public void Charm()
     {
         Debug.Log(Name + " has been charmed.");
         GameControllerScript.instance.Enemies.Remove(this);
         EnemyInfoPanel.instance.removeCharacter(this);
-        Character temp = new Character(Name, ID, getStat("Strength"), getStat("Smarts"), getStat("Agility"), getStat("Piloting"));
+        //Character temp = new Character(Name, ID, getStat("Strength"), getStat("Smarts"), getStat("Agility"), getStat("Piloting"));
         GameControllerScript.instance.party.addPartyMember(temp);
         //CharacterContainer.instance.addCharacter(temp);
 
     }
+
+    */
 
     public bool hasTrait(string traitName)
     {

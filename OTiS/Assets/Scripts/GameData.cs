@@ -13,6 +13,8 @@ public class GameData : MonoBehaviour {
     public Sprite defaultEventSprite = null;
     public Dictionary<string, CharacterTrait> traitDictionary;
     public Dictionary<string, Sprite> eventSpriteDictionary;
+    public Dictionary<string, Sprite> characterPortraitDictionary;
+    public List<string> races, genders;
     // Use this for initialization
     void Awake () {
         if (instance == null)
@@ -29,6 +31,8 @@ public class GameData : MonoBehaviour {
         }
 
         LoadSprites();
+        createRaceList();
+        createGenderList();
         createTraitDictionary();
     }
 
@@ -46,13 +50,21 @@ public class GameData : MonoBehaviour {
     void LoadSprites()
     {
         eventSpriteDictionary = new Dictionary<string, Sprite>();
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/EventImages/");
+        Sprite[] eventSprites = Resources.LoadAll<Sprite>("Images/EventImages/");
 
-        Debug.Log("LOADED RESOURCE:");
-        foreach (Sprite s in sprites)
+        foreach (Sprite s in eventSprites)
+        {
+            //Debug.Log(s.name);
+            eventSpriteDictionary[s.name] = s;
+        }
+
+        characterPortraitDictionary = new Dictionary<string, Sprite>();
+        Sprite[] portraitSprites = Resources.LoadAll<Sprite>("Images/CharacterPortraits/");
+
+        foreach (Sprite s in portraitSprites)
         {
             Debug.Log(s.name);
-            eventSpriteDictionary[s.name] = s;
+            characterPortraitDictionary[s.name] = s;
         }
     }
 
@@ -73,5 +85,31 @@ public class GameData : MonoBehaviour {
 
     }
 
+   public void createRaceList()
+    {
+        races = new List<string>();
+        races.Add("Terrestrial");
+        races.Add("Martian");
+        races.Add("Xorpan");
+
+    }
+
+    public string getRandomRace()
+    {
+        return races[Random.Range(0, races.Count)];
+    }
+
+    public void createGenderList()
+    {
+        genders = new List<string>();
+        genders.Add("Male");
+        genders.Add("Female");
+        genders.Add("Neutral");
+    }
+
+    public string getRandomGender()
+    {
+        return genders[Random.Range(0, genders.Count)];
+    }
 
 }

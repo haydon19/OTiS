@@ -7,6 +7,8 @@ public class CharacterCreationPanel : MonoBehaviour {
     public InputField characterNameField;
     public StatSetterPanel startingStats;
     public Character player;
+    public Image characterPortrait;
+    public Dropdown characterRace, characterGender;
     public const int DEFAULT_STAT_VALUE = 5;
     public const int MAX_STAT_VALUE = 99;
 
@@ -33,7 +35,15 @@ public class CharacterCreationPanel : MonoBehaviour {
         stats.Add("Agility");
         stats.Add("Piloting");
         startingStats.initStats(stats);
+        characterRace.onValueChanged.AddListener(CharacterRaceChanged);
+        
 
+    }
+
+    public void CharacterRaceChanged(int raceValue)
+    {
+        //Debug.Log(characterRace.options[raceValue].text);
+        characterPortrait.sprite = GameData.instance.characterPortraitDictionary[characterRace.options[characterRace.value].text];
     }
 
     private void OnEnable()
@@ -43,8 +53,10 @@ public class CharacterCreationPanel : MonoBehaviour {
 
     public void CreateCharacter()
     {
-
+        Debug.Log(characterGender.options[characterGender.value].text);
         Character temp = new Character(characterNameField.text,
+            characterRace.options[characterRace.value].text,
+            characterGender.options[characterGender.value].text,
             GameData.instance.nextCharID(),
             int.Parse(startingStats.StatObjectList["Strength"].statValue.text),
             int.Parse(startingStats.StatObjectList["Smarts"].statValue.text),

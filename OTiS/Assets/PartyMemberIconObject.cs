@@ -56,7 +56,7 @@ public class PartyMemberIconObject : MonoBehaviour, IPointerClickHandler
         Description = this.GetComponentInChildren<Text>();
 
 
-        Sprite = this.GetComponentInChildren<Image>();
+        Sprite = transform.FindChild("CharacterIcon").gameObject.GetComponent<Image>();
     }
 
 

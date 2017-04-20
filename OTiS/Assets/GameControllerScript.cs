@@ -134,7 +134,7 @@ public class GameControllerScript : MonoBehaviour {
 
     public Character createNPC()
     {
-        return new Character(getRandomName(), GameData.instance.nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
+        return new Character(getRandomName(), GameData.instance.getRandomRace(), GameData.instance.getRandomGender(), GameData.instance.nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
     }
 
     public Character getRandomPartyMember()

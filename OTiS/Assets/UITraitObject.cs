@@ -9,7 +9,7 @@ public class UITraitObject : MonoBehaviour, IPointerEnterHandler, IPointerClickH
 {
 
     public Text traitName;
-    public CharacterTrait trait;
+    public Trait trait;
     public Toggle traitToggle;
     // Use this for initialization
 
@@ -40,8 +40,12 @@ public class UITraitObject : MonoBehaviour, IPointerEnterHandler, IPointerClickH
             if (TraitSelectionPanel.instance.traitsChosen < TraitSelectionPanel.MAX_TRAITS)
             {
                 TraitSelectionPanel.instance.traitsChosen += 1;
-                TraitSelectionPanel.instance.selectTrait();
+                TraitSelectionPanel.instance.selectTrait(trait);
                 traitToggle.isOn = true;
+                foreach (StatBonus sb in trait.StatBonuses)
+                {
+                    StatSetterPanel.instance.StatObjectList[sb.StatName].AddStatBonus(sb);
+                }
             }
         }
         else
@@ -49,8 +53,12 @@ public class UITraitObject : MonoBehaviour, IPointerEnterHandler, IPointerClickH
             if (TraitSelectionPanel.instance.traitsChosen > 0)
             {
                 TraitSelectionPanel.instance.traitsChosen += -1;
-                TraitSelectionPanel.instance.selectTrait();
+                TraitSelectionPanel.instance.selectTrait(trait);
                 traitToggle.isOn = false;
+                foreach (StatBonus sb in trait.StatBonuses)
+                {
+                    StatSetterPanel.instance.StatObjectList[sb.StatName].RemoveStatBonus(sb);
+                }
             }
         }
 

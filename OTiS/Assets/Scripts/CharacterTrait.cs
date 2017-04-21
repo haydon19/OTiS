@@ -4,11 +4,11 @@ using UnityEngine;
 
 public enum TraitType { Engineer };
 
-public class CharacterTrait {
+public class Trait {
 
     string name;
     string description;
-
+    List<StatBonus> statBonuses;
     public string Name
     {
         get
@@ -35,9 +35,23 @@ public class CharacterTrait {
         }
     }
 
-    public CharacterTrait(string name, string description)
+    public List<StatBonus> StatBonuses
+    {
+        get
+        {
+            return statBonuses;
+        }
+
+        set
+        {
+            statBonuses = value;
+        }
+    }
+
+    public Trait(string name, string description, List<StatBonus> bonuses)
     {
         this.name = name;
         this.description = description;
+        StatBonuses = bonuses;
     }
 }

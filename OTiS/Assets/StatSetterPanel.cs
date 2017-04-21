@@ -47,7 +47,7 @@ public class StatSetterPanel : MonoBehaviour {
                 //If the stat doesnt exist and we are setting it, lets just create it
                 StatObjectList.Add(stat, newItem);
                 StatObjectList[stat].statName.text = stat;
-                StatObjectList[stat].statValue.text = ""+CharacterCreationPanel.DEFAULT_STAT_VALUE;
+                StatObjectList[stat].UpdateStat(CharacterCreationPanel.DEFAULT_STAT_VALUE);
 
         }
     }

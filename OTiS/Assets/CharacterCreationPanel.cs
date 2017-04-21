@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CharacterCreationPanel : MonoBehaviour {
     public InputField characterNameField;
     public StatSetterPanel startingStats;
+    
     public Character player;
     public Image characterPortrait;
     public Dropdown characterRace, characterGender;
@@ -31,7 +32,7 @@ public class CharacterCreationPanel : MonoBehaviour {
     {
         List<string> stats = new List<string>();
         stats.Add("Strength");
-        stats.Add("Smarts");
+        stats.Add("Mind");
         stats.Add("Agility");
         stats.Add("Piloting");
         startingStats.initStats(stats);
@@ -58,10 +59,10 @@ public class CharacterCreationPanel : MonoBehaviour {
             characterRace.options[characterRace.value].text,
             characterGender.options[characterGender.value].text,
             GameData.instance.nextCharID(),
-            int.Parse(startingStats.StatObjectList["Strength"].statValue.text),
-            int.Parse(startingStats.StatObjectList["Smarts"].statValue.text),
-            int.Parse(startingStats.StatObjectList["Agility"].statValue.text),
-            int.Parse(startingStats.StatObjectList["Piloting"].statValue.text));
+            startingStats.StatObjectList["Strength"].statValue,
+            startingStats.StatObjectList["Mind"].statValue,
+            startingStats.StatObjectList["Agility"].statValue,
+            startingStats.StatObjectList["Piloting"].statValue);
 
         GameData.instance.party.Add(temp);
 

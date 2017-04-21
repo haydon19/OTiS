@@ -11,9 +11,9 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
     string gender;
     int iD;
     bool dead;
-    public List<CharacterTrait> traits;
+    public List<Trait> traits;
     private int strength;
-    private int smarts;
+    private int Mind;
     private int agility;
     private int piloting;
 
@@ -108,7 +108,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         }
     }
 
-    public Character(string name, string race, string gender, int ID, int Strength, int Smarts, int Agility, int Piloting)
+    public Character(string name, string race, string gender, int ID, int Strength, int Mind, int Agility, int Piloting)
     {
         Dead = false;
         this.name = name;
@@ -117,21 +117,21 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         this.ID = ID;
         this.CharID = name + ID;
         setStat("Strength", Strength);
-        setStat("Smarts", Smarts);
+        setStat("Mind", Mind);
         setStat("Agility", Agility);
         setStat("Piloting", Piloting);
         setStat("Level", 1);
         setStat("Health", 15);
 
-        traits = new List<CharacterTrait>();
+        traits = new List<Trait>();
     }
 
-    public Character(string name, int iD, int strength, int smarts, int agility, int piloting)
+    public Character(string name, int iD, int strength, int Mind, int agility, int piloting)
     {
         this.name = name;
         this.iD = iD;
         this.strength = strength;
-        this.smarts = smarts;
+        this.Mind = Mind;
         this.agility = agility;
         this.piloting = piloting;
     }
@@ -158,7 +158,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         Debug.Log(Name + " has been charmed.");
         GameControllerScript.instance.Enemies.Remove(this);
         EnemyInfoPanel.instance.removeCharacter(this);
-        //Character temp = new Character(Name, ID, getStat("Strength"), getStat("Smarts"), getStat("Agility"), getStat("Piloting"));
+        //Character temp = new Character(Name, ID, getStat("Strength"), getStat("Mind"), getStat("Agility"), getStat("Piloting"));
         GameControllerScript.instance.party.addPartyMember(temp);
         //CharacterContainer.instance.addCharacter(temp);
 
@@ -169,7 +169,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
     public bool hasTrait(string traitName)
     {
         bool check = false;
-        foreach(CharacterTrait t in traits)
+        foreach(Trait t in traits)
         {
             if (t.Name == traitName)
             {
@@ -181,7 +181,7 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         return check;
     }
 
-    public void addTrait(CharacterTrait trait)
+    public void addTrait(Trait trait)
     {
         traits.Add(trait);
     }

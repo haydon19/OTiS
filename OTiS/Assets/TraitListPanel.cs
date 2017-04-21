@@ -9,7 +9,7 @@ public class TraitListPanel : MonoBehaviour {
     public UITraitObject traitItemProto;
     public List<UITraitObject> traits = new List<UITraitObject>();
 
-    public void addTraitItem(CharacterTrait trait)
+    public void addTraitItem(Trait trait)
     {
         UITraitObject newItem = Instantiate(traitItemProto, transform.position, transform.rotation, transform) as UITraitObject;
 
@@ -21,9 +21,9 @@ public class TraitListPanel : MonoBehaviour {
     }
 
 
-    public List<CharacterTrait> getSelectedTraits()
+    public List<Trait> getSelectedTraits()
     {
-        List<CharacterTrait> traitList = new List<CharacterTrait>();
+        List<Trait> traitList = new List<Trait>();
 
         foreach(UITraitObject tObj in traits)
         {

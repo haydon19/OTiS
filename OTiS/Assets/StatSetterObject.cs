@@ -5,29 +5,32 @@ using UnityEngine.UI;
 
 public class StatSetterObject : MonoBehaviour {
     public Text statName;
-    public Text statValue;
+    public Text statTextValue;
+    public int statValue = 0;
     public GameObject buttonContainer;
     public Button incButton, decButton;
-	// Use this for initialization
-	
-	void Awake () {
+    public List<StatBonus> statBonuses;
+    // Use this for initialization
+
+    void Awake() {
         List<Text> results = new List<Text>();
+        
         GetComponentsInChildren<Text>(results);
 
         foreach (Text t in results)
         {
-            if(t.name == "StatName")
+            if (t.name == "StatName")
             {
                 statName = t;
             }
 
             if (t.name == "StatValue")
             {
-                statValue = t;
+                statTextValue = t;
             }
         }
 
-        buttonContainer =  transform.FindChild("ButtonHolder").gameObject;
+        buttonContainer = transform.FindChild("ButtonHolder").gameObject;
 
         List<Button> buttons = new List<Button>();
         GetComponentsInChildren<Button>(buttons);
@@ -44,26 +47,54 @@ public class StatSetterObject : MonoBehaviour {
                 decButton = b;
             }
         }
-
+        statBonuses = new List<StatBonus>();
         incButton.onClick.AddListener(IncrementStat);
         decButton.onClick.AddListener(DecrementStat);
     }
 
     public void IncrementStat()
     {
-        if (int.Parse(statValue.text) < CharacterCreationPanel.MAX_STAT_VALUE)
+        if (statValue < CharacterCreationPanel.MAX_STAT_VALUE)
         {
-            statValue.text = "" + (int.Parse(statValue.text) + 1);
+            UpdateStat(1);
         }
     }
 
     public void DecrementStat()
     {
-        if (int.Parse(statValue.text) > CharacterCreationPanel.DEFAULT_STAT_VALUE)
+        if (statValue > CharacterCreationPanel.DEFAULT_STAT_VALUE)
         {
-            statValue.text = "" + (int.Parse(statValue.text) - 1);
+            UpdateStat(-1);
+
         }
 
     }
 
+    public void AddStatBonus(StatBonus sb){
+        statBonuses.Add(sb);
+        UpdateStat(sb.BonusValue);
+    }
+
+    public void RemoveStatBonus(StatBonus sb)
+    {
+        statBonuses.Remove(sb);
+        UpdateStat(-sb.BonusValue);
+    }
+
+    public void UpdateStat(int value)
+    {
+        string s;
+        string valueString;
+        statValue += value;
+        valueString = statValue.ToString();
+        if (statBonuses.Count > 0)
+        {
+            
+            s = "<color=green>value</color>";
+            statTextValue.text = s.Replace("value", valueString);
+        } else
+        {
+            statTextValue.text = valueString;
+        }
+    }
 }

@@ -32,15 +32,17 @@ public class TraitSelectionPanel : MonoBehaviour {
 
     }
 
-    public void selectTrait()
+    public void selectTrait(Trait trait)
     {
         traitsRemaining.text = traitsChosen + "/" + MAX_TRAITS + " traits selected.";
+       // AddStatBonus(trait);
     }
+
 
 
     public void populateTraitPanel()
     {
-        foreach(KeyValuePair<string, CharacterTrait> trait in GameData.instance.traitDictionary)
+        foreach(KeyValuePair<string, Trait> trait in GameData.instance.traitDictionary)
         {
             traitList.addTraitItem(trait.Value);
         }

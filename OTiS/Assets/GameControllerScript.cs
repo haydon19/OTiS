@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum GameState { Start, Active, GameOver};
 
-public enum Stat { Strength, Smarts, Agility };
+public enum Stat { Strength, Mind, Agility };
 
 public enum Resource { Fuel, Shields, Medicine };
 
@@ -19,7 +19,7 @@ public class GameControllerScript : MonoBehaviour {
     public static GameControllerScript instance;
     public Dictionary<int, string> names;
     List<string> shipNames;
-    public List<string> characterStatNames = new List<string> { "Strength", "Agility", "Smarts" };
+    public List<string> characterStatNames = new List<string> { "Strength", "Agility", "Mind" };
     public List<string> resourceNames = new List<string> { "Fuel", "Shields", "Ammo" };
 
     public Dictionary<OptionType, List<string>> options;
@@ -128,7 +128,7 @@ public class GameControllerScript : MonoBehaviour {
         int rand = Random.Range(0, enemyKeyList.Count);
         string randomKey = enemyKeyList[rand];
         enemyDictionary[randomKey].ID += 1;
-        Enemy enemy = new Enemy(enemyDictionary[randomKey].Name, enemyDictionary[randomKey].ID, enemyDictionary[randomKey].getStat("Strength"), enemyDictionary[randomKey].getStat("Smarts"), enemyDictionary[randomKey].getStat("Agility"), enemyDictionary[randomKey].getStat("Piloting"));
+        Enemy enemy = new Enemy(enemyDictionary[randomKey].Name, enemyDictionary[randomKey].ID, enemyDictionary[randomKey].getStat("Strength"), enemyDictionary[randomKey].getStat("Mind"), enemyDictionary[randomKey].getStat("Agility"), enemyDictionary[randomKey].getStat("Piloting"));
         return enemy;
     }
 

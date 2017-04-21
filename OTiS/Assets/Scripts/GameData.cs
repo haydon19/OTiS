@@ -11,7 +11,7 @@ public class GameData : MonoBehaviour {
     public List<Character> party = new List<Character>();
     public static int characterIndex;
     public Sprite defaultEventSprite = null;
-    public Dictionary<string, CharacterTrait> traitDictionary;
+    public Dictionary<string, Trait> traitDictionary;
     public Dictionary<string, Sprite> eventSpriteDictionary;
     public Dictionary<string, Sprite> characterPortraitDictionary;
     public List<string> races, genders;
@@ -75,13 +75,13 @@ public class GameData : MonoBehaviour {
 
     public void createTraitDictionary()
     {
-        traitDictionary = new Dictionary<string, CharacterTrait>();
-        traitDictionary.Add("Engineer", new CharacterTrait("Engineer", "Enginners are adept at mechanical workings."));
-        traitDictionary.Add("Diplomat", new CharacterTrait("Diplomat", "A diplomat has exeptional negotiating skills."));
-        traitDictionary.Add("Pirate", new CharacterTrait("Pirate", "Pirates will do whatever it takes to make some coin, even questionable things."));
-        traitDictionary.Add("Botanist", new CharacterTrait("Botanist", "A botanist can identify strange plants and even learn to grow their own."));
-        traitDictionary.Add("Sharpshooter", new CharacterTrait("Sharpshooter", "When it comes to gunning, a sharpshooter never misses."));
-        traitDictionary.Add("Explorer", new CharacterTrait("Explorer", "Explorers yearn for adventure and always seem to happen upon mysterious locales."));
+        traitDictionary = new Dictionary<string, Trait>();
+        traitDictionary.Add("Engineer", new Trait("Engineer", "Enginners are adept at mechanical workings.", new List<StatBonus> { new StatBonus("Strength", 2), new StatBonus("Piloting", 1)}));
+        traitDictionary.Add("Diplomat", new Trait("Diplomat", "A diplomat has exeptional negotiating skills.", new List<StatBonus> { new StatBonus("Mind", 2), new StatBonus("Strength", 1) }));
+        traitDictionary.Add("Pirate", new Trait("Pirate", "Pirates will do whatever it takes to make some coin, even questionable things.", new List<StatBonus> { new StatBonus("Piloting", 2), new StatBonus("Agility", 1) }));
+        traitDictionary.Add("Botanist", new Trait("Botanist", "A botanist can identify strange plants and even learn to grow their own.", new List<StatBonus> { new StatBonus("Mind", 3) }));
+        traitDictionary.Add("Sharpshooter", new Trait("Sharpshooter", "When it comes to gunning, a sharpshooter never misses.", new List<StatBonus> { new StatBonus("Agility", 2), new StatBonus("Mind", 1) }));
+        traitDictionary.Add("Explorer", new Trait("Explorer", "Explorers yearn for adventure and always seem to happen upon mysterious locales.", new List<StatBonus> { new StatBonus("Agility", 1), new StatBonus("Mind", 1), new StatBonus("Strength", 1), new StatBonus("Piloting", 1) }));
 
     }
 

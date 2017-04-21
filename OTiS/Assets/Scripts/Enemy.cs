@@ -6,7 +6,7 @@ public class Enemy : Character {
     private Enemy enemy;
 
 
-    public Enemy(string name, int ID, int strength, int smarts, int agility, int piloting) : base(name, ID, strength, smarts, agility, piloting) {
+    public Enemy(string name, int ID, int strength, int Mind, int agility, int piloting) : base(name, ID, strength, Mind, agility, piloting) {
 
 
     }

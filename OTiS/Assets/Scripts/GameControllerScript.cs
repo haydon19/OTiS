@@ -11,6 +11,7 @@ public enum Resource { Fuel, Shields, Medicine };
 public enum LocationState { Space, Land };
 
 public class GameControllerScript : MonoBehaviour {
+    public int LightYearsToEOU;
     public PartyManager party;
     public float eventRate = 2.0f;
     public float nextEvent = 0.0f;
@@ -62,7 +63,6 @@ public class GameControllerScript : MonoBehaviour {
         shipNames.Add("Wanderer");
         shipNames.Add("Cheese Mechana");
 
-
     }
 
     public void createEventOptionsDictionary()
@@ -72,7 +72,6 @@ public class GameControllerScript : MonoBehaviour {
         eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
         eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Gossip, OptionType.Intimidate });
         eventOptions.Add(EventType.EncounterPlanet, new List<OptionType> { OptionType.Land, OptionType.Scan, OptionType.Bypass });
-        //options.Add(OptionType.Blast, " ")
 
     }
 
@@ -85,9 +84,6 @@ public class GameControllerScript : MonoBehaviour {
         possibleEvents.Add(EventType.Statement, new StatementEvent(EventType.Statement, 3));
         possibleEvents.Add(EventType.GameOver, new GameOverEvent(EventType.Statement, 4));
         possibleEvents.Add(EventType.EncounterPlanet, new EncounterPlanet(EventType.EncounterPlanet, 5));
-
-
-        //options.Add(OptionType.Blast, " ")
 
     }
 
@@ -103,9 +99,6 @@ public class GameControllerScript : MonoBehaviour {
         optionStrings.Add(OptionType.Recruit, new List<string> { "<actor> trys to recruit <subject> by offering pizza flavoured chips", "<actor> eyes over <subject>'s resume then offers them a job" });
         optionStrings.Add(OptionType.Scan, new List<string> { "<actor> scans <subject> for lifeforms and resources", "<actor> scans <subject> for lifeforms and resources" });
         optionStrings.Add(OptionType.Bypass, new List<string> { "<actor> decides it's not worth the crews time and flies the <partyship> past <subject>", "There's no time, we must fly around <subject>" });
-
-
-        //options.Add(OptionType.Blast, " ")
 
     }
 
@@ -176,7 +169,7 @@ public class GameControllerScript : MonoBehaviour {
         createOptionStringsDictionary();
         createShipNameList();
         characterIndex = 0;
-
+        LightYearsToEOU = 30;
         party = new PartyManager();
         //Debug.Log(GameControllerScript.instance.party.ToString());
         if(GameData.instance.party != null)
@@ -208,14 +201,6 @@ public class GameControllerScript : MonoBehaviour {
     public EventType getRandomEvent()
     {
         validEvents.Clear();
-
-        //validEvents.Add(EventType.Statement);
-
-        /*
-        if (Enemies.Count < 5)
-        {
-            validEvents.Add(EventType.NewEnemy);
-        }*/
         switch (locationState)
         {
             case LocationState.Space:
@@ -231,20 +216,6 @@ public class GameControllerScript : MonoBehaviour {
         }
 
 
-
-        /*
-        if(enemyShip == null)
-        {
-            validEvents.Add(EventType.EnemyShip);
-        }
-        */
-
-        /*
-        if(ship != null && ship.getStat("Shields") > 0 && enemyShip != null && enemyShip.getStat("Shields") > 0)
-        {
-            validEvents.Add(EventType.SpaceCombat);
-        }
-        */
         return validEvents[Random.Range(0, validEvents.Count)];
 
     }

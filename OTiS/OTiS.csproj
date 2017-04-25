@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -77,54 +75,54 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CharacterContainer.cs" />
-    <Compile Include="Assets\CharacterCreationPanel.cs" />
-    <Compile Include="Assets\CharacterIconObject.cs" />
-    <Compile Include="Assets\CharacterIconsPanel.cs" />
-    <Compile Include="Assets\CharacterInfoObject.cs" />
-    <Compile Include="Assets\CharacterInfoPanel.cs" />
-    <Compile Include="Assets\CharacterStatPanel.cs" />
-    <Compile Include="Assets\EnemyInfoPanel.cs" />
-    <Compile Include="Assets\EventPanelScript.cs" />
-    <Compile Include="Assets\GameControllerScript.cs" />
-    <Compile Include="Assets\LogItemObject.cs" />
-    <Compile Include="Assets\MainMenuController.cs" />
-    <Compile Include="Assets\OptionMenuController.cs" />
-    <Compile Include="Assets\OptionObjectButton.cs" />
-    <Compile Include="Assets\PartyInfoPanel.cs" />
-    <Compile Include="Assets\PartyManagerPanel.cs" />
-    <Compile Include="Assets\PartyMemberIconObject.cs" />
-    <Compile Include="Assets\PartyMembersContainer.cs" />
-    <Compile Include="Assets\PartyMembersPanel.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\CharacterContainer.cs" />
+    <Compile Include="Assets\Scripts\CharacterCreationPanel.cs" />
+    <Compile Include="Assets\Scripts\CharacterIconObject.cs" />
+    <Compile Include="Assets\Scripts\CharacterIconsPanel.cs" />
+    <Compile Include="Assets\Scripts\CharacterInfoObject.cs" />
+    <Compile Include="Assets\Scripts\CharacterInfoPanel.cs" />
+    <Compile Include="Assets\Scripts\CharacterStatPanel.cs" />
     <Compile Include="Assets\Scripts\CharacterTrait.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\EnemyInfoPanel.cs" />
     <Compile Include="Assets\Scripts\Event.cs" />
     <Compile Include="Assets\Scripts\EventActions.cs" />
     <Compile Include="Assets\Scripts\EventController.cs" />
     <Compile Include="Assets\Scripts\EventDescription.cs" />
     <Compile Include="Assets\Scripts\EventLog.cs" />
+    <Compile Include="Assets\Scripts\EventPanelScript.cs" />
     <Compile Include="Assets\Scripts\GameAction.cs" />
+    <Compile Include="Assets\Scripts\GameControllerScript.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\Scripts\Interfaces.cs" />
     <Compile Include="Assets\Scripts\LogItem.cs" />
+    <Compile Include="Assets\Scripts\LogItemObject.cs" />
+    <Compile Include="Assets\Scripts\MainMenuController.cs" />
     <Compile Include="Assets\Scripts\Option.cs" />
+    <Compile Include="Assets\Scripts\OptionMenuController.cs" />
+    <Compile Include="Assets\Scripts\OptionObjectButton.cs" />
+    <Compile Include="Assets\Scripts\PartyInfoPanel.cs" />
     <Compile Include="Assets\Scripts\PartyManager.cs" />
+    <Compile Include="Assets\Scripts\PartyManagerPanel.cs" />
+    <Compile Include="Assets\Scripts\PartyMemberIconObject.cs" />
+    <Compile Include="Assets\Scripts\PartyMembersContainer.cs" />
+    <Compile Include="Assets\Scripts\PartyMembersPanel.cs" />
+    <Compile Include="Assets\Scripts\ShipInfoPanel.cs" />
+    <Compile Include="Assets\Scripts\ShipStatPanel.cs" />
+    <Compile Include="Assets\Scripts\SoundControllerScript.cs" />
     <Compile Include="Assets\Scripts\SpaceShip.cs" />
+    <Compile Include="Assets\Scripts\StartMenuScript.cs" />
     <Compile Include="Assets\Scripts\StatBonus.cs" />
-    <Compile Include="Assets\ShipInfoPanel.cs" />
-    <Compile Include="Assets\ShipStatPanel.cs" />
-    <Compile Include="Assets\SoundControllerScript.cs" />
-    <Compile Include="Assets\StartMenuScript.cs" />
-    <Compile Include="Assets\StatInfoObject.cs" />
-    <Compile Include="Assets\StatSetterObject.cs" />
-    <Compile Include="Assets\StatSetterPanel.cs" />
-    <Compile Include="Assets\TraitInfoPanel.cs" />
-    <Compile Include="Assets\TraitListPanel.cs" />
-    <Compile Include="Assets\TraitSelectionPanel.cs" />
-    <Compile Include="Assets\UIManager.cs" />
-    <Compile Include="Assets\UITraitObject.cs" />
-    <Compile Include="Assets\image.cs" />
+    <Compile Include="Assets\Scripts\StatInfoObject.cs" />
+    <Compile Include="Assets\Scripts\StatSetterObject.cs" />
+    <Compile Include="Assets\Scripts\StatSetterPanel.cs" />
+    <Compile Include="Assets\Scripts\TraitInfoPanel.cs" />
+    <Compile Include="Assets\Scripts\TraitListPanel.cs" />
+    <Compile Include="Assets\Scripts\TraitSelectionPanel.cs" />
+    <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\Scripts\UITraitObject.cs" />
+    <Compile Include="Assets\Scripts\image.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -488,3 +488,4 @@ public class EncounterPlanet : Event
         summary = "The party spots a planet nearby. A quick XooXle search reveals it's name - " + subject;
     }
 }
+

@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShipType { };
+public enum ShipState { Travelling, Lightspeed, Idle, Drifting };
 
 public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISubject {
 
     public List<Character> passengers;
     Dictionary<string, int> shipResources = new Dictionary<string, int>();
     private string name;
+    ShipState state;
 
     public string Name
     {
@@ -37,11 +38,24 @@ public class SpaceShip : IDamageable<float>, IAttacker<IDamageable<float>>, ISub
         }
     }
 
+    public ShipState State
+    {
+        get
+        {
+            return state;
+        }
+
+        set
+        {
+            state = value;
+        }
+    }
+
     public SpaceShip(string name, int damage)
     {
 
         this.Name = name;
-        
+        State = ShipState.Travelling;
 
         setStat("Fuel", 50);
         setStat("Ammo", 100);

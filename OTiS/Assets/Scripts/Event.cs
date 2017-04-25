@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAsteroid, EncounterNPC, EncounterPlanet};
+public enum EventType { Statement, Death, GameOver, EnemyShip, SpaceCombat, RogueAsteroid, EncounterNPC, EncounterPlanet, EmptyShip };
 
 public abstract class Event {
 
@@ -196,6 +196,36 @@ public class GameOverEvent : Event
 
 }
 
+public class EmptyShipEvent : Event
+{
+
+    public EmptyShipEvent(EventType type, int id) : base(type, id)
+    {
+
+    }
+
+    public override void EnterEvent()
+    {
+        setSummary();
+        LogEvent();
+    }
+
+    public override void setSummary()
+    {
+        summary = " The ship has run out of fuel. The party slowly starves to death drifting in space.";
+
+
+        
+        foreach (Character c in GameControllerScript.instance.party.partyMembers)
+        {
+            c.Damage(c.getStat("Health"));
+        }
+
+        GameControllerScript.instance.party.partyMembers.RemoveAll(item => item.Dead);
+    }
+
+}
+
 public class RogueAsteroidEvent : Event
 {
 
@@ -244,7 +274,9 @@ public class RogueAsteroidEvent : Event
                         summary = "Your heroic dive to the pilots seat is misaligned, luckily it wasn't the hardest asteroid in the galaxy, and your ship destroys it with it's hull.";
                     }
                 }
-            break;
+                GameControllerScript.instance.LightYearsToEOU -= 2;
+                EventActions.loseResource(this, "Fuel");
+                break;
             case (OptionType.Blast):
                 if (characters[1].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
@@ -254,6 +286,8 @@ public class RogueAsteroidEvent : Event
                 {
                     summary = "Ya fucked up blasting it.";
                 }
+                GameControllerScript.instance.LightYearsToEOU -= 1;
+                EventActions.loseResource(this, "Fuel");
                 break;
             case (OptionType.Land):
                 if (characters[2].getStat("Piloting") + Random.Range(0, 3) > 6)
@@ -268,7 +302,10 @@ public class RogueAsteroidEvent : Event
                     summary = characters[2].Name + " misjudges the landing and the ship scapes along the surface of the asteroid. The party decides to cut their losses and not try again.";
                     summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
                     GameControllerScript.instance.party.changeShipStat("Shields", -5);
+                    GameControllerScript.instance.LightYearsToEOU -= 1;
+                    EventActions.loseResource(this, "Fuel");
                 }
+
                 break;
         }
         LogEvent();
@@ -313,18 +350,24 @@ public class EnemyShipEvent : Event
                 if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
                     summary = "It's about to get spicy as " + characters[0].Name + " churns up the engines to the MAX. " + ship.Name + "'s thrusters fuckin' RIP OUT OF THERE.";
+                    GameControllerScript.instance.LightYearsToEOU -= 3;
+                    EventActions.loseResource(this, "Fuel");
                 }
                 else
                 {
                     summary = "Maybe " + ship.Name + " isn't as nimble as we thought, maybe " + characters[0].Name + " is just a shit pilot, only time will tell...";
                     summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
                     GameControllerScript.instance.party.changeShipStat("Shields", -5);
+                    GameControllerScript.instance.LightYearsToEOU -= 1;
+                    EventActions.loseResource(this, "Fuel");
                 }
                 break;
             case (OptionType.Blast):
                 if (characters[1].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
                     summary = "Ya fuckin blasted it bud.";
+                    GameControllerScript.instance.LightYearsToEOU -= 1;
+
                 }
                 else
                 {
@@ -341,7 +384,8 @@ public class EnemyShipEvent : Event
                 else
                 {
                     summary = "The boarding was botched! Luckily you got away unscathed.";
-
+                    EventActions.loseResource(this, "Fuel");
+                    GameControllerScript.instance.LightYearsToEOU -= 1;
                 }
                 break;
         }
@@ -397,7 +441,7 @@ public class EncounterNPC : Event
 
                 summary = characters[2].Name + " learns about a nearby planet rich with resources from " + characters[0].Name;
                 EventActions.gainRandomResource(this);
-
+                GameControllerScript.instance.LightYearsToEOU -= 2;
                 break;
             case (OptionType.Intimidate):
                 if (characters[3].getStat("Strength") > Random.Range(0, 10))
@@ -472,11 +516,13 @@ public class EncounterPlanet : Event
                 {
                     summary = "The atmosphere of " + subject + " is creating too much interference to properly scan.";
                 }
+                EventActions.loseResource(this, "Fuel");
                 break;
             case (OptionType.Bypass):
 
                     summary = characters[2].Name + " guides the ship around the planet.";
                     EventActions.loseResource(this, "Fuel");
+                GameControllerScript.instance.LightYearsToEOU -= 2;
                 break;
                
         }

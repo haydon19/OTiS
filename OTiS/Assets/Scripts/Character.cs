@@ -143,9 +143,10 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
 
     public virtual float Damage(float damageTaken)
     {
-        setStat("Health", getStat("Health") - (int)damageTaken);
-        CharacterContainer.instance.updateCharacterInfo(this);
-        if(getStat("Health") <= 0)
+        //setStat("Health", getStat("Health") - (int)damageTaken);
+        changeStat("Health", -(int)damageTaken);
+        //CharacterContainer.instance.updateCharacterInfo(this);
+        if (getStat("Health") <= 0)
         {
             Dead = true;
         }

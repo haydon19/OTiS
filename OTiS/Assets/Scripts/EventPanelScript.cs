@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EventPanelScript : MonoBehaviour {
     public static EventPanelScript instance;
-
+    public Text LightYearCounter;
     public Text eventDesciption;
     public Image eventImage;
     public OptionMenuController optionsMenu;
@@ -23,6 +23,7 @@ public class EventPanelScript : MonoBehaviour {
             Destroy(gameObject);
 
     }
+
 
 
     public void SetEvent(Event newEvent)

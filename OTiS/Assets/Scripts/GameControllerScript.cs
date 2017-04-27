@@ -74,13 +74,13 @@ public class GameControllerScript : MonoBehaviour {
     public void createShipNameList()
     {
         shipNames = new List<string>();
-        shipNames.Add("Neverwhatever");
-        shipNames.Add("Star Destroyer");
-        shipNames.Add("Her Majesty");
-        shipNames.Add("Qtaz'Tzor");
+        shipNames.Add("The Neverwhatever");
+        shipNames.Add("The Star Destroyer");
+        shipNames.Add("Her Majesty's Vessel");
+        shipNames.Add("The Qtaz'Tzor");
         shipNames.Add("The Justice");
-        shipNames.Add("Wanderer");
-        shipNames.Add("Cheese Mechana");
+        shipNames.Add("The Wanderer");
+        shipNames.Add("The Cheese Mechana");
 
     }
 
@@ -91,7 +91,7 @@ public class GameControllerScript : MonoBehaviour {
         eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board, OptionType.Negotiate });
         eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Gossip, OptionType.Intimidate });
         eventOptions.Add(EventType.EncounterPlanet, new List<OptionType> { OptionType.Land, OptionType.Scan, OptionType.Bypass });
-
+        eventOptions.Add(EventType.ShipCombat, new List<OptionType> { OptionType.Flee, OptionType.Blast, OptionType.Board, OptionType.Negotiate });
     }
 
     public void createPossibleEventsDictionary()
@@ -104,6 +104,7 @@ public class GameControllerScript : MonoBehaviour {
         possibleEvents.Add(EventType.GameOver, new GameOverEvent(EventType.GameOver, 4));
         possibleEvents.Add(EventType.EncounterPlanet, new EncounterPlanet(EventType.EncounterPlanet, 5));
         possibleEvents.Add(EventType.EmptyShip, new EmptyShipEvent(EventType.EmptyShip, 6));
+        possibleEvents.Add(EventType.ShipCombat, new ShipCombatEvent(EventType.ShipCombat, 7));
 
 
     }
@@ -121,6 +122,7 @@ public class GameControllerScript : MonoBehaviour {
         optionStrings.Add(OptionType.Scan, new List<string> { "<actor> scans <subject> for lifeforms and resources", "<actor> scans <subject> for lifeforms and resources" });
         optionStrings.Add(OptionType.Bypass, new List<string> { "<actor> decides it's not worth the crews time and flies the <partyship> past <subject>", "There's no time, we must fly around <subject>" });
         optionStrings.Add(OptionType.Negotiate, new List<string> { "<actor> urges the captain of <subject> make a parlay", "<actor> tries to convice the captain of <subject> they have nothing worth plundering" });
+        optionStrings.Add(OptionType.Flee, new List<string> { "<actor> fires up the engines in attempt to warp away from <subject>", "<actor> engages lightspeed!" });
 
     }
 
@@ -224,6 +226,11 @@ public class GameControllerScript : MonoBehaviour {
     public EventType getRandomEvent()
     {
         validEvents.Clear();
+        if (enemyShip != null) {
+            validEvents.Add(EventType.ShipCombat);
+            return validEvents[Random.Range(0, validEvents.Count)];
+
+        }
         switch (locationState)
         {
             case LocationState.Space:

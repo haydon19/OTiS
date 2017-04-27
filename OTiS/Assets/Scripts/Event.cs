@@ -334,6 +334,7 @@ public class EnemyShipEvent : Event
         //This should be the enemy ship
         //ship = new SpaceShip(GameControllerScript.instance.getRandomShipName(), 5);
         enemyShip = new SpaceShip(GameControllerScript.instance.getRandomShipName(), 5);
+        GameControllerScript.instance.enemyShip = this.enemyShip;
         subject = enemyShip.SubjectReference();
         ship = GameControllerScript.instance.party.ship;
         getOptions();
@@ -352,6 +353,7 @@ public class EnemyShipEvent : Event
                     summary = "It's about to get spicy as " + characters[0].Name + " churns up the engines to the MAX. " + ship.Name + "'s thrusters fuckin' RIP OUT OF THERE.";
                     GameControllerScript.instance.LightYearsToEOU -= 3;
                     EventActions.loseResource(this, "Fuel");
+                    GameControllerScript.instance.enemyShip = null;
                 }
                 else
                 {
@@ -387,6 +389,21 @@ public class EnemyShipEvent : Event
                     EventActions.loseResource(this, "Fuel");
                     GameControllerScript.instance.LightYearsToEOU -= 1;
                 }
+                break;
+            case (OptionType.Negotiate):
+                if (characters[3].getStat("Mind") + Random.Range(0, 3) > 6)
+                {
+                    summary = characters[3].Name + " convices the enemies to stand down.";
+                    GameControllerScript.instance.LightYearsToEOU -= 1;
+
+                }
+                else
+                {
+                    summary = "The enemies decide not to attack however you must send them some resources as tribute.";
+                    EventActions.loseRandomResource(this);
+                    GameControllerScript.instance.LightYearsToEOU -= 1;
+                }
+                GameControllerScript.instance.enemyShip = null;
                 break;
         }
         LogEvent();

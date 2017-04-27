@@ -4,7 +4,7 @@ using UnityEngine;
 //public enum OptionType {  };
 
 
-    public enum OptionType { Avoid, Blast, Land, Board, Thrusters, Comms, Intimidate, Recruit, Gossip, Scan, Bypass };
+    public enum OptionType { Avoid, Blast, Land, Board, Thrusters, Comms, Intimidate, Recruit, Gossip, Scan, Bypass, Negotiate };
 public class Option {
     //string type;
     string name;

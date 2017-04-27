@@ -88,7 +88,7 @@ public class GameControllerScript : MonoBehaviour {
     {
         eventOptions = new Dictionary<EventType, List<OptionType>>();
         eventOptions.Add(EventType.RogueAsteroid, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Land });
-        eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board });
+        eventOptions.Add(EventType.EnemyShip, new List<OptionType> { OptionType.Avoid, OptionType.Blast, OptionType.Board, OptionType.Negotiate });
         eventOptions.Add(EventType.EncounterNPC, new List<OptionType> { OptionType.Recruit, OptionType.Gossip, OptionType.Intimidate });
         eventOptions.Add(EventType.EncounterPlanet, new List<OptionType> { OptionType.Land, OptionType.Scan, OptionType.Bypass });
 
@@ -120,6 +120,7 @@ public class GameControllerScript : MonoBehaviour {
         optionStrings.Add(OptionType.Recruit, new List<string> { "<actor> trys to recruit <subject> by offering pizza flavoured chips", "<actor> eyes over <subject>'s resume then offers them a job" });
         optionStrings.Add(OptionType.Scan, new List<string> { "<actor> scans <subject> for lifeforms and resources", "<actor> scans <subject> for lifeforms and resources" });
         optionStrings.Add(OptionType.Bypass, new List<string> { "<actor> decides it's not worth the crews time and flies the <partyship> past <subject>", "There's no time, we must fly around <subject>" });
+        optionStrings.Add(OptionType.Negotiate, new List<string> { "<actor> urges the captain of <subject> make a parlay", "<actor> tries to convice the captain of <subject> they have nothing worth plundering" });
 
     }
 

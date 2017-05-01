@@ -33,10 +33,12 @@ public class EventLog : MonoBehaviour {
         
         
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
-       
+        //yield return new WaitForSeconds(1);
         //logItemList.Add(newItem);
 
     }
+
+
 
     public void newLogItem(string desc, Color color)
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISubject {
+public class Character : IAttacker<IDamageable<int>>, IDamageable<int>, ISubject {
     Dictionary<string, int> stats = new Dictionary<string, int>();
     string name;
     string charID;
@@ -136,15 +136,15 @@ public class Character : IAttacker<IDamageable<float>>, IDamageable<float>, ISub
         this.piloting = piloting;
     }
 
-    public float Attack(IDamageable<float> target)
+    public int Attack(IDamageable<int> target)
     {
         return target.Damage(getStat("Strength"));
     }
 
-    public virtual float Damage(float damageTaken)
+    public virtual int Damage(int damageTaken)
     {
         //setStat("Health", getStat("Health") - (int)damageTaken);
-        changeStat("Health", -(int)damageTaken);
+        changeStat("Health", -damageTaken);
         //CharacterContainer.instance.updateCharacterInfo(this);
         if (getStat("Health") <= 0)
         {

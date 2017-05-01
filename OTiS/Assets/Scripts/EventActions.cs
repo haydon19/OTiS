@@ -24,7 +24,7 @@ public static class EventActions  {
 
         
         GameControllerScript.instance.party.changeShipStat(randomResource, amount);
-        activeEvent.Summary += "\nThe party has gained " + amount + " " + randomResource + ".";
+        activeEvent.LogEntry("The party has gained " + amount + " " + randomResource + ".");
     }
 
     public static void loseRandomResource(Event activeEvent)
@@ -34,7 +34,7 @@ public static class EventActions  {
 
 
         GameControllerScript.instance.party.changeShipStat(randomResource, -amount);
-        activeEvent.Summary += "\nThe party loses " + amount + " " + randomResource + ".";
+        activeEvent.LogEntry("The party loses " + amount + " " + randomResource + ".");
     }
 
     public static void loseResource(Event activeEvent, string resource)
@@ -43,7 +43,16 @@ public static class EventActions  {
 
 
         GameControllerScript.instance.party.changeShipStat(resource, -amount);
-        activeEvent.Summary += "\nThe party loses " + amount + " " + resource + ".";
+        activeEvent.LogEntry("The party loses " + amount + " " + resource + ".");
+    }
+
+    public static void gainResource(Event activeEvent, string resource)
+    {
+        int amount = randomAmounts[Random.Range(0, randomAmounts.Count)];
+
+
+        GameControllerScript.instance.party.changeShipStat(resource, -amount);
+        activeEvent.LogEntry("The party loses " + amount + " " + resource + ".");
     }
 
 

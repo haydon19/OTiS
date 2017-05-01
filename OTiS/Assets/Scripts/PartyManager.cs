@@ -22,12 +22,35 @@ public class PartyManager  {
         PartyInfoPanel.instance.setStat("Ship", ship.Name);
         PartyInfoPanel.instance.setStat("Fuel", ship.getStat("Fuel").ToString());
         PartyInfoPanel.instance.setStat("Shields", ship.getStat("Shields").ToString());
+        PartyInfoPanel.instance.setStat("Hull", ship.getStat("Hull").ToString());
 
         supplies = 5;
-        PartyInfoPanel.instance.setStat("Supplies", supplies.ToString());
+        PartyInfoPanel.instance.setStat("Ammo", ship.getStat("Ammo").ToString());
         PartyInfoPanel.instance.setStat("Blast", ship.getStat("Blast").ToString());
 
 
+    }
+    
+    public void EventTick()
+    {
+        if(ship.ToRegen < ship.RegenRate)
+        ship.ToRegen++;
+
+        if (ship.getStat("Shields") < ship.getStat("MaxShields") && ship.ToRegen >= ship.RegenRate)
+        {
+            ship.Regenerate();
+            ship.ToRegen = 0;
+        }
+
+        /*
+        if(ship.getStat("Shields") < ship.getStat("MaxShields") && ship.ToRegen >= ship.RegenRate)
+        {
+            ship.changeStat("Shields", 2);
+            if (ship.getStat("Shields") > ship.getStat("MaxShields"))
+                ship.setStat("Shields", ship.getStat("MaxShields"));
+            ship.ToRegen = 0;
+        }
+        */
     }
 
     public void addPartyMember()
@@ -52,24 +75,16 @@ public class PartyManager  {
     }
 
 
-    //FOR ALL SUPPLIES RELATED THINGS
-    public void addSupplies(int num)
-    {
-        supplies += num;
-    }
-
-    public void loseSupplies(int num)
-    {
-        if (supplies > 0)
-        {
-            supplies -= num;
-        }
-    }
-
     public void changeShipStat(string stat, int change)
     {
 
         ship.changeStat(stat, change);
+        //PartyInfoPanel.instance.setStat(stat, ship.getStat(stat).ToString());
+        //ShipInfoPanel.instance.updateCurrentShip();
+    }
+
+    public void updateShipStat(string stat)
+    {
         PartyInfoPanel.instance.setStat(stat, ship.getStat(stat).ToString());
         ShipInfoPanel.instance.updateCurrentShip();
     }

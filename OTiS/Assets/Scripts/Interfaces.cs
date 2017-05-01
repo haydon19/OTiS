@@ -6,14 +6,14 @@ using UnityEngine;
 
 public interface IAttacker<T> {
 
-    float Attack(T target);
+    int Attack(T target);
 
 }
 
 
 public interface IDamageable<T>
 {
-    float Damage(T damageTaken);
+    int Damage(T damageTaken);
 }
 
 public interface ISubject

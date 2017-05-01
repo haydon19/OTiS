@@ -21,7 +21,7 @@ public class GameControllerScript : MonoBehaviour {
     public Dictionary<int, string> names;
     List<string> shipNames;
     public List<string> characterStatNames = new List<string> { "Strength", "Agility", "Mind" };
-    public List<string> resourceNames = new List<string> { "Fuel", "Shields", "Ammo" };
+    public List<string> resourceNames = new List<string> { "Fuel", "Ammo" };
 
     public Dictionary<OptionType, List<string>> options;
     public Dictionary<EventType, Event> possibleEvents;
@@ -296,7 +296,7 @@ void Update () {
             }
                     
 
-            if (party.getParty().Count <= 0)
+            if (party.getParty().Count <= 0 || party.ship.getStat("Hull") <= 0)
             {
                 
 
@@ -305,6 +305,7 @@ void Update () {
                 //EventLog.instance.newLogItem();
             }
 
+            party.EventTick();
         }
         
 	}

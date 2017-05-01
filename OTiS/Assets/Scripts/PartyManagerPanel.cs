@@ -5,6 +5,7 @@ using UnityEngine;
 public class PartyManagerPanel : MonoBehaviour {
 
     public static PartyManagerPanel instance;
+    public GameObject panelHolder;
     public int currTab = 0;
     // Use this for initialization
     void Awake() {
@@ -28,6 +29,7 @@ public class PartyManagerPanel : MonoBehaviour {
     {
         
         gameObject.SetActive(!gameObject.activeSelf);
+        gameObject.transform.position = new Vector3(0, 0, 0);
         GameControllerScript.instance.pauseGame();
         if (gameObject.activeSelf)
         {
@@ -47,6 +49,7 @@ public class PartyManagerPanel : MonoBehaviour {
             case (0):
                 
                 CharacterInfoPanel.instance.gameObject.SetActive(true);
+                //CharacterInfoPanel.instance.gameObject.transform.position = panelHolder.transform.position;
 
                 CharacterContainer.instance.populateContainer();
                 CharacterInfoPanel.instance.ActiveCharacter = GameControllerScript.instance.party.partyMembers[0];
@@ -54,7 +57,7 @@ public class PartyManagerPanel : MonoBehaviour {
                 break;
             case (1):
                 ShipInfoPanel.instance.gameObject.SetActive(true);
-
+               // ShipInfoPanel.instance.gameObject.transform.position = panelHolder.transform.position;
                 //ShipInfoPanel.instance.CurrentShip = GameControllerScript.instance.party.ship;
                 currTab = tabID;
                 break;

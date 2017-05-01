@@ -11,9 +11,9 @@ public class Enemy : Character {
 
     }
 
-    public override float Damage(float damageTaken)
+    public override int Damage(int damageTaken)
     {
-        setStat("Health", getStat("Health") - (int)damageTaken);
+        setStat("Health", getStat("Health") - damageTaken);
         if (getStat("Health") <= 0)
         {
             setStat("Health", 0);

@@ -8,6 +8,8 @@ public abstract class Event {
 
     
     protected string summary;
+    protected string logEntry;
+
     int id;
     List<Option> options;
     protected string subject;
@@ -112,7 +114,13 @@ public abstract class Event {
         EventLog.instance.newLogItem(summary);
     }
 
-   
+    public void LogEntry(string entry)
+    {
+        EventLog.instance.newLogItem(entry);
+    }
+
+
+
     public virtual void setSummary()
     {
         summary = "Default Summary";
@@ -190,7 +198,7 @@ public class GameOverEvent : Event
 
     public override void setSummary()
     {
-        summary = " The party has died. Game Over.";
+        LogEntry(" The party has died. Game Over.");
 
     }
 
@@ -212,7 +220,7 @@ public class EmptyShipEvent : Event
 
     public override void setSummary()
     {
-        summary = " The ship has run out of fuel. The party slowly starves to death drifting in space.";
+        LogEntry(" The ship has run out of fuel. The party slowly starves to death drifting in space.");
 
 
         
@@ -255,12 +263,16 @@ public class RogueAsteroidEvent : Event
                 {
                     if (randomSkillGain(characters[0], "Piloting"))
                     {
-                        summary = "You seem to be at one with the controls of the ship, you feel your skills as a pilot grow!\n\n" + characters[0].Name + "'s Piloting increases! " + characters[0].getStat("Piloting");
+
+                        LogEntry("You seem to be at one with the controls of the ship, you feel your skills as a pilot grow!\n\n" + characters[0].Name + "'s Piloting increases! " + characters[0].getStat("Piloting"));
+
+
                     }
                     else {
-                        summary = "You race to the helm, and dive into the pilots seat in an effort to steer the ship clear of the asteroid. A narrow success.";
-                        summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
-                        GameControllerScript.instance.party.changeShipStat("Shields", -5);
+                        LogEntry("You race to the helm, and dive into the pilots seat in an effort to steer the ship clear of the asteroid. A narrow success.");
+                        GameControllerScript.instance.party.ship.Damage(5);
+                        //LogEntry(ship.Name + " has lost " + 5 + " shields.");
+                        //GameControllerScript.instance.party.changeShipStat("Shields", -5);
                     }
                 }
                 else {
@@ -268,10 +280,10 @@ public class RogueAsteroidEvent : Event
                     if (randomSkillLoss(characters[0], "Piloting"))
                     {
                         characters[0].changeStat("Piloting", -1);
-                        summary = "You scrape against the asteriods hard exterior, a compartment of the ship holding ESSENTIAL supplies has been damaged and it's contents blown into space! Maybe you weren't meant to hang around the pilots seat...\n\n" + characters[0].Name + "'s Piloting decreases!  " + characters[0].getStat("Piloting");
+                        LogEntry("You scrape against the asteriods hard exterior, a compartment of the ship holding ESSENTIAL supplies has been damaged and it's contents blown into space! Maybe you weren't meant to hang around the pilots seat...\n\n" + characters[0].Name + "'s Piloting decreases!  " + characters[0].getStat("Piloting"));
                     }
                     else {
-                        summary = "Your heroic dive to the pilots seat is misaligned, luckily it wasn't the hardest asteroid in the galaxy, and your ship destroys it with it's hull.";
+                        LogEntry("Your heroic dive to the pilots seat is misaligned, luckily it wasn't the hardest asteroid in the galaxy, and your ship destroys it with it's hull.");
                     }
                 }
                 GameControllerScript.instance.LightYearsToEOU -= 2;
@@ -280,11 +292,11 @@ public class RogueAsteroidEvent : Event
             case (OptionType.Blast):
                 if (characters[1].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = "Ya fuckin blasted it bud.";
+                    LogEntry("Ya fuckin blasted it bud.");
                 }
                 else
                 {
-                    summary = "Ya fucked up blasting it.";
+                    LogEntry("Ya fucked up blasting it.");
                 }
                 GameControllerScript.instance.LightYearsToEOU -= 1;
                 EventActions.loseResource(this, "Fuel");
@@ -292,23 +304,21 @@ public class RogueAsteroidEvent : Event
             case (OptionType.Land):
                 if (characters[2].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[2].Name + " has successfully landed on the Asteroid, allowing the party to scavange for resources.";
+                    LogEntry(characters[2].Name + " has successfully landed on the Asteroid, allowing the party to scavange for resources.");
                     EventActions.gainRandomResource(this);
                     EventActions.gainRandomResource(this);
                     GameControllerScript.instance.locationState = LocationState.Land;
                 }
                 else
                 {
-                    summary = characters[2].Name + " misjudges the landing and the ship scapes along the surface of the asteroid. The party decides to cut their losses and not try again.";
-                    summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
-                    GameControllerScript.instance.party.changeShipStat("Shields", -5);
+                    LogEntry(characters[2].Name + " misjudges the landing and the ship scapes along the surface of the asteroid. The party decides to cut their losses and not try again.");
+                    GameControllerScript.instance.party.ship.Damage(5);
                     GameControllerScript.instance.LightYearsToEOU -= 1;
                     EventActions.loseResource(this, "Fuel");
                 }
 
                 break;
         }
-        LogEvent();
     }
 
     public override void setSummary()
@@ -350,23 +360,22 @@ public class EnemyShipEvent : Event
             case (OptionType.Avoid):
                 if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = "It's about to get spicy as " + characters[0].Name + " churns up the engines to the MAX. " + ship.Name + "'s thrusters fuckin' RIP OUT OF THERE.";
+                    LogEntry("It's about to get spicy as " + characters[0].Name + " churns up the engines to the MAX. " + ship.Name + "'s thrusters fuckin' RIP OUT OF THERE.");
                     GameControllerScript.instance.LightYearsToEOU -= 3;
                     EventActions.loseResource(this, "Fuel");
                     GameControllerScript.instance.enemyShip = null;
                 }
                 else
                 {
-                    summary = "Maybe " + ship.Name + " isn't as nimble as we thought, maybe " + characters[0].Name + " is just a shit pilot, only time will tell...";
-                    summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
-                    GameControllerScript.instance.party.changeShipStat("Shields", -5);
+                    LogEntry("Maybe " + ship.Name + " isn't as nimble as we thought, maybe " + characters[0].Name + " is just a shit pilot, only time will tell...");
+                    GameControllerScript.instance.party.ship.Damage(5);
                     EventActions.loseResource(this, "Fuel");
                 }
                 break;
             case (OptionType.Blast):
                 if (characters[1].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = ship.Name + " fires at full power, blasting " + subject + " to bits.";
+                    LogEntry(ship.Name + " fires at full power, blasting " + subject + " to bits.");
                     GameControllerScript.instance.enemyShip = null;
                     EventActions.gainRandomResource(this);
                     GameControllerScript.instance.LightYearsToEOU -= 1;
@@ -374,22 +383,21 @@ public class EnemyShipEvent : Event
                 }
                 else
                 {
-                    summary = characters[1].Name + " misjudges the shot an leaves " + ship.Name + " vulnerable to counter fire.";
-                    EventActions.loseResource(this, "Shields");
-
+                    LogEntry(characters[1].Name + " misjudges the shot an leaves " + ship.Name + " vulnerable to counter fire.");
+                    GameControllerScript.instance.party.ship.Damage(enemyShip.getStat("Blast"));
                 }
                 break;
             case (OptionType.Board):
                 if (characters[2].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[2].Name + " boarded the enemy ship with ease! After a fierce battle on board you manage to steal some goods and make your way out.";
+                    LogEntry(characters[2].Name + " boarded the enemy ship with ease! After a fierce battle on board you manage to steal some goods and make your way out.");
                     GameControllerScript.instance.enemyShip = null;
                     EventActions.gainRandomResource(this);
                     EventActions.gainRandomResource(this);
                 }
                 else
                 {
-                    summary = "The boarding was botched! You'll have to come around to try again.";
+                    LogEntry("The boarding was botched! You'll have to come around to try again.");
                     EventActions.loseResource(this, "Fuel");
                     GameControllerScript.instance.LightYearsToEOU -= 1;
                 }
@@ -397,20 +405,19 @@ public class EnemyShipEvent : Event
             case (OptionType.Negotiate):
                 if (characters[3].getStat("Mind") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[3].Name + " convices the enemies to stand down.";
+                    LogEntry(characters[3].Name + " convices the enemies to stand down.");
                     GameControllerScript.instance.LightYearsToEOU -= 1;
 
                 }
                 else
                 {
-                    summary = "The enemies decide not to attack however you must send them some resources as tribute.";
+                    LogEntry("The enemies decide not to attack however you must send them some resources as tribute.");
                     EventActions.loseRandomResource(this);
                     GameControllerScript.instance.LightYearsToEOU -= 1;
                 }
                 GameControllerScript.instance.enemyShip = null;
                 break;
         }
-        LogEvent();
     }
 
     public override void setSummary()
@@ -451,16 +458,15 @@ public class ShipCombatEvent : Event
             case (OptionType.Flee):
                 if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = "It's about to get spicy as " + characters[0].Name + " churns up the engines to the MAX. " + ship.Name + "'s thrusters fuckin' RIP OUT OF THERE.";
+                    LogEntry("It's about to get spicy as " + characters[0].Name + " churns up the engines to the MAX. " + ship.Name + "'s thrusters fuckin' RIP OUT OF THERE.");
                     GameControllerScript.instance.LightYearsToEOU -= 3;
                     EventActions.loseResource(this, "Fuel");
                     GameControllerScript.instance.enemyShip = null;
                 }
                 else
                 {
-                    summary = "Maybe " + ship.Name + " isn't as nimble as we thought, maybe " + characters[0].Name + " is just a shit pilot, only time will tell...";
-                    summary += "\n" + ship.Name + " has lost " + 5 + " shields.";
-                    GameControllerScript.instance.party.changeShipStat("Shields", -5);
+                    LogEntry("Maybe " + ship.Name + " isn't as nimble as we thought, maybe " + characters[0].Name + " is just a shit pilot, only time will tell...");
+                    GameControllerScript.instance.party.ship.Damage(5);
                     GameControllerScript.instance.LightYearsToEOU -= 1;
                     EventActions.loseResource(this, "Fuel");
                 }
@@ -468,7 +474,7 @@ public class ShipCombatEvent : Event
             case (OptionType.Blast):
                 if (characters[1].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = ship.Name + " fires at full power, blasting " + subject + " to bits.";
+                    LogEntry(ship.Name + " fires at full power, blasting " + subject + " to bits.");
                     GameControllerScript.instance.enemyShip = null;
                     EventActions.gainRandomResource(this);
                     GameControllerScript.instance.LightYearsToEOU -= 1;
@@ -476,22 +482,22 @@ public class ShipCombatEvent : Event
                 }
                 else
                 {
-                    summary = characters[1].Name + " misjudges the shot an leaves " + ship.Name + " vulnerable to counter fire.";
-                    EventActions.loseResource(this, "Shields");
+                    LogEntry(characters[1].Name + " misjudges the shot an leaves " + ship.Name + " vulnerable to counter fire.");
+                    GameControllerScript.instance.party.ship.Damage(Random.Range(1, 10));
 
                 }
                 break;
             case (OptionType.Board):
                 if (characters[2].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[2].Name + " boarded the enemy ship with ease! After a fierce battle on board you manage to steal some goods and make your way out.";
+                    LogEntry(characters[2].Name + " boarded the enemy ship with ease! After a fierce battle on board you manage to steal some goods and make your way out.");
                     GameControllerScript.instance.enemyShip = null;
                     EventActions.gainRandomResource(this);
                     EventActions.gainRandomResource(this);
                 }
                 else
                 {
-                    summary = "The boarding was botched! You'll have to come around to try again.";
+                    LogEntry("The boarding was botched! You'll have to come around to try again.");
                     EventActions.loseResource(this, "Fuel");
                     GameControllerScript.instance.LightYearsToEOU -= 1;
                 }
@@ -499,20 +505,19 @@ public class ShipCombatEvent : Event
             case (OptionType.Negotiate):
                 if (characters[3].getStat("Mind") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[3].Name + " convices the enemies to stand down.";
+                    LogEntry(characters[3].Name + " convices the enemies to stand down.");
                     GameControllerScript.instance.LightYearsToEOU -= 1;
 
                 }
                 else
                 {
-                    summary = "The enemies decide not to attack however you must send them some resources as tribute.";
+                    LogEntry("The enemies decide not to attack however you must send them some resources as tribute.");
                     EventActions.loseRandomResource(this);
                     GameControllerScript.instance.LightYearsToEOU -= 1;
                 }
                 GameControllerScript.instance.enemyShip = null;
                 break;
         }
-        LogEvent();
     }
 
     public override void setSummary()
@@ -550,38 +555,37 @@ public class EncounterNPC : Event
             case (OptionType.Recruit):
                 if (characters[1].getStat("Mind") + Random.Range(0, 10) > 6)
                 {
-                    summary = characters[1].Name + " convices " + characters[0].Name + " to join the party with a triumphant speech.";
+                    LogEntry(characters[1].Name + " convices " + characters[0].Name + " to join the party with a triumphant speech.");
                     GameControllerScript.instance.party.addPartyMember(characters[0]);
-                    summary += "\n" + characters[0].Name + " joins the party!";
+                    LogEntry(characters[0].Name + " joins the party!");
                     
                 }
                 else
                 {
-                    summary = "AWKWARD! " + characters[0].Name + " rejects the invitation from " + characters[1].Name + " to join the party.";
+                    LogEntry("AWKWARD! " + characters[0].Name + " rejects the invitation from " + characters[1].Name + " to join the party.");
                 }
                 break;
             case (OptionType.Gossip):
 
-                summary = characters[2].Name + " learns about a nearby planet rich with resources from " + characters[0].Name;
+                LogEntry(characters[2].Name + " learns about a nearby planet rich with resources from " + characters[0].Name);
                 EventActions.gainRandomResource(this);
                 GameControllerScript.instance.LightYearsToEOU -= 2;
                 break;
             case (OptionType.Intimidate):
                 if (characters[3].getStat("Strength") > Random.Range(0, 10))
                 {
-                    summary = characters[0].Name + " backs away as " + characters[3].Name + " threatens them into giving up supplies.";
+                    LogEntry(characters[0].Name + " backs away as " + characters[3].Name + " threatens them into giving up supplies.");
                     EventActions.gainRandomResource(this);
                 }
                 else
                 {
-                    summary = characters[0].Name + " stands up to " + characters[3].Name + ", causing them to give up supplies in embarassment.";
+                    LogEntry(characters[0].Name + " stands up to " + characters[3].Name + ", causing them to give up supplies in embarassment.");
                     EventActions.loseRandomResource(this);
                 }
                 break;
         }
-        summary += "\nThe crew fires up the ship and heads back into space.";
+        LogEntry("The crew fires up the ship and heads back into space.");
         GameControllerScript.instance.locationState = LocationState.Space;
-        LogEvent();
     }
 
     public override void setSummary()
@@ -617,15 +621,16 @@ public class EncounterPlanet : Event
             case (OptionType.Land):
                 if (characters[0].getStat("Piloting") + Random.Range(0, 3) > 6)
                 {
-                    summary = characters[0].Name + " has successfully landed on " + subject + " allowing the party to scavange for resources.";
+                    LogEntry(characters[0].Name + " has successfully landed on " + subject + " allowing the party to scavange for resources.");
                     EventActions.gainRandomResource(this);
                     EventActions.gainRandomResource(this);
                     GameControllerScript.instance.locationState = LocationState.Land;
                 }
                 else
                 {
-                    summary = "As " + characters[0].Name + " descends into the atmosphere, an electrical storm knocks out the " + GameControllerScript.instance.party.ship.Name + "'s engines, causing it to crash.";
-                    EventActions.loseResource(this, "Shields");
+                    LogEntry("As " + characters[0].Name + " descends into the atmosphere, an electrical storm knocks out the " + GameControllerScript.instance.party.ship.Name + "'s engines, causing it to crash.");
+                    GameControllerScript.instance.party.ship.Damage(5);
+
                     EventActions.loseResource(this, "Fuel");
                     GameControllerScript.instance.locationState = LocationState.Land;
                 }
@@ -633,23 +638,22 @@ public class EncounterPlanet : Event
             case (OptionType.Scan):
                 if (Random.Range(0, 100) > 60)
                 {
-                    summary = characters[1].Name + " scans " + subject + " and determines it is rich with minerals.";
+                    LogEntry(characters[1].Name + " scans " + subject + " and determines it is rich with minerals.");
                     EventActions.gainRandomResource(this);
                 } else
                 {
-                    summary = "The atmosphere of " + subject + " is creating too much interference to properly scan.";
+                    LogEntry("The atmosphere of " + subject + " is creating too much interference to properly scan.");
                 }
                 EventActions.loseResource(this, "Fuel");
                 break;
             case (OptionType.Bypass):
 
-                    summary = characters[2].Name + " guides the ship around the planet.";
+                LogEntry(characters[2].Name + " guides the ship around the planet.");
                     EventActions.loseResource(this, "Fuel");
                 GameControllerScript.instance.LightYearsToEOU -= 2;
                 break;
                
         }
-        LogEvent();
     }
 
     public override void setSummary()

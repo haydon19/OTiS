@@ -203,8 +203,10 @@ public class GameControllerScript : MonoBehaviour {
             party.addPartyMember(c);
         }
 
+
+
         //Lets create some Characters, we'll randomize their starting stats based on 2d6
-        while(party.partyMembers.Count < 4)
+        while (party.partyMembers.Count < 4)
         {
             party.addPartyMember();
         }

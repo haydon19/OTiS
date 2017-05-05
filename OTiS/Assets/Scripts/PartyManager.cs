@@ -17,19 +17,19 @@ public class PartyManager  {
     {
         partyMembers = new List<Character>();
         ship = new SpaceShip("The Aloha", 10);
+        foreach(KeyValuePair<string, int> item in ship.ShipResources)
+        {
+            PartyInfoPanel.instance.setStat(item.Key, item.Value.ToString());
+        }
         ShipInfoPanel.instance.CurrentShip = ship;
-
-        PartyInfoPanel.instance.setStat("Ship", ship.Name);
-        PartyInfoPanel.instance.setStat("Fuel", ship.getStat("Fuel").ToString());
-        PartyInfoPanel.instance.setStat("Shields", ship.getStat("Shields").ToString());
-        PartyInfoPanel.instance.setStat("Hull", ship.getStat("Hull").ToString());
+        ShipInfoPanel.instance.updateCurrentShip();
 
         supplies = 5;
-        PartyInfoPanel.instance.setStat("Ammo", ship.getStat("Ammo").ToString());
-        PartyInfoPanel.instance.setStat("Blast", ship.getStat("Blast").ToString());
 
 
     }
+    
+    
     
     public void EventTick()
     {
@@ -52,6 +52,8 @@ public class PartyManager  {
         }
         */
     }
+
+
 
     public void addPartyMember()
     {
@@ -79,8 +81,8 @@ public class PartyManager  {
     {
 
         ship.changeStat(stat, change);
-        //PartyInfoPanel.instance.setStat(stat, ship.getStat(stat).ToString());
-        //ShipInfoPanel.instance.updateCurrentShip();
+        PartyInfoPanel.instance.setStat(stat, ship.getStat(stat).ToString());
+        ShipInfoPanel.instance.updateCurrentShip();
     }
 
     public void updateShipStat(string stat)

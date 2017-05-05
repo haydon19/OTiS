@@ -13,6 +13,8 @@ public class SpaceShip : IDamageable<int>, IAttacker<IDamageable<int>>, ISubject
     ShipState state;
     int regenRate = 3;
     int toRegen = 0;
+    List<Module> modules;
+    List<Attack> attacks;
 
     public string Name
     {
@@ -79,6 +81,19 @@ public class SpaceShip : IDamageable<int>, IAttacker<IDamageable<int>>, ISubject
         }
     }
 
+    public List<Attack> Attacks
+    {
+        get
+        {
+            return attacks;
+        }
+
+        set
+        {
+            attacks = value;
+        }
+    }
+
     public SpaceShip(string name, int damage)
     {
 
@@ -91,8 +106,25 @@ public class SpaceShip : IDamageable<int>, IAttacker<IDamageable<int>>, ISubject
         setStat("MaxShields", 20);
         setStat("Hull", 20);
         setStat("Blast", damage);
-        setStat("CargoSpace", 5);
+        setStat("ModuleSlots", 4);
 
+
+    }
+
+    public bool addModule(Module m)
+    {
+        if (modules.Count < getStat("ModuleSlots"))
+        {
+            modules.Add(m);
+            return true;
+        }
+
+        return false;
+    }
+
+    public List<Module> getModules()
+    {
+        return modules;
     }
 
     //Dealing with the player stat dictionary
@@ -114,8 +146,7 @@ public class SpaceShip : IDamageable<int>, IAttacker<IDamageable<int>>, ISubject
         {
             ShipResources[resourceName] = Value;
 
-            GameControllerScript.instance.party.updateShipStat(resourceName);
-        }
+       }
         else
         {
             //If the stat doesnt exist and we are setting it, lets just create it
@@ -123,13 +154,9 @@ public class SpaceShip : IDamageable<int>, IAttacker<IDamageable<int>>, ISubject
         }
         //
 
-        /*
-        Debug.Log(GameControllerScript.instance.party.ToString());
-        if (this == GameControllerScript.instance.party.ship)
-        {
-            PartyInfoPanel.instance.setStat(resourceName, shipResources[resourceName].ToString());
-        }
-        */
+        
+
+        
     }
     public void Regenerate()
     {
@@ -145,7 +172,6 @@ public class SpaceShip : IDamageable<int>, IAttacker<IDamageable<int>>, ISubject
             {
                 ShipResources[resourceName] = 0;
             }
-            GameControllerScript.instance.party.updateShipStat(resourceName);
         }
         else
         {
@@ -153,12 +179,8 @@ public class SpaceShip : IDamageable<int>, IAttacker<IDamageable<int>>, ISubject
             ShipResources.Add(resourceName, statChange);
         }
         //
-        /*
-        if (this == GameControllerScript.instance.party.ship)
-        {
-             PartyInfoPanel.instance.setStat(resourceName, shipResources[resourceName].ToString());
-        }
-        */
+        
+        
     }
 
     public virtual int Damage(int damageTaken)

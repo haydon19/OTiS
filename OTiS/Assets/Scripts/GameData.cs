@@ -14,6 +14,8 @@ public class GameData : MonoBehaviour {
     public Dictionary<string, Trait> traitDictionary;
     public Dictionary<string, Sprite> eventSpriteDictionary;
     public Dictionary<string, Sprite> characterPortraitDictionary;
+    public Dictionary<string, Module> modulePrototypes;
+
     public List<string> races, genders;
     // Use this for initialization
     void Awake () {
@@ -34,6 +36,7 @@ public class GameData : MonoBehaviour {
         createRaceList();
         createGenderList();
         createTraitDictionary();
+        createModulePrototypes();
     }
 
     public Sprite getEventSprite(string eventName)
@@ -71,6 +74,12 @@ public class GameData : MonoBehaviour {
     public int nextCharID()
     {
         return characterIndex += 1;
+    }
+
+    public void createModulePrototypes()
+    {
+        modulePrototypes = new Dictionary<string, Module>();
+        modulePrototypes.Add("Laser Gun", new WeaponModule(ShipWeaponType.Laser, new Attack(1, 10), null));
     }
 
     public void createTraitDictionary()

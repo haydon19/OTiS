@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Attack.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\CharacterContainer.cs" />
     <Compile Include="Assets\Scripts\CharacterCreationPanel.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\Scripts\CharacterInfoPanel.cs" />
     <Compile Include="Assets\Scripts\CharacterStatPanel.cs" />
     <Compile Include="Assets\Scripts\CharacterTrait.cs" />
+    <Compile Include="Assets\Scripts\Effect.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\EnemyInfoPanel.cs" />
     <Compile Include="Assets\Scripts\Event.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="Assets\Scripts\LogItem.cs" />
     <Compile Include="Assets\Scripts\LogItemObject.cs" />
     <Compile Include="Assets\Scripts\MainMenuController.cs" />
+    <Compile Include="Assets\Scripts\Module.cs" />
     <Compile Include="Assets\Scripts\Option.cs" />
     <Compile Include="Assets\Scripts\OptionMenuController.cs" />
     <Compile Include="Assets\Scripts\OptionObjectButton.cs" />

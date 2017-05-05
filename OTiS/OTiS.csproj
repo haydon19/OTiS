@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\StatInfoObject.cs" />
     <Compile Include="Assets\Scripts\StatSetterObject.cs" />
     <Compile Include="Assets\Scripts\StatSetterPanel.cs" />
+    <Compile Include="Assets\Scripts\Stats.cs" />
     <Compile Include="Assets\Scripts\TraitInfoPanel.cs" />
     <Compile Include="Assets\Scripts\TraitListPanel.cs" />
     <Compile Include="Assets\Scripts\TraitSelectionPanel.cs" />

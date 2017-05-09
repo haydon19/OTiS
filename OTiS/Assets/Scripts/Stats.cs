@@ -71,12 +71,12 @@ public class StatModifier
     {
         get
         {
-            return Stat1;
+            return stat;
         }
 
         set
         {
-            Stat1 = value;
+            stat = value;
         }
     }
 

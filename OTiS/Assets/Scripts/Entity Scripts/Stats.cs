@@ -11,7 +11,7 @@ public class Stats {
 
     public Stats()
     {
-        //baseStats = new 
+        baseStats = new Dictionary<string, int>();
 
     }
 

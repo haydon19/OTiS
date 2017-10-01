@@ -19,6 +19,7 @@ public class PartyManager  {
         ship = new SpaceShip("The Aloha", 10);
         foreach(KeyValuePair<string, int> item in ship.ShipResources)
         {
+            if(PartyInfoPanel.instance != null)
             PartyInfoPanel.instance.setStat(item.Key, item.Value.ToString());
         }
         ShipInfoPanel.instance.CurrentShip = ship;
@@ -81,6 +82,7 @@ public class PartyManager  {
     {
 
         ship.changeStat(stat, change);
+        if (PartyInfoPanel.instance != null)
         PartyInfoPanel.instance.setStat(stat, ship.getStat(stat).ToString());
         ShipInfoPanel.instance.updateCurrentShip();
     }

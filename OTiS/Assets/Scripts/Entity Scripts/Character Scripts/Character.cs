@@ -12,6 +12,7 @@ public class Character : IAttacker<IDamageable<int>>, IDamageable<int>, ISubject
     int iD;
     bool dead;
     public List<Trait> traits;
+    Stats charStats;
     private int strength;
     private int Mind;
     private int agility;
@@ -108,6 +109,19 @@ public class Character : IAttacker<IDamageable<int>>, IDamageable<int>, ISubject
         }
     }
 
+    public Stats CharStats
+    {
+        get
+        {
+            return charStats;
+        }
+
+        set
+        {
+            charStats = value;
+        }
+    }
+
     public Character(string name, string race, string gender, int ID, int Strength, int Mind, int Agility, int Piloting)
     {
         Dead = false;
@@ -116,6 +130,8 @@ public class Character : IAttacker<IDamageable<int>>, IDamageable<int>, ISubject
         this.gender = gender;
         this.ID = ID;
         this.CharID = name + ID;
+
+        charStats = new Stats();
         setStat("Strength", Strength);
         setStat("Mind", Mind);
         setStat("Agility", Agility);

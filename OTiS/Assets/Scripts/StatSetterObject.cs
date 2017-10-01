@@ -30,7 +30,7 @@ public class StatSetterObject : MonoBehaviour {
             }
         }
 
-        buttonContainer = transform.FindChild("ButtonHolder").gameObject;
+        buttonContainer = transform.Find("ButtonHolder").gameObject;
 
         List<Button> buttons = new List<Button>();
         GetComponentsInChildren<Button>(buttons);

@@ -56,6 +56,7 @@ public class GameControllerScript : MonoBehaviour {
 
         }
     }
+    //Dictionary of character names, for generating new characters
 
     public void createNameDictionary()
     {
@@ -71,6 +72,8 @@ public class GameControllerScript : MonoBehaviour {
 
     }
 
+    //Dictionary of ship names, for generating new ships
+
     public void createShipNameList()
     {
         shipNames = new List<string>();
@@ -84,6 +87,8 @@ public class GameControllerScript : MonoBehaviour {
 
     }
 
+    //Dictionary that contains the options for each event
+
     public void createEventOptionsDictionary()
     {
         eventOptions = new Dictionary<EventType, List<OptionType>>();
@@ -93,6 +98,8 @@ public class GameControllerScript : MonoBehaviour {
         eventOptions.Add(EventType.EncounterPlanet, new List<OptionType> { OptionType.Land, OptionType.Scan, OptionType.Bypass });
         eventOptions.Add(EventType.ShipCombat, new List<OptionType> { OptionType.Flee, OptionType.Blast, OptionType.Board, OptionType.Negotiate });
     }
+
+    //Dictionary of the different events that can happen
 
     public void createPossibleEventsDictionary()
     {
@@ -108,6 +115,8 @@ public class GameControllerScript : MonoBehaviour {
 
 
     }
+
+   //Dictionary that holds the descriptions for each option
 
     public void createOptionStringsDictionary()
     {
@@ -126,7 +135,7 @@ public class GameControllerScript : MonoBehaviour {
 
     }
 
-
+    //Prototypes of different enemies
 
     public void createEnemyPrototypes()
     {
@@ -140,6 +149,7 @@ public class GameControllerScript : MonoBehaviour {
         enemyKeyList = new List<string>(enemyDictionary.Keys);
     }
 
+    //When we want a new enemy, we get a random one using this function
     public Enemy getRandomEnemy()
     {
         int rand = Random.Range(0, enemyKeyList.Count);
@@ -149,6 +159,7 @@ public class GameControllerScript : MonoBehaviour {
         return enemy;
     }
 
+    //Creating non player characters, giving them random stats, races, genders, etc.
     public Character createNPC()
     {
         return new Character(getRandomName(), GameData.instance.getRandomRace(), GameData.instance.getRandomGender(), GameData.instance.nextCharID(), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
@@ -185,6 +196,7 @@ public class GameControllerScript : MonoBehaviour {
 
         validEvents = new List<EventType>();
         PartyManagerPanel.instance.gameObject.SetActive(false);
+
         //Create prototype lists, eventually this will just be importing from an XML file or something
         createNameDictionary();
         createEnemyPrototypes();
@@ -205,7 +217,7 @@ public class GameControllerScript : MonoBehaviour {
 
 
 
-        //Lets create some Characters, we'll randomize their starting stats based on 2d6
+        //Lets create some Characters, we'll randomize their starting stats (done in the character creation function)
         while (party.partyMembers.Count < 4)
         {
             party.addPartyMember();
@@ -219,6 +231,7 @@ public class GameControllerScript : MonoBehaviour {
     //function for quitting the game
     public void ExitGame() {
         //use this later when inputs are set up
+        //Dont use this if on iphone
        // if (Input.GetKeyDown(KeyCode.Escape)) { };
         
             Application.Quit();
@@ -247,7 +260,8 @@ public class GameControllerScript : MonoBehaviour {
 
         }
 
-        
+        validEvents.Add(EventType.Statement);
+
 
 
         return validEvents[Random.Range(0, validEvents.Count)];
@@ -280,6 +294,7 @@ void Update () {
         }
         if(gameState == GameState.GameOver)
         {
+            //if the game is over stop doing the game loop
             return;
         }
       
@@ -307,6 +322,7 @@ void Update () {
                 //EventLog.instance.newLogItem();
             }
 
+            //Anything that happens per event, like a ship regenerating shields, happens in here
             party.EventTick();
         }
         

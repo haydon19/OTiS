@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
+//This class holds all kind of data about the game
+//There are a bunch of functions and data creation that needs to be moved here
 public class GameData : MonoBehaviour {
 
     public static GameData instance;

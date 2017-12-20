@@ -109,7 +109,7 @@ public abstract class Event {
     }
 
 
-    public void LogEvent()
+    public void LogEventSummary()
     {
         EventLog.instance.newLogItem(summary);
     }
@@ -134,7 +134,7 @@ public abstract class Event {
         getOptions();
         setSummary();
 
-        LogEvent();
+        LogEventSummary();
 
     }
 
@@ -171,7 +171,7 @@ public class StatementEvent : Event
     public override void EnterEvent()
     {
         setSummary();
-        LogEvent();
+        LogEventSummary();
     }
 
     public override void setSummary()
@@ -193,7 +193,7 @@ public class GameOverEvent : Event
     public override void EnterEvent()
     {
         setSummary();
-        LogEvent();
+        LogEventSummary();
     }
 
     public override void setSummary()
@@ -215,7 +215,7 @@ public class EmptyShipEvent : Event
     public override void EnterEvent()
     {
         setSummary();
-        LogEvent();
+        LogEventSummary();
     }
 
     public override void setSummary()

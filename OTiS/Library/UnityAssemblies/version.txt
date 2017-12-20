@@ -9,3 +9,5 @@ C:/Program Files/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.An
 C:/Program Files/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll
 C:/Program Files/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll
 C:/Program Files/Editor/Data/Managed/UnityEditor.dll
+C:/Program Files/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll
+C:/Program Files/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll
